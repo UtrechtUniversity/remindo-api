@@ -9,6 +9,7 @@ def test_isInstanceRemindoRecipe(rclient):
     assert isinstance(moments[0], RemindoMoment)
     assert [3472 == m.rid for m in moments]
 
+
 def test_isRecipe(rclient):
     moment = rclient.list_moments(recipe_ids=2323)[0]
     assert moment.rid == 3472
@@ -34,6 +35,7 @@ def test_isRecipe(rclient):
     assert moment.time_end == "2020-02-24 12:30:00"
     assert moment.time_start == "2020-02-21 14:00:00"
     assert moment.type == "period"
+
 
 def test_momentResult(rclient):
     result = rclient.list_moments_results(ids=3472)

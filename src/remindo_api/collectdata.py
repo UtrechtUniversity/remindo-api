@@ -21,7 +21,8 @@ logger = logging.getLogger(__name__)
 # list_results() currently not being used - no need to save students' data?
 # list_reliability() currently not being used because does not work
 
-class RemindoCollect():
+
+class RemindoCollect:
     def __init__(self, rclient, data_directory, since_date):
         self._rclient = rclient
         self._data_directory = data_directory
@@ -36,13 +37,13 @@ class RemindoCollect():
         self._reliability_data_list = list()
         self._stats_data_list = list()
         self._item_data_list = list()
-        
+
         self._recipe_id_list = list()
         self._recipe_moment_id_dict = dict()
         self._moment_id_list = list()
         self._moment = int()
         self._recipe = int()
-        self._base_directory = os.path.join(data_directory, 'data/landing-zone')
+        self._base_directory = os.path.join(data_directory, "data/landing-zone")
         if not os.path.isdir(self._base_directory):
             os.makedirs(self._base_directory)
 
@@ -52,25 +53,23 @@ class RemindoCollect():
         for cluster in clusters:
             self._cluster_data_list.append(self._parse_cluster_data(cluster))
 
-        for module_name, module_data in zip(
-            ["cluster"], [self._cluster_data_list]
-            ):
+        for module_name, module_data in zip(["cluster"], [self._cluster_data_list]):
             logging.debug(f"Writing data for: {module_name}")
             self._write_to_disk(module_name, module_data)
 
     def fetch_studies_recipes(self):
         logging.debug("Fetching study data.")
         global studies
-        studies, recipes = self._rclient.list_studies(complete=True, since=self._since_date)
+        studies, recipes = self._rclient.list_studies(
+            complete=True, since=self._since_date
+        )
         for study in studies:
             self._study_data_list.append(self._parse_study_data(study))
         # These are the recipes modified from the date chosen
         for recipe in recipes:
             self._recipe_id_list.append(recipe.rid)
 
-        for module_name, module_data in zip(
-            ["studies"], [self._study_data_list]
-            ):
+        for module_name, module_data in zip(["studies"], [self._study_data_list]):
             logging.debug(f"Writing data for: {module_name}")
             self._write_to_disk(module_name, module_data)
 
@@ -78,11 +77,11 @@ class RemindoCollect():
         logging.debug("Fetching recipes data from studies.")
         for rid in self._recipe_id_list:
             try:
-                recipes = self._rclient.list_recipes(recipe_id = rid)
+                recipes = self._rclient.list_recipes(recipe_id=rid)
                 # recipe comes within a list because of how list_recipes works
                 if len(recipes) == 1:
                     self._recipe_data_list.append(self._parse_recipe_data(recipes[0]))
-                else: 
+                else:
                     for recipe in recipes:
                         self._recipe_data_list.append(self._parse_recipe_data(recipe))
                 time.sleep(0.1)
@@ -90,9 +89,7 @@ class RemindoCollect():
                 print("An error occurred on recipe id: {0}".format(rid))
                 continue
 
-        for module_name, module_data in zip(
-            ["recipes"], [self._recipe_data_list]
-            ):
+        for module_name, module_data in zip(["recipes"], [self._recipe_data_list]):
             logging.debug(f"Writing data for: {module_name}")
             self._write_to_disk(module_name, module_data)
 
@@ -100,13 +97,13 @@ class RemindoCollect():
         logging.debug("Fetching moments from recipes.")
         for recipe in self._recipe_id_list:
             try:
-                moments = self._rclient.list_moments(recipe_ids = recipe)
+                moments = self._rclient.list_moments(recipe_ids=recipe)
                 moment_temp_list = []
                 for moment in moments:
                     moment_temp_list.append(moment.rid)
                     self._moment_data_list.append(self._parse_moment_data(moment))
                     self._moment_id_list.append(moment.rid)
-                # Possibility of saving individual moments not as list 
+                # Possibility of saving individual moments not as list
                 # and empty list as "None"?
                 self._recipe_moment_id_dict[recipe] = moment_temp_list
                 time.sleep(0.1)
@@ -114,9 +111,7 @@ class RemindoCollect():
                 print("An error occurred on recipe {0}".format(recipe))
                 continue
 
-        for module_name, module_data in zip(
-            ["moments"], [self._moment_data_list]
-            ):
+        for module_name, module_data in zip(["moments"], [self._moment_data_list]):
             logging.debug(f"Writing data for: {module_name}")
             self._write_to_disk(module_name, module_data)
 
@@ -124,10 +119,12 @@ class RemindoCollect():
         logging.debug("Fetching moments result data from moments.")
         for moment in self._moment_id_list:
             try:
-                moment_results = self._rclient.list_moments_results(ids = moment)
+                moment_results = self._rclient.list_moments_results(ids=moment)
                 if moment_results != False:
                     for moment_result in moment_results:
-                        self._moment_result_data_list.append(self._parse_moment_result_data(moment_result))
+                        self._moment_result_data_list.append(
+                            self._parse_moment_result_data(moment_result)
+                        )
                 time.sleep(0.1)
             except:
                 print("An error occurred on moment {0}".format(moment))
@@ -135,7 +132,7 @@ class RemindoCollect():
 
         for module_name, module_data in zip(
             ["moment_result"], [self._moment_result_data_list]
-            ):
+        ):
             logging.debug(f"Writing data for: {module_name}")
             self._write_to_disk(module_name, module_data)
 
@@ -143,9 +140,11 @@ class RemindoCollect():
         logging.debug("Fetching reliability data from moments.")
         for moment in self._moment_id_list:
             try:
-                reliability_result = self._rclient.list_reliability(moment_id = moment)
+                reliability_result = self._rclient.list_reliability(moment_id=moment)
                 if reliability_result != None:
-                    self._reliability_data_list.append(self._parse_reliability_result_data(reliability_result))
+                    self._reliability_data_list.append(
+                        self._parse_reliability_result_data(reliability_result)
+                    )
                 time.sleep(0.1)
             except:
                 print("An error occurred on moment {0}".format(moment))
@@ -153,7 +152,7 @@ class RemindoCollect():
 
         for module_name, module_data in zip(
             ["reliability"], [self._reliability_data_list]
-            ):
+        ):
             logging.debug(f"Writing data for: {module_name}")
             self._write_to_disk(module_name, module_data)
 
@@ -164,33 +163,40 @@ class RemindoCollect():
             for moment in self._recipe_moment_id_dict[recipe]:
                 if moment is None:
                     try:
-                        stats_results = self._rclient.list_stats(recipe_id = recipe)
+                        stats_results = self._rclient.list_stats(recipe_id=recipe)
                         if stats_results != None:
                             for result in stats_results:
-                                self._stats_data_list.append(self._parse_stats_data(result))
+                                self._stats_data_list.append(
+                                    self._parse_stats_data(result)
+                                )
                     except:
-                        print("An error occurred on recipe {0}, moment {1}".format(recipe,moment))
+                        print(
+                            "An error occurred on recipe {0}, moment {1}".format(
+                                recipe, moment
+                            )
+                        )
                         continue
                 else:
                     try:
-                        stats_results = self._rclient.list_stats(recipe_id = recipe, moment_id = moment)
+                        stats_results = self._rclient.list_stats(
+                            recipe_id=recipe, moment_id=moment
+                        )
                         if stats_results != None:
                             for result in stats_results:
-                                self._stats_data_list.append(self._parse_stats_data(result))
+                                self._stats_data_list.append(
+                                    self._parse_stats_data(result)
+                                )
                         time.sleep(0.1)
                     except Exception as e:
-                        print("An error of class {0} occurred on recipe {1}, moment {2}:".format(
-                            type(e),
-                            recipe,
-                            moment
+                        print(
+                            "An error of class {0} occurred on recipe {1}, moment {2}:".format(
+                                type(e), recipe, moment
                             )
                         )
                         print("with message {0}".format(e))
                         continue
 
-        for module_name, module_data in zip(
-            ["stats"], [self._stats_data_list]
-            ):
+        for module_name, module_data in zip(["stats"], [self._stats_data_list]):
             logging.debug(f"Writing data for: {module_name}")
             self._write_to_disk(module_name, module_data)
 
@@ -202,37 +208,41 @@ class RemindoCollect():
                     continue
                 else:
                     try:
-                        item_results = self._rclient.list_item_results(recipe_id = recipe, moment_id = moment)
+                        item_results = self._rclient.list_item_results(
+                            recipe_id=recipe, moment_id=moment
+                        )
                         if item_results != None:
                             for item_result in item_results:
-                                self._item_data_list.append(self._parse_item_data(item_result))
+                                self._item_data_list.append(
+                                    self._parse_item_data(item_result)
+                                )
                         time.sleep(0.1)
                     except Exception as e:
-                        print("An error of class {0} occurred on recipe {1}, moment {2} ".format(
-                            type(e),
-                            recipe,
-                            moment
+                        print(
+                            "An error of class {0} occurred on recipe {1}, moment {2} ".format(
+                                type(e), recipe, moment
                             )
                         )
                         print("with message: '{0}'".format(e))
                         continue
 
-
-        for module_name, module_data in zip(
-            ["item"], [self._item_data_list]
-            ):
+        for module_name, module_data in zip(["item"], [self._item_data_list]):
             logging.debug(f"Writing data for: {module_name}")
             self._write_to_disk(module_name, module_data)
 
     def _write_to_disk(self, module_name, module_data):
         file = os.path.join(self._base_directory, f"{module_name}.csv")
-        write_mode, header = ('a', False) if os.path.isfile(file) else ('w',True)
+        write_mode, header = ("a", False) if os.path.isfile(file) else ("w", True)
 
-        if(len(module_data) > 0):
-            pd\
-                .DataFrame(module_data)\
-                .to_csv(path_or_buf=file, index=False, mode=write_mode, header=header, quoting=csv.QUOTE_MINIMAL)
-            
+        if len(module_data) > 0:
+            pd.DataFrame(module_data).to_csv(
+                path_or_buf=file,
+                index=False,
+                mode=write_mode,
+                header=header,
+                quoting=csv.QUOTE_MINIMAL,
+            )
+
     def reset_data_lists(self):
         self._cluster_data_list = list()
         self._study_data_list = list()
@@ -249,8 +259,8 @@ class RemindoCollect():
         return OrderedDict(
             {
                 "cluster_id": cluster_obj.rid,
-                "cluster_name" : cluster_obj.name,
-                "record_create_timestamp": datetime.now()
+                "cluster_name": cluster_obj.name,
+                "record_create_timestamp": datetime.now(),
             }.items()
         )
 
@@ -259,14 +269,14 @@ class RemindoCollect():
         return OrderedDict(
             {
                 "study_id": study_obj.rid,
-                "study_name" : study_obj.name,
-                "study_code" : study_obj.code,
-                "study_descr" : study_obj.descr,
-                "study_edition_name" : study_obj.edition_name,
-                "study_edition_descr" : study_obj.edition_descr,
-                "study_source_edition_id" : study_obj.source_edition_id,
-                "study_source_study_id" : study_obj.source_study_id,
-                "record_create_timestamp": datetime.now()
+                "study_name": study_obj.name,
+                "study_code": study_obj.code,
+                "study_descr": study_obj.descr,
+                "study_edition_name": study_obj.edition_name,
+                "study_edition_descr": study_obj.edition_descr,
+                "study_source_edition_id": study_obj.source_edition_id,
+                "study_source_study_id": study_obj.source_study_id,
+                "record_create_timestamp": datetime.now(),
             }.items()
         )
 
@@ -275,16 +285,16 @@ class RemindoCollect():
         return OrderedDict(
             {
                 "recipe_id": recipe_obj.rid,
-                "recipe_name" : recipe_obj.name,
-                "recipe_code" : recipe_obj.code,
-                "recipe_study_id" : recipe_obj.study_id,
-                "recipe_category" : recipe_obj.category,
-                "recipe_status" : recipe_obj.status,
-                "recipe_type" : recipe_obj.type,
+                "recipe_name": recipe_obj.name,
+                "recipe_code": recipe_obj.code,
+                "recipe_study_id": recipe_obj.study_id,
+                "recipe_category": recipe_obj.category,
+                "recipe_status": recipe_obj.status,
+                "recipe_type": recipe_obj.type,
                 # "recipe_source_recipe_id" : recipe_obj.source_recipe_id,
-                "recipe_v" : recipe_obj.settings_v,
-                "recipe_max_retries" : recipe_obj.settings_max_retries,
-                "recipe_tools" : recipe_obj.settings_tools,
+                "recipe_v": recipe_obj.settings_v,
+                "recipe_max_retries": recipe_obj.settings_max_retries,
+                "recipe_tools": recipe_obj.settings_tools,
                 # "recipe_practice_repeat_until" : recipe_obj.settings_practice_repeat_until,
                 # "recipe_practice_continue_practice" : recipe_obj.settings_practice_continue_practice,
                 # "recipe_practice_start_retry_by_candidate" : recipe_obj.settings_practice_start_retry_by_candidate,
@@ -304,7 +314,7 @@ class RemindoCollect():
                 # "recipe_settings_edit_show_result" : recipe_obj.settings_settings_edit_show_result,
                 # "recipe_settings_edit_retry_delay" : recipe_obj.settings_settings_edit_retry_delay,
                 # "recipe_settings_edit_continue_practice" : recipe_obj.settings_settings_edit_continue_practice,
-                "record_create_timestamp": datetime.now()
+                "record_create_timestamp": datetime.now(),
             }.items()
         )
 
@@ -314,30 +324,30 @@ class RemindoCollect():
             {
                 "moment_id": moment_obj.rid,
                 "moment_name": moment_obj.name,
-                "moment_caesura" : moment_obj.caesura,
-                "moment_code" : moment_obj.code,
-                "moment_datasource_id" : moment_obj.datasource_id,
-                "moment_date_end" : moment_obj.date_end,
-                "moment_date_start" : moment_obj.date_start,
-                "moment_duration" : moment_obj.duration,
-                "moment_extra_time" : moment_obj.extra_time,
-                "moment_limit_ips" : moment_obj.limit_ips,
-                "moment_recipe_id" : moment_obj.recipe_id,
-                "moment_recipe_type" : moment_obj.recipe_type,
-                "moment_requires_approval" : moment_obj.requires_approval,
-                "moment_recipe_type" : moment_obj.recipe_type,
-                "moment_study_id" : moment_obj.study_id,
-                "moment_study_name" : moment_obj.study_name,
-                "moment_time_end" : moment_obj.time_end,
-                "moment_time_start" : moment_obj.time_start,
-                "moment_type" : moment_obj.type,
-                "moment_show_result" : moment_obj.show_result,
-                "moment_show_result_date" : moment_obj.show_result_date,
-                "moment_show_result_delay" : moment_obj.show_result_delay,
-                "moment_show_result_delay_type" : moment_obj.show_result_delay_type,
-                "moment_show_result_time" : moment_obj.show_result_time,
-                "moment_status" : moment_obj.status,
-                "record_create_timestamp": datetime.now()
+                "moment_caesura": moment_obj.caesura,
+                "moment_code": moment_obj.code,
+                "moment_datasource_id": moment_obj.datasource_id,
+                "moment_date_end": moment_obj.date_end,
+                "moment_date_start": moment_obj.date_start,
+                "moment_duration": moment_obj.duration,
+                "moment_extra_time": moment_obj.extra_time,
+                "moment_limit_ips": moment_obj.limit_ips,
+                "moment_recipe_id": moment_obj.recipe_id,
+                "moment_recipe_type": moment_obj.recipe_type,
+                "moment_requires_approval": moment_obj.requires_approval,
+                "moment_recipe_type": moment_obj.recipe_type,
+                "moment_study_id": moment_obj.study_id,
+                "moment_study_name": moment_obj.study_name,
+                "moment_time_end": moment_obj.time_end,
+                "moment_time_start": moment_obj.time_start,
+                "moment_type": moment_obj.type,
+                "moment_show_result": moment_obj.show_result,
+                "moment_show_result_date": moment_obj.show_result_date,
+                "moment_show_result_delay": moment_obj.show_result_delay,
+                "moment_show_result_delay_type": moment_obj.show_result_delay_type,
+                "moment_show_result_time": moment_obj.show_result_time,
+                "moment_status": moment_obj.status,
+                "record_create_timestamp": datetime.now(),
             }.items()
         )
 
@@ -384,7 +394,7 @@ class RemindoCollect():
                 "moment_score_type": moment_obj.score_type,
                 "moment_grade_formatted": moment_obj.grade_formatted,
                 "moment_can_change": moment_obj.can_change,
-                "record_create_timestamp": datetime.now()
+                "record_create_timestamp": datetime.now(),
             }.items()
         )
 
@@ -400,7 +410,7 @@ class RemindoCollect():
                 "stdev": reliability_obj.stdev,
                 "average": reliability_obj.average,
                 "max": reliability_obj.max,
-                "record_create_timestamp": datetime.now()
+                "record_create_timestamp": datetime.now(),
             }.items()
         )
 
@@ -422,7 +432,7 @@ class RemindoCollect():
                 "rir": stats_obj.rir,
                 "total": stats_obj.total,
                 "answered": stats_obj.answered,
-                "record_create_timestamp": datetime.now()
+                "record_create_timestamp": datetime.now(),
             }.items()
         )
 
@@ -445,6 +455,6 @@ class RemindoCollect():
                 "response_choiceSequence": item_obj.response_choiceSequence,
                 "response_candidateResponse": item_obj.response_candidateResponse,
                 "response_correctResponse": item_obj.response_correctResponse,
-                "record_create_timestamp": datetime.now()
+                "record_create_timestamp": datetime.now(),
             }.items()
         )

@@ -13,8 +13,8 @@ from .reliability import RemindoReliability
 from .item import RemindoItem
 from .stats import RemindoStats
 
-# TODO: create a utils function to validate success of call
-# Then modify collectdata.py as it catches errors
+#  TODO: create a utils function to validate success of call
+#  Then modify collectdata.py as it catches errors
 # TODO: Error: /api/v1/result/reliability {'error': 'Please specify a valid API method for class result. Available methods: list'}
 # TODO: what about generator of fake data using real calls?
 
@@ -59,12 +59,7 @@ class RemindoClient:
         resp = self.request(url="/remote_api/hello_world", content="")
         return RemindoHelloWorld(resp)
 
-    def list_clusters(
-        self,
-        filter=None,
-        category=None,
-        full=True
-    ):
+    def list_clusters(self, filter=None, category=None, full=True):
         """List all available user groups.
 
         Parameters
@@ -98,12 +93,7 @@ class RemindoClient:
         return clusters
 
     def list_studies(
-        self,
-        code=None,
-        study_id=None,
-        datasource_uuid=None,
-        complete=False,
-        since=None
+        self, code=None, study_id=None, datasource_uuid=None, complete=False, since=None
     ):
         """'List studies, which are a set of recipes
 
@@ -142,7 +132,7 @@ class RemindoClient:
         list_study = list()
         resp = self.request(url="/study/list", content=params)
         studies = RemindoStudy(resp["studies"]).list_all()
-        
+
         if complete == False:
             for study in studies:
                 list_study.append(RemindoStudy(studies[study]))
@@ -153,9 +143,10 @@ class RemindoClient:
                 list_study.append(RemindoStudy(studies[study]))
             for study in resp["studies"]:
                 for recipe in resp["studies"][study]["recipes"]:
-                    recipes.append(RemindoRecipe(resp["studies"][study]["recipes"][recipe]))
+                    recipes.append(
+                        RemindoRecipe(resp["studies"][study]["recipes"][recipe])
+                    )
             return list_study, recipes
-
 
     def list_recipes(
         self,
@@ -167,7 +158,7 @@ class RemindoClient:
         datasource_uuid=None,
         since=None,
         properties=None,
-        full=False
+        full=False,
     ):
         """List recipes
 
@@ -227,14 +218,7 @@ class RemindoClient:
 
         return list_recipes
 
-    def list_moments(
-        self,
-        ids=None,
-        code=None,
-        recipe_ids=None,
-        frm=None,
-        until=None
-    ):
+    def list_moments(self, ids=None, code=None, recipe_ids=None, frm=None, until=None):
         """List moments
 
         Parameters
@@ -281,7 +265,7 @@ class RemindoClient:
         code=None,
         candidate_ids=None,
         candidate_codes=None,
-        candidate_filter=None
+        candidate_filter=None,
     ):
         """List results of selected moments
 
@@ -341,7 +325,7 @@ class RemindoClient:
         subscription_ids=None,
         page=None,
         page_size=None,
-        complete=False
+        complete=False,
     ):
         """Retrieve list of results
 
@@ -464,7 +448,7 @@ class RemindoClient:
         moment_id=None,
         subscription_ids=None,
         user_ids=None,
-        add_item_info=False
+        add_item_info=False,
     ):
         """List subscription results
 
@@ -510,7 +494,7 @@ class RemindoClient:
         variant_id=None,
         scan_id=None,
         corrections=None,
-        locale=None
+        locale=None,
     ):
         """"Calculate result reliability
 
@@ -578,7 +562,7 @@ class RemindoClient:
         moment_id=None,
         subscription_ids=None,
         user_ids=None,
-        add_item_info=False
+        add_item_info=False,
     ):
         """"Retrieve item results
 
@@ -636,11 +620,7 @@ class RemindoClient:
             return None
 
     def list_stats(
-        self,
-        recipe_id=None,
-        moment_id=None,
-        subscription_ids=None,
-        user_ids=None
+        self, recipe_id=None, moment_id=None, subscription_ids=None, user_ids=None
     ):
         """"Retrieve recipe question/item result statistics
 

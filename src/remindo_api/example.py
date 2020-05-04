@@ -21,28 +21,36 @@ import apikey
 config = configparser.ConfigParser()
 config.read_file(open("config.cfg"))
 
+
 def main():
     logging.debug("Creating remindo client in example.py.")
     rclient = client.RemindoClient(
-        config["REMINDOKEYS"]["UUID"], config["REMINDOKEYS"]["SECRET"], config["REMINDOKEYS"]["URL_BASE"]
+        config["REMINDOKEYS"]["UUID"],
+        config["REMINDOKEYS"]["SECRET"],
+        config["REMINDOKEYS"]["URL_BASE"],
     )
     l = list()
-
 
     r = rclient.list_moments_results(ids=3472)
     for c in r:
         print(
-            c.subscription_id, 
-            "|", c.user_id,
-            "|", c.user_code,
-            "|", c.cluster_ids,
-            "|", c.area_feedback,
-            "|", c.area_name,
-            "|", c.try_count
+            c.subscription_id,
+            "|",
+            c.user_id,
+            "|",
+            c.user_code,
+            "|",
+            c.cluster_ids,
+            "|",
+            c.area_feedback,
+            "|",
+            c.area_name,
+            "|",
+            c.try_count,
         )
 
     # print(
-    #     c.rid, 
+    #     c.rid,
     #     "|", c.caesura,
     #     "|", c.code,
     #     "|", c.datasource_id,
@@ -70,7 +78,6 @@ def main():
     # )
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
     logging.debug("Closing.")
-
