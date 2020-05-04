@@ -1,15 +1,15 @@
 import requests
 
-from .helloworld import RemindoHelloWorld
-from .request import RemindoRequest
 from .cluster import RemindoCluster
-from .study import RemindoStudy
-from .recipe import RemindoRecipe
-from .moment import RemindoMoment
-from .result import RemindoResult
-from .reliability import RemindoReliability
+from .helloworld import RemindoHelloWorld
 from .item import RemindoItem
+from .moment import RemindoMoment
+from .recipe import RemindoRecipe
+from .reliability import RemindoReliability
+from .request import RemindoRequest
+from .result import RemindoResult
 from .stats import RemindoStats
+from .study import RemindoStudy
 
 #  TODO: create a utils function to validate success of call
 #  Then modify collectdata.py as it catches errors
@@ -92,12 +92,7 @@ class RemindoClient:
         return clusters
 
     def list_studies(
-        self,
-        code=None,
-        study_id=None,
-        datasource_uuid=None,
-        complete=False,
-        since=None
+        self, code=None, study_id=None, datasource_uuid=None, complete=False, since=None
     ):
         """'List studies, which are a set of recipes
 
@@ -502,7 +497,7 @@ class RemindoClient:
     ):
         """"Calculate result reliability
 
-        Calculate the reliability over a set of results using cronbach’s alpha 
+        Calculate the reliability over a set of results using cronbach’s alpha
         and the standard error of measurement.You always need to filter on a single
         recipe to calculate the reliability. Either using a test moment, a recipe,
         a scan or a paper variant.

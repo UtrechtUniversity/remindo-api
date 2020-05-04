@@ -13,8 +13,6 @@ def pytest_configure(config):
 @pytest.fixture
 def rclient():
     rclient = client.RemindoClient(
-        uuid=apikey.uuid,
-        secret=apikey.secret,
-        url_base=apikey.url_base
+        uuid=apikey.uuid, secret=apikey.secret, url_base=apikey.url_base
     )
     yield rclient

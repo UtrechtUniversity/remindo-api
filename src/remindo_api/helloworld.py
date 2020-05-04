@@ -1,4 +1,4 @@
-import collections
+# content of src/remindo_api/helloworld.py
 
 
 class RemindoHelloWorld:

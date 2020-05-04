@@ -1,13 +1,14 @@
 """Class implementation for fetching remindo data"""
-
-from collections import OrderedDict
-import pandas as pd
 import os
 import csv
 import time
 import logging
 import logging.config
 from datetime import datetime
+
+from collections import OrderedDict
+import pandas as pd
+
 
 logger = logging.getLogger(__name__)
 # TODO: retrieve individual recipes based on date

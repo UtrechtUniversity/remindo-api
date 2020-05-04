@@ -1,9 +1,9 @@
+from datetime import datetime
 import configparser
-import time
 import logging
 import logging.config
 from pathlib import Path
-from datetime import datetime
+import time
 
 from remindoapi import client
 from remindoapi import collectdata
