@@ -11,10 +11,8 @@ import logging
 import logging.config
 from pathlib import Path
 import time
-import cx_Oracle
-
-from remindoapi import client
-from remindoapi.recipe import RemindoRecipe
+from remindo_api import client
+from remindo_api.recipe import RemindoRecipe
 import apikey
 
 # Reading configurations

@@ -1,6 +1,4 @@
-import collections, requests, logging, time
-import configparser
-from pathlib import Path
+import requests
 
 from .helloworld import RemindoHelloWorld
 from .request import RemindoRequest
@@ -15,7 +13,8 @@ from .stats import RemindoStats
 
 #  TODO: create a utils function to validate success of call
 #  Then modify collectdata.py as it catches errors
-# TODO: Error: /api/v1/result/reliability {'error': 'Please specify a valid API method for class result. Available methods: list'}
+# TODO: Error: /api/v1/result/reliability {'error':
+# 'Please specify a valid API method for class result. Available methods: list'}
 # TODO: what about generator of fake data using real calls?
 
 
@@ -78,11 +77,11 @@ class RemindoClient:
                 {"id" : 0000, "name" : 'test'}.
         """
         params = {}
-        if filter != None:
+        if filter is not None:
             params["filter"] = filter
-        if category != None:
+        if category is not None:
             params["category"] = category
-        if full != False:
+        if full is not False:
             params["full"] = True
 
         resp = self.request(url="/cluster/list", content=params)
@@ -93,7 +92,12 @@ class RemindoClient:
         return clusters
 
     def list_studies(
-        self, code=None, study_id=None, datasource_uuid=None, complete=False, since=None
+        self,
+        code=None,
+        study_id=None,
+        datasource_uuid=None,
+        complete=False,
+        since=None
     ):
         """'List studies, which are a set of recipes
 
@@ -118,22 +122,22 @@ class RemindoClient:
             if complete == True, return list of studies and associated recipes modified since date
         """
         params = {}
-        if code != None:
+        if code is not None:
             params["code"] = code
-        if study_id != None:
+        if study_id is not None:
             params["study_id"] = study_id
-        if datasource_uuid != None:
+        if datasource_uuid is not None:
             params["datasource_uuid"] = datasource_uuid
-        if complete != False:
+        if complete is not False:
             params["complete"] = complete
-        if since != None:
+        if since is not None:
             params["since"] = since
 
         list_study = list()
         resp = self.request(url="/study/list", content=params)
         studies = RemindoStudy(resp["studies"]).list_all()
 
-        if complete == False:
+        if complete is False:
             for study in studies:
                 list_study.append(RemindoStudy(studies[study]))
             return list_study
@@ -192,23 +196,23 @@ class RemindoClient:
             Return list of Remindo recipe object(s)
         """
         params = {}
-        if code != None:
+        if code is not None:
             params["code"] = code
-        if category != None:
+        if category is not None:
             params["category"] = category
-        if study_id != None:
+        if study_id is not None:
             params["study_id"] = int(study_id)
-        if recipe_id != None:
+        if recipe_id is not None:
             params["recipe_id"] = recipe_id
-        if filtr != None:
+        if filtr is not None:
             params["filter"] = filtr
-        if datasource_uuid != None:
+        if datasource_uuid is not None:
             params["datasource_uuid"] = datasource_uuid
-        if since != None:
+        if since is not None:
             params["since"] = since
-        if properties != None:
+        if properties is not None:
             params["properties"] = properties
-        if full != False:
+        if full is not False:
             params["full"] = True
 
         resp = self.request(url="/recipe/list", content=params)
@@ -240,15 +244,15 @@ class RemindoClient:
             Return list of RemindoMoment object(s)
         """
         params = {}
-        if ids != None:
+        if ids is not None:
             params["ids"] = ids
-        if code != None:
+        if code is not None:
             params["code"] = list(code)
-        if recipe_ids != None:
+        if recipe_ids is not None:
             params["recipe_ids"] = recipe_ids
-        if frm != None:
+        if frm is not None:
             params["from"] = frm
-        if until != None:
+        if until is not None:
             params["until"] = until
 
         resp = self.request(url="/moment/list", content=params)
@@ -286,24 +290,24 @@ class RemindoClient:
             Return list of Remindo Result object(s) for the moment.
         """
         params = {}
-        if ids != None:
+        if ids is not None:
             params["id"] = ids
-        if code != None:
+        if code is not None:
             params["code"] = code
-        if candidate_ids != None:
+        if candidate_ids is not None:
             params["candidate_ids"] = list(candidate_ids)
-        if candidate_codes != None:
+        if candidate_codes is not None:
             params["candidate_codes"] = list(candidate_codes)
-        if candidate_filter != None:
-            params["candidate_filter"] = make_filter(candidate_filter)
+        if candidate_filter is not None:
+            params["candidate_filter"] = candidate_filter
 
         resp = self.request(url="/moment/results", content=params)
-        if resp["success"] == True:
+        if resp["success"] is True:
             list_results = []
             for result in resp["results"]:
                 list_results.append(RemindoResult(result))
             return list_results
-        if resp["success"] == False:
+        if resp["success"] is False:
             return False
 
     def list_results(
@@ -375,45 +379,45 @@ class RemindoClient:
             If the results only have one page of results, returns one RemindoResult object.
         """
         params = {}
-        if typ != None:
+        if typ is not None:
             params["type"] = typ
-        if modified_since != None:
+        if modified_since is not None:
             params["modified_since"] = modified_since
-        if modified_until != None:
+        if modified_until is not None:
             params["modified_until"] = modified_until
-        if start_time_since != None:
+        if start_time_since is not None:
             params["start_time_since"] = start_time_since
-        if start_time_until != None:
+        if start_time_until is not None:
             params["start_time_until"] = start_time_until
-        if end_time_since != None:
+        if end_time_since is not None:
             params["end_time_since"] = end_time_since
-        if end_time_until != None:
+        if end_time_until is not None:
             params["end_time_until"] = end_time_until
-        if status != None:
-            params["status"] = make_filter(status)
-        if search != None:
-            params["search"] = make_filter(search)
-        if candidate_ids != None:
+        if status is not None:
+            params["status"] = status
+        if search is not None:
+            params["search"] = search
+        if candidate_ids is not None:
             params["candidate_ids"] = list(candidate_ids)
-        if cluster_ids != None:
+        if cluster_ids is not None:
             params["cluster_ids"] = list(cluster_ids)
-        if study_ids != None:
+        if study_ids is not None:
             params["study_ids"] = list(study_ids)
-        if recipe_ids != None:
+        if recipe_ids is not None:
             params["recipe_ids"] = recipe_ids
-        if result_ids != None:
+        if result_ids is not None:
             params["result_ids"] = list(result_ids)
-        if subscription_ids != None:
+        if subscription_ids is not None:
             params["subscription_ids"] = subscription_ids
-        if page != None:
+        if page is not None:
             params["page"] = page
-        if page_size != None:
+        if page_size is not None:
             params["page_size"] = page_size
-        if complete != False:
+        if complete is not False:
             params["complete"] = True
 
         resp = self.request(url="/result/list", content=params)
-        if resp["success"] == True:
+        if resp["success"] is True:
             page_dict = {
                 "total_pages": resp["response"]["total_pages"],
                 "total_results": resp["response"]["total_results"],
@@ -473,15 +477,15 @@ class RemindoClient:
             return results tied to subscription.
         """
         params = {}
-        if recipe_id != None:
+        if recipe_id is not None:
             params["recipe_id"] = recipe_id
-        if moment_id != None:
+        if moment_id is not None:
             params["moment_id"] = moment_id
-        if subscription_ids != None:
+        if subscription_ids is not None:
             params["subscription_ids"] = list(subscription_ids)
-        if user_ids != None:
+        if user_ids is not None:
             params["user_ids"] = list(user_ids)
-        if add_item_info != False:
+        if add_item_info is not False:
             params["add_item_info"] = True
         resp = self.request(url="/itemresult/list", content=params)
         return resp
@@ -542,15 +546,15 @@ class RemindoClient:
         """
 
         params = {}
-        if recipe_id != None:
+        if recipe_id is not None:
             params["recipe_id"] = recipe_id
-        if moment_id != None:
+        if moment_id is not None:
             params["moment_id"] = moment_id
-        if variant_id != None:
+        if variant_id is not None:
             params["variant_id"] = int(variant_id)
-        if corrections != None:
+        if corrections is not None:
             params["corrections"] = list(corrections)
-        if locale != None:
+        if locale is not None:
             params["locale"] = str(locale)
 
         resp = self.request(url="/result/reliability/list", content=params)
@@ -588,26 +592,26 @@ class RemindoClient:
         """
 
         params = {}
-        if recipe_id != None:
+        if recipe_id is not None:
             params["recipe_id"] = recipe_id
-        if moment_id != None:
+        if moment_id is not None:
             params["moment_id"] = moment_id
-        if subscription_ids != None:
-            params["subscription_ids"] = subscription_idss
-        if user_ids != None:
+        if subscription_ids is not None:
+            params["subscription_ids"] = subscription_ids
+        if user_ids is not None:
             params["user_ids"] = user_ids
-        if add_item_info != False:
+        if add_item_info is not False:
             params["add_item_info"] = True
 
         resp = self.request(url="/itemresult/list", content=params)
-        if resp["success"] != False:
+        if resp["success"] is not False:
             resp = resp["itemresults"]
             itemresults = []
             for subscription in resp.keys():
                 sections = len(resp[subscription])
                 for s in range(sections):
-                    section = resp[subscription][s]["section"]
-                    section_id = resp[subscription][s]["section_id"]
+                    # section = resp[subscription][s]["section"]
+                    # section_id = resp[subscription][s]["section_id"]
                     items = resp[subscription][s]["itemresults"].keys()
                     [
                         itemresults.append(
@@ -643,19 +647,19 @@ class RemindoClient:
         """
 
         params = {}
-        if recipe_id != None:
+        if recipe_id is not None:
             params["recipe_id"] = recipe_id
-        if moment_id != None:
+        if moment_id is not None:
             params["moment_id"] = moment_id
-        if subscription_ids != None:
-            params["subscription_ids"] = subscription_idss
-        if user_ids != None:
+        if subscription_ids is not None:
+            params["subscription_ids"] = subscription_ids
+        if user_ids is not None:
             params["user_ids"] = user_ids
 
         # Why does the call return results within a list?
         # This behavior is not consistent with the documentation
         resp = self.request(url="/itemresult/stats", content=params)
-        if resp["success"] == True:
+        if resp["success"] is True:
             itemstats = []
             for item in range(len(resp["itemresults"])):
                 itemstats.append(RemindoStats(resp["itemresults"][item]))

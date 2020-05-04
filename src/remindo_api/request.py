@@ -1,5 +1,6 @@
-import requests, json, time
-from collections import namedtuple
+import requests
+import json
+import time
 from Cryptodome.Hash import HMAC, SHA1
 
 

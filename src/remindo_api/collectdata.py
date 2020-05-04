@@ -8,7 +8,7 @@ import time
 import logging
 import logging.config
 from datetime import datetime
-from remindoapi import client
+from remindo_api import client
 from retrying import retry
 
 logger = logging.getLogger(__name__)
