@@ -8,8 +8,6 @@ import time
 import logging
 import logging.config
 from datetime import datetime
-from remindo_api import client
-from retrying import retry
 
 logger = logging.getLogger(__name__)
 # TODO: retrieve individual recipes based on date
@@ -120,7 +118,7 @@ class RemindoCollect:
         for moment in self._moment_id_list:
             try:
                 moment_results = self._rclient.list_moments_results(ids=moment)
-                if moment_results != False:
+                if moment_results is not False:
                     for moment_result in moment_results:
                         self._moment_result_data_list.append(
                             self._parse_moment_result_data(moment_result)
@@ -141,7 +139,7 @@ class RemindoCollect:
         for moment in self._moment_id_list:
             try:
                 reliability_result = self._rclient.list_reliability(moment_id=moment)
-                if reliability_result != None:
+                if reliability_result is not None:
                     self._reliability_data_list.append(
                         self._parse_reliability_result_data(reliability_result)
                     )
@@ -164,7 +162,7 @@ class RemindoCollect:
                 if moment is None:
                     try:
                         stats_results = self._rclient.list_stats(recipe_id=recipe)
-                        if stats_results != None:
+                        if stats_results is not None:
                             for result in stats_results:
                                 self._stats_data_list.append(
                                     self._parse_stats_data(result)
@@ -181,7 +179,7 @@ class RemindoCollect:
                         stats_results = self._rclient.list_stats(
                             recipe_id=recipe, moment_id=moment
                         )
-                        if stats_results != None:
+                        if stats_results is not None:
                             for result in stats_results:
                                 self._stats_data_list.append(
                                     self._parse_stats_data(result)
@@ -211,7 +209,7 @@ class RemindoCollect:
                         item_results = self._rclient.list_item_results(
                             recipe_id=recipe, moment_id=moment
                         )
-                        if item_results != None:
+                        if item_results is not None:
                             for item_result in item_results:
                                 self._item_data_list.append(
                                     self._parse_item_data(item_result)
@@ -335,7 +333,6 @@ class RemindoCollect:
                 "moment_recipe_id": moment_obj.recipe_id,
                 "moment_recipe_type": moment_obj.recipe_type,
                 "moment_requires_approval": moment_obj.requires_approval,
-                "moment_recipe_type": moment_obj.recipe_type,
                 "moment_study_id": moment_obj.study_id,
                 "moment_study_name": moment_obj.study_name,
                 "moment_time_end": moment_obj.time_end,

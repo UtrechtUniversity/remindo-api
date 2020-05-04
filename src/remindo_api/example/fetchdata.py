@@ -3,7 +3,7 @@ import time
 import logging
 import logging.config
 from pathlib import Path
-from datetime import datetime, timedelta
+from datetime import datetime
 
 from remindoapi import client
 from remindoapi import collectdata

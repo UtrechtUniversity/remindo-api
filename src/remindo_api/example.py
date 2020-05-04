@@ -1,19 +1,8 @@
 import configparser
-
-from collections import OrderedDict
-import pandas as pd
-from pandas.io.json import json_normalize
-import os
-import csv
-import time
-from datetime import datetime
 import logging
 import logging.config
-from pathlib import Path
-import time
+
 from remindo_api import client
-from remindo_api.recipe import RemindoRecipe
-import apikey
 
 # Reading configurations
 config = configparser.ConfigParser()

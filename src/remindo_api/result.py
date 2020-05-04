@@ -195,16 +195,6 @@ class RemindoResult:
         return self._result_dict["passed"]
 
     @property
-    def area_name(self):
-        """Return the Remindo area name for the result"""
-        return self._result_dict["area_name"]
-
-    @property
-    def area_feedback(self):
-        """Return the Remindo area feedback for the result"""
-        return self._result_dict["area_feedback"]
-
-    @property
     def score_type(self):
         """Return the Remindo score type for the result"""
         return self._result_dict["score_type"]

@@ -1,5 +1,4 @@
 # content of ./test_helloworld.py
-from remindo_api import client
 from remindo_api.helloworld import RemindoHelloWorld
 
 

@@ -502,8 +502,10 @@ class RemindoClient:
     ):
         """"Calculate result reliability
 
-        Calculate the reliability over a set of results using cronbach’s alpha and the standard error of measurement.
-        You always need to filter on a single recipe to calculate the reliability. Either using a test moment, a recipe, a scan or a paper variant.
+        Calculate the reliability over a set of results using cronbach’s alpha 
+        and the standard error of measurement.You always need to filter on a single
+        recipe to calculate the reliability. Either using a test moment, a recipe,
+        a scan or a paper variant.
 
         Parameters
         ---------
@@ -570,8 +572,9 @@ class RemindoClient:
     ):
         """"Retrieve item results
 
-        Returns a list of question/item results for a given filter. No more than 50.000 item results will be returned.
-        The result is a nested array, grouped by subscription id and test section (if applicable).
+        Returns a list of question/item results for a given filter. No more than 50.000
+        item results will be returned. The result is a nested array, grouped by subscription
+        id and test section (if applicable).
 
         Parameters
         ---------
@@ -584,8 +587,9 @@ class RemindoClient:
         user_ids : array, optional
             Limit the item results to the given user IDs
         add_item_info : boolean, optional
-            If true, and in combination with a single subscription_id or a single user_id, will add extra information for each item,
-             such as item properties, the author of the item and the time it was created
+            If true, and in combination with a single subscription_id or a single user_id,
+            will add extra information for each item, such as item properties, the author
+            of the item and the time it was created
 
         Returns
         -------
@@ -641,7 +645,7 @@ class RemindoClient:
             Limit the item results to the given subscription IDs
         user_ids : array, optional
             Limit the item results to the given user IDs
-        
+
         Returns
         -------
         """

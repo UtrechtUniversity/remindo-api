@@ -73,27 +73,32 @@ class RemindoRecipe:
 
     @property
     def settings_practice_repeat_until(self):
-        """Return the Remindo settings: practice: repeat_until for the recipe"""
+        """Return the Remindo settings: 
+        practice: repeat_until for the recipe"""
         return self._recipe_dict["settings"]["practice"]["repeat_until"]
 
     @property
     def settings_practice_continue_practice(self):
-        """Return the Remindo settings: practice: continue_practice for the recipe"""
+        """Return the Remindo settings:
+        practice: continue_practice for the recipe"""
         return self._recipe_dict["settings"]["practice"]["continue_practice"]
 
     @property
     def settings_practice_start_retry_by_candidate(self):
-        """Return the Remindo settings: practice: start_retry_by_candidate for the recipe"""
+        """Return the Remindo settings:
+        practice: start_retry_by_candidate for the recipe"""
         return self._recipe_dict["settings"]["practice"]["start_retry_by_candidate"]
 
     @property
     def settings_practice_start_retry_delay(self):
-        """Return the Remindo settings: practice: retry_delay for the recipe"""
+        """Return the Remindo settings:
+        practice: retry_delay for the recipe"""
         return self._recipe_dict["settings"]["practice"]["retry_delay"]
 
     @property
     def settings_practice(self):
-        """Return the Remindo settings: practice for the recipe"""
+        """Return the Remindo settings:
+        practice for the recipe"""
         return {
             "repeat_until": self._recipe_dict["settings"]["practice"]["repeat_until"],
             "continue_practice": self._recipe_dict["settings"]["practice"][
@@ -109,65 +114,76 @@ class RemindoRecipe:
 
     @property
     def settings_exam_caesura(self):
-        """Return the Remindo settings: exam: caesura for the recipe"""
+        """Return the Remindo settings:
+        exam: caesura for the recipe"""
         return self._recipe_dict["settings"]["exam"]["caesura"]
 
     @property
     def settings_exam_round_grade_decimals(self):
-        """Return the Remindo settings: exam: round_grade_decimals for the recipe"""
+        """Return the Remindo settings:
+        exam: round_grade_decimals for the recipe"""
         return self._recipe_dict["settings"]["exam"]["round_grade_decimals"]
 
     @property
     def settings_exam_duration(self):
-        """Return the Remindo settings: exam: duration for the recipe"""
+        """Return the Remindo settings:
+        exam: duration for the recipe"""
         return self._recipe_dict["settings"]["exam"]["duration"]
 
     @property
     def settings_exam(self):
-        """Return the Remindo settings: exam for the recipe"""
+        """Return the Remindo settings:
+        exam for the recipe"""
         return {
             "caesura": self._recipe_dict["settings"]["exam"]["caesura"],
             "round_grade_decimals": self._recipe_dict["settings"]["exam"][
                 "round_grade_decimals"
             ],
-            "round_grade_decimals": self._recipe_dict["settings"]["exam"]["duration"],
+            "duration": self._recipe_dict["settings"]["exam"]["duration"],
         }
 
     # Settings: show_result
 
     @property
     def settings_show_result_given_answer(self):
-        """Return the Remindo settings: show_result: given_answer for the recipe"""
+        """Return the Remindo settings:
+        show_result: given_answer for the recipe"""
         return self._recipe_dict["settings"]["show_result"]["given_answer"]
 
     @property
     def settings_show_result_correct_answer(self):
-        """Return the Remindo settings: show_result: correct_answer for the recipe"""
+        """Return the Remindo settings:
+        show_result: correct_answer for the recipe"""
         return self._recipe_dict["settings"]["show_result"]["correct_answer"]
 
     @property
     def settings_show_result_score(self):
-        """Return the Remindo settings: show_result: score for the recipe"""
+        """Return the Remindo settings:
+        show_result: score for the recipe"""
         return self._recipe_dict["settings"]["show_result"]["score"]
 
     @property
     def settings_show_correct(self):
-        """Return the Remindo settings: correct: score for the recipe"""
+        """Return the Remindo settings:
+        correct: score for the recipe"""
         return self._recipe_dict["settings"]["show_result"]["correct"]
 
     @property
     def settings_show_grade(self):
-        """Return the Remindo settings: correct: grade for the recipe"""
+        """Return the Remindo settings:
+        correct: grade for the recipe"""
         return self._recipe_dict["settings"]["show_result"]["grade"]
 
     @property
     def settings_passed(self):
-        """Return the Remindo settings: correct: passed for the recipe"""
+        """Return the Remindo settings:
+        correct: passed for the recipe"""
         return self._recipe_dict["settings"]["show_result"]["passed"]
 
     @property
     def settings_show_result(self):
-        """Return the Remindo settings: show_result for the recipe"""
+        """Return the Remindo settings:
+        show_result for the recipe"""
         return {
             "given_answer": self._recipe_dict["settings"]["show_result"][
                 "given_answer"
@@ -185,37 +201,44 @@ class RemindoRecipe:
 
     @property
     def settings_settings_edit_caesura(self):
-        """Return the Remindo settings: settings: edit_caesura for the recipe"""
+        """Return the Remindo settings:
+        settings: edit_caesura for the recipe"""
         return self._recipe_dict["settings"]["settings"]["edit_caesura"]
 
     @property
     def settings_settings_bonuspoints(self):
-        """Return the Remindo settings: settings: bonuspoints for the recipe"""
+        """Return the Remindo settings:
+        settings: bonuspoints for the recipe"""
         return self._recipe_dict["settings"]["settings"]["bonuspoints"]
 
     @property
     def settings_settings_extra_time(self):
-        """Return the Remindo settings: settings: extra_time for the recipe"""
+        """Return the Remindo settings:
+        settings: extra_time for the recipe"""
         return self._recipe_dict["settings"]["settings"]["extra_time"]
 
     @property
     def settings_settings_edit_show_result(self):
-        """Return the Remindo settings: settings: edit_show_result for the recipe"""
+        """Return the Remindo settings:
+        settings: edit_show_result for the recipe"""
         return self._recipe_dict["settings"]["settings"]["edit_show_result"]
 
     @property
     def settings_settings_edit_retry_delay(self):
-        """Return the Remindo settings: settings: edit_retry_delay for the recipe"""
+        """Return the Remindo settings:
+        settings: edit_retry_delay for the recipe"""
         return self._recipe_dict["settings"]["settings"]["edit_retry_delay"]
 
     @property
     def settings_settings_edit_continue_practice(self):
-        """Return the Remindo settings: settings: edit_continue_practice for the recipe"""
+        """Return the Remindo settings:
+        settings: edit_continue_practice for the recipe"""
         return self._recipe_dict["settings"]["settings"]["edit_continue_practice"]
 
     @property
     def settings_settings(self):
-        """Return the Remindo settings: settings for the recipe"""
+        """Return the Remindo settings:
+        settings for the recipe"""
         return {
             "edit_caesura": self._recipe_dict["settings"]["settings"]["edit_caesura"],
             "bonuspoints": self._recipe_dict["settings"]["settings"]["bonuspoints"],

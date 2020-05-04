@@ -1,5 +1,4 @@
 # content of ./test_moments.py
-from remindo_api import client
 from remindo_api.moment import RemindoMoment
 from remindo_api.result import RemindoResult
 
@@ -18,17 +17,17 @@ def test_isRecipe(rclient):
     assert moment.date_end == "2020-02-24"
     assert moment.date_start == "2020-02-21"
     assert moment.duration == 120
-    assert moment.extra_time == None
-    assert moment.limit_ips == False
+    assert moment.extra_time is None
+    assert moment.limit_ips is False
     assert moment.name == "[20200205] BMW11405 - Evolutiebiologie - FT1_BCI"
     assert moment.recipe_id == 2323
     assert moment.recipe_type == "graded practice"
-    assert moment.requires_approval == False
+    assert moment.requires_approval is False
     assert moment.recipe_type == "graded practice"
-    assert moment.show_result_date == None
+    assert moment.show_result_date is None
     assert moment.show_result_delay == 0
     assert moment.show_result_delay_type == "none"
-    assert moment.show_result_time == None
+    assert moment.show_result_time is None
     assert moment.status == "active"
     assert moment.study_id == 86
     assert moment.study_name == "BETA project LearningLytics"

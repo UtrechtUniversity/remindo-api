@@ -1,5 +1,4 @@
 # content of ./test_cluster.py
-from remindo_api import client
 from remindo_api.cluster import RemindoCluster
 
 

@@ -71,11 +71,6 @@ class RemindoMoment:
         return self._moment_dict["requires_approval"]
 
     @property
-    def recipe_type(self):
-        """Return the Remindo recipe type for the moment"""
-        return self._moment_dict["recipe_type"]
-
-    @property
     def show_result(self):
         """Return the Remindo show result attribute for the moment"""
         return self._moment_dict["show_result"]
