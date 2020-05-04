@@ -1,7 +1,7 @@
 # content of ./conftest.py
 import pytest
-from remindoapi import apikey
-from remindoapi import client
+from remindo_api import apikey
+from remindo_api import client
 
 
 @pytest.fixture
