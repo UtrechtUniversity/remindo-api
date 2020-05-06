@@ -45,7 +45,7 @@ Getting Started
 
 The first thing is to request an API key from Utrecht University's (UU) ITS services.
 One person you could contact, if you believe you will be granted access authorization
-is Patrick Van der Veer, system architect of UU's ITS. 
+is Patrick Van der Veer, system architect of UU's ITS.
 
 Once you have the API keys, you need to substitute your keys in the `config.ini` file,
 before creating client instance to query Remindo.
@@ -93,7 +93,7 @@ You can get information about an author as well.
 
     list_recipes = []
     [list_recipes.append(recipe.rid) for recipe in cln.list_recipes(cln, full = True)]
-    
+
     # For results statistics
     for recipe in list_recipes[1:2]:
         # print(cln.list_stats(cln, recipe_id = recipe))
@@ -103,11 +103,11 @@ You can get information about an author as well.
     # for recipe in list_recipes[1:2]:
     #     print([item.duration for item in cln.list_itemresults(cln, recipe_id = recipe, add_item_info = True)])
     # print(cln.list_itemresults(cln, recipe_id = recipe, add_item_info = True))
-    
+
     # For reliability
     # for recipe in list_recipes:
     #     print(cln.list_reliability(cln, recipe_id = recipe))
-    
+
     # For results
     # for recipe in list_recipes[1:2]:
     #     result_recipe = cln.list_results(cln, recipe_ids= recipe)

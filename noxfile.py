@@ -12,9 +12,7 @@ def tests(session):
     """Run the test suite."""
     args = session.posargs or ["--cov", "-m", "not e2e"]
     session.run("poetry", "install", "--no-dev", external=True)
-    install_with_constraints(
-        session, "coverage", "pytest", "pytest-cov"
-    )
+    install_with_constraints(session, "coverage", "pytest", "pytest-cov")
     session.run("poetry", "run", "pytest", "--cov", external=True)
 
 

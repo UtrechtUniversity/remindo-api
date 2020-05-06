@@ -8,6 +8,16 @@ from remindo_api import client
 config = configparser.ConfigParser()
 config.read_file(open("config.cfg"))
 
+class myex(Exception):
+    def __init__(self, error_msg):
+        self.error_msg = error_msg
+
+    def __str__(self):
+        return self.error_msg
+
+class ValueTooSmallError(Exception):
+    "asasdas"
+    pass
 
 def main():
     logging.debug("Creating remindo client in example.py.")
@@ -18,23 +28,26 @@ def main():
     )
     l = list()
 
-    r = rclient.list_moments_results(ids=3472)
-    for c in r:
-        print(
-            c.subscription_id,
-            "|",
-            c.user_id,
-            "|",
-            c.user_code,
-            "|",
-            c.cluster_ids,
-            "|",
-            c.area_feedback,
-            "|",
-            c.area_name,
-            "|",
-            c.try_count,
-        )
+    # except myex as e:
+    #     pass
+
+    # r = rclient.list_moments_results(ids=3472)
+    # for c in r:
+    #     print(
+    #         c.subscription_id,
+    #         "|",
+    #         c.user_id,
+    #         "|",
+    #         c.user_code,
+    #         "|",
+    #         c.cluster_ids,
+    #         "|",
+    #         c.area_feedback,
+    #         "|",
+    #         c.area_name,
+    #         "|",
+    #         c.try_count,
+    #     )
 
     # print(
     #     c.rid,

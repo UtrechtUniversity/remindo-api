@@ -73,7 +73,7 @@ class RemindoRecipe:
 
     @property
     def settings_practice_repeat_until(self):
-        """Return the Remindo settings: 
+        """Return the Remindo settings:
         practice: repeat_until for the recipe"""
         return self._recipe_dict["settings"]["practice"]["repeat_until"]
 

@@ -1,12 +1,12 @@
 """Class implementation for fetching remindo data"""
-import os
+from collections import OrderedDict
 import csv
-import time
+from datetime import datetime
+import os
 import logging
 import logging.config
-from datetime import datetime
+import time
 
-from collections import OrderedDict
 import pandas as pd
 
 
@@ -19,6 +19,19 @@ logger = logging.getLogger(__name__)
 # _parse_moment_data() is not parsing subscriptions settings on purpose
 # list_results() currently not being used - no need to save students' data?
 # list_reliability() currently not being used because does not work
+
+class RemindoCollectException(Exception):
+    """Class that is called for exception messages
+
+    You can see the usage of this class looking at the test
+
+    """
+
+    def __init__(self, error_msg):
+        self.error_msg = error_msg
+
+    def __str__(self):
+        return self.error_msg
 
 
 class RemindoCollect:
@@ -80,11 +93,13 @@ class RemindoCollect:
                 # recipe comes within a list because of how list_recipes works
                 if len(recipes) == 1:
                     self._recipe_data_list.append(self._parse_recipe_data(recipes[0]))
-                else:
+                elif:
                     for recipe in recipes:
                         self._recipe_data_list.append(self._parse_recipe_data(recipe))
+                else:
+                    raise RemindoCollectException
                 time.sleep(0.1)
-            except:
+            except RemindoCollectException
                 print("An error occurred on recipe id: {0}".format(rid))
                 continue
 
