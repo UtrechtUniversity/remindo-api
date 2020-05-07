@@ -8,6 +8,22 @@ version = "1.4.3"
 
 [[package]]
 category = "dev"
+description = "Bash tab completion for argparse"
+name = "argcomplete"
+optional = false
+python-versions = "*"
+version = "1.11.1"
+
+[package.dependencies]
+[package.dependencies.importlib-metadata]
+python = ">=3.7,<3.8"
+version = ">=0.23,<2"
+
+[package.extras]
+test = ["coverage", "flake8", "pexpect", "wheel"]
+
+[[package]]
+category = "dev"
 description = "Atomic file writes."
 marker = "sys_platform == \"win32\""
 name = "atomicwrites"
@@ -104,6 +120,17 @@ name = "colorama"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
 version = "0.4.3"
+
+[[package]]
+category = "dev"
+description = "Log formatting with colors!"
+name = "colorlog"
+optional = false
+python-versions = "*"
+version = "4.1.0"
+
+[package.dependencies]
+colorama = "*"
 
 [[package]]
 category = "main"
@@ -347,6 +374,23 @@ name = "nodeenv"
 optional = false
 python-versions = "*"
 version = "1.3.5"
+
+[[package]]
+category = "dev"
+description = "Flexible test automation."
+name = "nox"
+optional = false
+python-versions = ">=3.5"
+version = "2019.11.9"
+
+[package.dependencies]
+argcomplete = ">=1.9.4,<2.0"
+colorlog = ">=2.6.1,<5.0.0"
+py = ">=1.4.0,<2.0.0"
+virtualenv = ">=14.0.0"
+
+[package.extras]
+tox_to_nox = ["jinja2", "tox"]
 
 [[package]]
 category = "main"
@@ -694,13 +738,17 @@ docs = ["sphinx", "jaraco.packaging (>=3.2)", "rst.linker (>=1.9)"]
 testing = ["jaraco.itertools", "func-timeout"]
 
 [metadata]
-content-hash = "178ccd34169d732e7a4dbd90309a74067c61c6b3a26681f268f13457864a1bed"
+content-hash = "13ab2e5da1dfd4c2ca4ba44433d77ce2ca685ac6f515b2c6af8676c1353f8bbd"
 python-versions = "^3.7"
 
 [metadata.files]
 appdirs = [
     {file = "appdirs-1.4.3-py2.py3-none-any.whl", hash = "sha256:d8b24664561d0d34ddfaec54636d502d7cea6e29c3eaf68f3df6180863e2166e"},
     {file = "appdirs-1.4.3.tar.gz", hash = "sha256:9e5896d1372858f8dd3344faf4e5014d21849c756c8d5701f78f8a103b372d92"},
+]
+argcomplete = [
+    {file = "argcomplete-1.11.1-py2.py3-none-any.whl", hash = "sha256:890bdd1fcbb973ed73db241763e78b6d958580e588c2910b508c770a59ef37d7"},
+    {file = "argcomplete-1.11.1.tar.gz", hash = "sha256:5ae7b601be17bf38a749ec06aa07fb04e7b6b5fc17906948dc1866e7facf3740"},
 ]
 atomicwrites = [
     {file = "atomicwrites-1.4.0-py2.py3-none-any.whl", hash = "sha256:6d1784dea7c0c8d4a5172b6c620f40b6e4cbfdf96d783691f2e1302a7b88e197"},
@@ -737,6 +785,10 @@ click = [
 colorama = [
     {file = "colorama-0.4.3-py2.py3-none-any.whl", hash = "sha256:7d73d2a99753107a36ac6b455ee49046802e59d9d076ef8e47b61499fa29afff"},
     {file = "colorama-0.4.3.tar.gz", hash = "sha256:e96da0d330793e2cb9485e9ddfd918d456036c7149416295932478192f4436a1"},
+]
+colorlog = [
+    {file = "colorlog-4.1.0-py2.py3-none-any.whl", hash = "sha256:732c191ebbe9a353ec160d043d02c64ddef9028de8caae4cfa8bd49b6afed53e"},
+    {file = "colorlog-4.1.0.tar.gz", hash = "sha256:30aaef5ab2a1873dec5da38fd6ba568fa761c9fa10b40241027fa3edea47f3d2"},
 ]
 configparser = [
     {file = "configparser-5.0.0-py3-none-any.whl", hash = "sha256:cffc044844040c7ce04e9acd1838b5f2e5fa3170182f6fda4d2ea8b0099dbadd"},
@@ -862,6 +914,10 @@ mypy-extensions = [
 ]
 nodeenv = [
     {file = "nodeenv-1.3.5-py2.py3-none-any.whl", hash = "sha256:5b2438f2e42af54ca968dd1b374d14a1194848955187b0e5e4be1f73813a5212"},
+]
+nox = [
+    {file = "nox-2019.11.9-py2.py3-none-any.whl", hash = "sha256:0f4b489fdd0eb5665f8c5ee89e5aeb648beae6ccbb363b2492a6786f26e70d85"},
+    {file = "nox-2019.11.9.tar.gz", hash = "sha256:22d0f45ad2bd2d75fa4a243d8d8b84359dbf43134ec5cbff4de9f243b6d528b8"},
 ]
 numpy = [
     {file = "numpy-1.18.4-cp35-cp35m-macosx_10_9_intel.whl", hash = "sha256:efdba339fffb0e80fcc19524e4fdbda2e2b5772ea46720c44eaac28096d60720"},

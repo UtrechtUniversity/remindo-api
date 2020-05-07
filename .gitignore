@@ -22,7 +22,10 @@ __pycache__/
 
 # Distribution / packaging
 .Python
+.nox
 build/
+config.cfg
+apikey.py
 develop-eggs/
 dist/
 downloads/

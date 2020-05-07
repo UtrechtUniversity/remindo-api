@@ -2,9 +2,9 @@
 from collections import OrderedDict
 import csv
 from datetime import datetime
-import os
 import logging
 import logging.config
+import os
 import time
 
 import pandas as pd
@@ -13,12 +13,14 @@ import pandas as pd
 logger = logging.getLogger(__name__)
 # TODO: retrieve individual recipes based on date
 # use it to quality check with those retrieved from studies?
+# TODO: FINISH EXCEPTIONS!
 
 # All results are based around moments, as those represent test made, not recipes
 # apart from item results, where recipes are first level
 # _parse_moment_data() is not parsing subscriptions settings on purpose
 # list_results() currently not being used - no need to save students' data?
 # list_reliability() currently not being used because does not work
+
 
 class RemindoCollectException(Exception):
     """Class that is called for exception messages
@@ -93,13 +95,13 @@ class RemindoCollect:
                 # recipe comes within a list because of how list_recipes works
                 if len(recipes) == 1:
                     self._recipe_data_list.append(self._parse_recipe_data(recipes[0]))
-                elif:
+                elif len(recipes) > 1:
                     for recipe in recipes:
                         self._recipe_data_list.append(self._parse_recipe_data(recipe))
                 else:
                     raise RemindoCollectException
                 time.sleep(0.1)
-            except RemindoCollectException
+            except RemindoCollectException:
                 print("An error occurred on recipe id: {0}".format(rid))
                 continue
 
@@ -121,7 +123,7 @@ class RemindoCollect:
                 # and empty list as "None"?
                 self._recipe_moment_id_dict[recipe] = moment_temp_list
                 time.sleep(0.1)
-            except:
+            except Exception:
                 print("An error occurred on recipe {0}".format(recipe))
                 continue
 
@@ -140,7 +142,7 @@ class RemindoCollect:
                             self._parse_moment_result_data(moment_result)
                         )
                 time.sleep(0.1)
-            except:
+            except Exception:
                 print("An error occurred on moment {0}".format(moment))
                 continue
 
@@ -160,7 +162,7 @@ class RemindoCollect:
                         self._parse_reliability_result_data(reliability_result)
                     )
                 time.sleep(0.1)
-            except:
+            except Exception:
                 print("An error occurred on moment {0}".format(moment))
                 continue
 
@@ -183,7 +185,7 @@ class RemindoCollect:
                                 self._stats_data_list.append(
                                     self._parse_stats_data(result)
                                 )
-                    except:
+                    except Exception:
                         print(
                             "An error occurred on recipe {0}, moment {1}".format(
                                 recipe, moment

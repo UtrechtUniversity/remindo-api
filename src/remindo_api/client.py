@@ -369,7 +369,7 @@ class RemindoClient:
 
         Returns
         -------
-        result_list : object
+        RemindoResult : list
             If the results have more than one page of results, returns a list of RemindoResult objects
             If the results only have one page of results, returns one RemindoResult object.
         """
