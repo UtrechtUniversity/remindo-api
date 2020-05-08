@@ -1,5 +1,5 @@
-from datetime import datetime
 import configparser
+from datetime import datetime
 import logging
 import logging.config
 from pathlib import Path

@@ -1,4 +1,5 @@
 """Class implementation for Remindo reliability"""
+from remindoapi import utils
 
 
 class RemindoReliability:
@@ -12,39 +13,40 @@ class RemindoReliability:
     @property
     def alpha(self):
         """Return the alpha for the selected assessment"""
-        return self._reliability_dict["alpha"]
+        return utils.safeget(self._reliability_dict, "alpha")
 
     @property
     def sem(self):
         """Return the sem for the selected assessment"""
-        return self._reliability_dict["sem"]
+        return utils.safeget(self._reliability_dict, "sem")
 
     @property
     def notes(self):
         """Return the notes for the selected assessment"""
-        return self._reliability_dict["notes"][0]
+        # TODO: to check when available
+        return utils.safeget(self._reliability_dict, "sem")[0]
 
     @property
     def missing_count(self):
         """Return the missing count for the selected assessment"""
-        return self._reliability_dict["missing_count"]
+        return utils.safeget(self._reliability_dict, "missing_count")
 
     @property
     def answer_count(self):
         """Return the answer count for the selected assessment"""
-        return self._reliability_dict["answer_count"]
+        return utils.safeget(self._reliability_dict, "answer_count")
 
     @property
     def stdev(self):
         """Return the standard deviation for the selected assessment"""
-        return self._reliability_dict["stdev"]
+        return utils.safeget(self._reliability_dict, "stdev")
 
     @property
     def average(self):
         """Return the average for the selected assessment"""
-        return self._reliability_dict["average"]
+        return utils.safeget(self._reliability_dict, "average")
 
     @property
     def max(self):
         """Return the max for the selected assessment"""
-        return self._reliability_dict["max"]
+        return utils.safeget(self._reliability_dict, "max")

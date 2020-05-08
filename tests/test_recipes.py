@@ -1,5 +1,5 @@
 # content of ./test_recips.py
-from remindo_api.recipe import RemindoRecipe
+from remindoapi.recipe import RemindoRecipe
 
 # TODO: expand tests to "full = True"
 

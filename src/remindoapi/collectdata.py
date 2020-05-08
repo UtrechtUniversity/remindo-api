@@ -94,15 +94,28 @@ class RemindoCollect:
                 recipes = self._rclient.list_recipes(recipe_id=rid)
                 # recipe comes within a list because of how list_recipes works
                 if len(recipes) == 1:
-                    self._recipe_data_list.append(self._parse_recipe_data(recipes[0]))
+                    try:
+                        self._recipe_data_list.append(
+                            self._parse_recipe_data(recipes[0])
+                        )
+                    except KeyError:
+                        print("A Key Error occurred on recipe {0} ".format(rid))
+                        continue
                 elif len(recipes) > 1:
                     for recipe in recipes:
-                        self._recipe_data_list.append(self._parse_recipe_data(recipe))
+                        try:
+                            self._recipe_data_list.append(
+                                self._parse_recipe_data(recipe)
+                            )
+                        except KeyError:
+                            print("A Key Error occurred on recipe {0} ".format(rid))
+                            continue
                 else:
-                    raise RemindoCollectException
+                    print("ERROR")
+                    continue
                 time.sleep(0.1)
-            except RemindoCollectException:
-                print("An error occurred on recipe id: {0}".format(rid))
+            except Exception:
+                print("An error occurred on recipe id {0}".format(rid))
                 continue
 
         for module_name, module_data in zip(["recipes"], [self._recipe_data_list]):
@@ -307,29 +320,27 @@ class RemindoCollect:
                 "recipe_category": recipe_obj.category,
                 "recipe_status": recipe_obj.status,
                 "recipe_type": recipe_obj.type,
+                # availalbe only from study/list full=True
                 # "recipe_source_recipe_id" : recipe_obj.source_recipe_id,
                 "recipe_v": recipe_obj.settings_v,
                 "recipe_max_retries": recipe_obj.settings_max_retries,
                 "recipe_tools": recipe_obj.settings_tools,
-                # "recipe_practice_repeat_until" : recipe_obj.settings_practice_repeat_until,
-                # "recipe_practice_continue_practice" : recipe_obj.settings_practice_continue_practice,
-                # "recipe_practice_start_retry_by_candidate" : recipe_obj.settings_practice_start_retry_by_candidate,
-                # "recipe_practice_start_retry_delay" : recipe_obj.settings_practice_start_retry_delay,
-                # "recipe_exam_caesura" : recipe_obj.settings_exam_caesura,
-                # "recipe_exam_round_grade_decimals" : recipe_obj.settings_exam_round_grade_decimals,
-                # "recipe_exam_duration" : recipe_obj.settings_exam_duration,
-                # "recipe_show_result_given_answer" : recipe_obj.settings_show_result_given_answer,
-                # "recipe_show_result_correct_answer" : recipe_obj.settings_show_result_correct_answer,
-                # "recipe_show_result_score" : recipe_obj.settings_show_result_score,
-                # "recipe_show_correct" : recipe_obj.settings_show_correct,
-                # "recipe_show_grade" : recipe_obj.settings_show_grade,
-                # "recipe_passed" : recipe_obj.settings_passed,
-                # "recipe_edit_caesura" : recipe_obj.settings_settings_edit_caesura,
-                # "recipe_settings_bonuspoints" : recipe_obj.settings_settings_bonuspoints,
-                # "recipe_settings_extra_time" : recipe_obj.settings_settings_extra_time,
-                # "recipe_settings_edit_show_result" : recipe_obj.settings_settings_edit_show_result,
-                # "recipe_settings_edit_retry_delay" : recipe_obj.settings_settings_edit_retry_delay,
-                # "recipe_settings_edit_continue_practice" : recipe_obj.settings_settings_edit_continue_practice,
+                "recipe_practice_repeat_until": recipe_obj.settings_practice_repeat_until,
+                "recipe_practice_continue_practice": recipe_obj.settings_practice_continue_practice,
+                "recipe_practice_start_retry_by_candidate": recipe_obj.settings_practice_start_retry_by_candidate,
+                "recipe_practice_start_retry_delay": recipe_obj.settings_practice_start_retry_delay,
+                "recipe_exam_caesura": recipe_obj.settings_exam_caesura,
+                "recipe_settings_exam_round_grade_decimals": recipe_obj.settings_exam_round_grade_decimals,
+                "recipe_settings_show_result_given_answer": recipe_obj.settings_show_result_given_answer,
+                "recipe_settings_show_result_correct_answer": recipe_obj.settings_show_result_correct_answer,
+                "recipe_settings_show_result_score": recipe_obj.settings_show_result_score,
+                "recipe_settings_show_correct": recipe_obj.settings_show_correct,
+                "recipe_settings_show_grade": recipe_obj.settings_show_grade,
+                "recipe_settings_passed": recipe_obj.settings_passed,
+                "recipe_exam_round_grade_decimals": recipe_obj.settings_exam_round_grade_decimals,
+                "recipe_exam_duration": recipe_obj.settings_exam_duration,
+                "recipe_settings_settings_bonuspoints": recipe_obj.settings_settings_bonuspoints,
+                "recipe_settings_settings_extra_time": recipe_obj.settings_settings_extra_time,
                 "record_create_timestamp": datetime.now(),
             }.items()
         )

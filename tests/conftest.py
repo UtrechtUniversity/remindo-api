@@ -1,12 +1,12 @@
 # content of ./conftest.py
 import pytest
-from remindo_api import apikey
-from remindo_api import client
+from remindoapi import apikey
+from remindoapi import client
 
-# TODO: Create mocking fixture
 
-# TODO: apply e2e and use with "-m e2e"
 def pytest_configure(config):
+    # TODO: Create mocking fixture
+    # TODO: apply e2e and use with "-m e2e"
     config.addinivalue_line("markers", "e2e: mark as end-to-end test.")
 
 

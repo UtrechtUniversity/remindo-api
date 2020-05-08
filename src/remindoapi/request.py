@@ -1,8 +1,8 @@
 import json
 import time
 
-import requests
 from Cryptodome.Hash import HMAC, SHA1
+import requests
 
 
 class RemindoRequestException(Exception):

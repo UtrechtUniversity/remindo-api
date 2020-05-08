@@ -1,4 +1,5 @@
 """Class implementation for Remindo user groups"""
+from remindoapi import utils
 
 
 class RemindoCluster:
@@ -8,12 +9,12 @@ class RemindoCluster:
     @property
     def rid(self):
         """Return the Remindo id for the group"""
-        return self._cluster_dict["id"]
+        return utils.safeget(self._cluster_dict, "id")
 
     @property
     def name(self):
         """Return the Remindo name for the group"""
-        return self._cluster_dict["name"]
+        return utils.safeget(self._cluster_dict, "name")
 
     def categories(self):
         """Return the Remindo categories of the groups"""

@@ -1,5 +1,5 @@
 # content of ./test_helloworld.py
-from remindo_api.helloworld import RemindoHelloWorld
+from remindoapi.helloworld import RemindoHelloWorld
 
 
 def test_helloworld(rclient):

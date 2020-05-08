@@ -1,4 +1,5 @@
-# content of src/remindo_api/helloworld.py
+# content of src/remindoapi/helloworld.py
+from remindoapi import utils
 
 
 class RemindoHelloWorld:
@@ -8,4 +9,4 @@ class RemindoHelloWorld:
     @property
     def message(self):
         """Return the Remindo id for the moment"""
-        return self._hw["message"]
+        return utils.safeget(self._hw, "message")

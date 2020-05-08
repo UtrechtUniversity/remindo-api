@@ -24,4 +24,14 @@ def retry_if_type_error(exception):
     return isinstance(exception, TypeError)
 
 
+# From https://stackoverflow.com/questions/25833613/python-safe-method-to-get-value-of-nested-dictionary
+def safeget(dct, *keys):
+    for key in keys:
+        try:
+            dct = dct[key]
+        except KeyError:
+            return None
+    return dct
+
+
 # @retry(retry_on_exception=retry_if_type_error, wrap_exception=True, stop_max_attempt_number=10)
