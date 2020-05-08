@@ -1,5 +1,5 @@
-# content of src/remindoapi/helloworld.py
-from remindoapi import utils
+# content of src/remindo_api/helloworld.py
+from remindo_api import utils
 
 
 class RemindoHelloWorld:

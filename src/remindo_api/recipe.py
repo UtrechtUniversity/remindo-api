@@ -1,5 +1,5 @@
 """Class implementation for Remindo recipe"""
-from remindoapi import utils
+from remindo_api import utils
 
 
 class RemindoRecipe:
@@ -290,3 +290,43 @@ class RemindoRecipe:
                 self._recipe_dict, "settings", "settings", "edit_continue_practice"
             ),
         }
+
+    @property
+    def api_call_params_recipe_id(self):
+        """Return the parameter recipe_id used in the api call"""
+        return utils.safeget(self._recipe_dict, "api_call_params", "recipe_id")
+
+    @property
+    def api_call_params_code(self):
+        """Return the parameter code used in the api call"""
+        return utils.safeget(self._recipe_dict, "api_call_params", "code")
+
+    @property
+    def api_call_params_category(self):
+        """Return the parameter category used in the api call"""
+        return utils.safeget(self._recipe_dict, "api_call_params", "category")
+
+    @property
+    def api_call_params_study_id(self):
+        """Return the parameter study_id used in the api call"""
+        return utils.safeget(self._recipe_dict, "api_call_params", "study_id")
+
+    @property
+    def api_call_params_filtr(self):
+        """Return the parameter study_id used in the api call"""
+        return utils.safeget(self._recipe_dict, "api_call_params", "filtr")
+
+    @property
+    def api_call_params_datasource_uuid(self):
+        """Return the parameter study_id used in the api call"""
+        return utils.safeget(self._recipe_dict, "api_call_params", "datasource_uuid")
+
+    @property
+    def api_call_params_since(self):
+        """Return the parameter since used in the api call"""
+        return utils.safeget(self._recipe_dict, "api_call_params", "since")
+
+    @property
+    def api_call_params_full(self):
+        """Return the parameter full used in the api call"""
+        return utils.safeget(self._recipe_dict, "api_call_params", "full")

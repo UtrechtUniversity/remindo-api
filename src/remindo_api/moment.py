@@ -1,5 +1,5 @@
 """Class implementation for Remindo moment"""
-from remindoapi import utils
+from remindo_api import utils
 
 
 class RemindoMoment:
@@ -245,3 +245,28 @@ class RemindoMoment:
             "tools": utils.safeget(self._moment_dict, "subscription_settings", "tools"),
             "v": utils.safeget(self._moment_dict, "subscription_settings", "v"),
         }
+
+    @property
+    def api_call_params_ids(self):
+        """Return the parameter ids used in the api call"""
+        return utils.safeget(self._moment_dict, "api_call_params", "ids")
+
+    @property
+    def api_call_params_codes(self):
+        """Return the parameter codes used in the api call"""
+        return utils.safeget(self._moment_dict, "api_call_params", "codes")
+
+    @property
+    def api_call_params_recipe_ids(self):
+        """Return the parameter recipe_ids used in the api call"""
+        return utils.safeget(self._moment_dict, "api_call_params", "recipe_ids")
+
+    @property
+    def api_call_params_from(self):
+        """Return the parameter from used in the api call"""
+        return utils.safeget(self._moment_dict, "api_call_params", "from")
+
+    @property
+    def api_call_params_until(self):
+        """Return the parameter until used in the api call"""
+        return utils.safeget(self._moment_dict, "api_call_params", "until")

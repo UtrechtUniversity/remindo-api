@@ -1,4 +1,4 @@
-remindoapi
+remindo_api
 =========
 
 This package provides a Python interface for the `Remindo API
@@ -51,7 +51,7 @@ Once you have the API keys, you need to substitute your keys in the `config.ini`
 before creating client instance to query Remindo.
 
 .. code:: python
-    from remindoapi import client
+    from remindo_api import client
     rc = client.RemindoClient()
 
 

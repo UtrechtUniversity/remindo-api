@@ -1,6 +1,6 @@
 # content of ./test_studies.py
-from remindoapi.recipe import RemindoRecipe
-from remindoapi.study import RemindoStudy
+from remindo_api.recipe import RemindoRecipe
+from remindo_api.study import RemindoStudy
 
 
 def test_listOnlyStudies(rclient):

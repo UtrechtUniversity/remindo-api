@@ -2,7 +2,7 @@
 
 These are overall statistics for items.
 """
-from remindoapi import utils
+from remindo_api import utils
 
 
 class RemindoStats:
@@ -79,3 +79,24 @@ class RemindoStats:
     def answered(self):
         """Return the number of answers"""
         return utils.safeget(self._stats_dict, "answered")
+
+    # Api call
+    @property
+    def api_call_params_recipe_id(self):
+        """Return the Remindo recipe_id for the study"""
+        return utils.safeget(self._stats_dict, "api_call_params", "recipe_id")
+
+    @property
+    def api_call_params_moment_id(self):
+        """Return the Remindo moment_id for the study"""
+        return utils.safeget(self._stats_dict, "api_call_params", "moment_id")
+
+    @property
+    def api_call_params_subscription_ids(self):
+        """Return the Remindo subscription_ids for the study"""
+        return utils.safeget(self._stats_dict, "api_call_params", "subscription_ids")
+
+    @property
+    def api_call_params_user_ids(self):
+        """Return the Remindo user_ids for the study"""
+        return utils.safeget(self._stats_dict, "api_call_params", "user_ids")

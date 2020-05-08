@@ -1,5 +1,5 @@
 """Class implementation for Remindo studies"""
-from remindoapi import utils
+from remindo_api import utils
 
 
 class RemindoStudy:

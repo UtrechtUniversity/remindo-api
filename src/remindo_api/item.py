@@ -1,10 +1,12 @@
 """Class implementation for Remindo item"""
-from remindoapi import utils
+from collections import OrderedDict
+
+from remindo_api import utils
 
 
 class RemindoItem:
     def __init__(self, item_dict):
-        self._item_dict = item_dict
+        self._item_dict = OrderedDict(item_dict)
 
     @property
     def item_identifier(self):
@@ -82,3 +84,30 @@ class RemindoItem:
     def response_correctResponse(self):
         """Return a boolean whether the answer was correct or not"""
         return utils.safeget(self._item_dict, "response", "RESPONSE", "correctResponse")
+
+    # Api calls properties
+
+    @property
+    def api_call_params_recipe_id(self):
+        """Return the parameter recipe_id used in the api call"""
+        return utils.safeget(self._item_dict, "api_call_params", "recipe_id")
+
+    @property
+    def api_call_params_moment_id(self):
+        """Return the parameter moment_id used in the api call"""
+        return utils.safeget(self._item_dict, "api_call_params", "moment_id")
+
+    @property
+    def api_call_params_subscription_ids(self):
+        """Return the parameter subscription_ids used in the api call"""
+        return utils.safeget(self._item_dict, "api_call_params", "subscription_ids")
+
+    @property
+    def api_call_params_user_ids(self):
+        """Return the parameter user_ids used in the api call"""
+        return utils.safeget(self._item_dict, "api_call_params", "user_ids")
+
+    @property
+    def api_call_params_add_item_info(self):
+        """Return the parameter add_item_info used in the api call"""
+        return utils.safeget(self._item_dict, "api_call_params", "add_item_info")

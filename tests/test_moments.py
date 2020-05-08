@@ -1,6 +1,6 @@
 # content of ./test_moments.py
-from remindoapi.moment import RemindoMoment
-from remindoapi.result import RemindoResult
+from remindo_api.moment import RemindoMoment
+from remindo_api.result import RemindoResult
 
 
 def test_isInstanceRemindoRecipe(rclient):

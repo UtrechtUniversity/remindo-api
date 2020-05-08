@@ -11,11 +11,11 @@ from .result import RemindoResult
 from .stats import RemindoStats
 from .study import RemindoStudy
 
-#  TODO: create a utils function to validate success of call
-#  Then modify collectdata.py as it catches errors
+
 # TODO: Error: /api/v1/result/reliability {'error':
 # 'Please specify a valid API method for class result. Available methods: list'}
-# TODO: what about generator of fake data using real calls?
+# TODO: what about substituting to personal data fake with Faker?
+# TODO: complete list_stubscritpion call
 
 
 class RemindoClientException(Exception):
@@ -49,7 +49,7 @@ class RemindoClient:
         return {"key": self.uuid, "secret": self.secret, "url_base": self.url_base}
 
     def request(self, *args, **kwargs):
-        """ Create a RemindoAPI object and make a request """
+        """ Create a remindo_api object and make a request """
         req = RemindoRequest(self, *args, **kwargs)
         return req.request()
 
@@ -131,7 +131,6 @@ class RemindoClient:
         list_study = list()
         resp = self.request(url="/study/list", content=params)
         studies = RemindoStudy(resp["studies"]).list_all()
-
         if complete is False:
             for study in studies:
                 list_study.append(RemindoStudy(studies[study]))
@@ -213,7 +212,9 @@ class RemindoClient:
         resp = self.request(url="/recipe/list", content=params)
         list_recipes = []
         for recipe in resp["recipes"]:
-            list_recipes.append(RemindoRecipe(resp["recipes"][recipe]))
+            r = resp["recipes"][recipe]
+            r.update({"api_call_params": params})
+            list_recipes.append(RemindoRecipe(r))
 
         return list_recipes
 
@@ -254,13 +255,15 @@ class RemindoClient:
         # moments = RemindoMoment(resp["moments"]).list_all()
         list_moments = []
         for moment in resp["moments"]:
-            list_moments.append(RemindoMoment(resp["moments"][moment]))
+            m = resp["moments"][moment]
+            m.update({"api_call_params": params})
+            list_moments.append(RemindoMoment(m))
 
         return list_moments
 
     def list_moments_results(
         self,
-        ids=None,
+        id=None,
         code=None,
         candidate_ids=None,
         candidate_codes=None,
@@ -271,7 +274,9 @@ class RemindoClient:
         Parameters
         --------.
         ids : int, string mandatory
-             ID or code
+            ID of moment
+        code : int, string mandatory
+            code of moment
         candidate_ids : int or array<int>, optional
             Return result for candidate id
         candidate_codes : int or array<int>, optional
@@ -285,8 +290,8 @@ class RemindoClient:
             Return list of Remindo Result object(s) for the moment.
         """
         params = {}
-        if ids is not None:
-            params["id"] = ids
+        if id is not None:
+            params["id"] = id
         if code is not None:
             params["code"] = code
         if candidate_ids is not None:
@@ -300,6 +305,7 @@ class RemindoClient:
         if resp["success"] is True:
             list_results = []
             for result in resp["results"]:
+                result.update({"api_call_params": params})
                 list_results.append(RemindoResult(result))
             return list_results
         if resp["success"] is False:
@@ -419,27 +425,30 @@ class RemindoClient:
                 "page_size": resp["response"]["page_size"],
                 "current_page": resp["response"]["current_page"],
             }
+            result_list = []
             if page_dict["total_pages"] > 1:
-                result_list = []
-                [
-                    result_list.append(RemindoResult(resp["response"]["results"][r]))
-                    for r in range(len(resp["response"]["results"]))
-                ]
+                for r in range(len(resp["response"]["results"])):
+                    r_first = resp["response"]["results"][r]
+                    # Add the api call params
+                    r_first.update({"api_call_params": params})
+                    result_list.append(RemindoResult(r_first))
                 for i in range(1, page_dict["total_pages"]):
+                    # Go to next page
                     params["page"] = i + 1
                     new_resp = self.request(url="/result/list", content=params)
-                    [
-                        result_list.append(
-                            RemindoResult(new_resp["response"]["results"][r])
-                        )
-                        for r in range(len(new_resp["response"]["results"]))
-                    ]
+                    for j in range(len(new_resp["response"]["results"])):
+                        r_next = new_resp["response"]["results"][j]
+                        # Add the api call params
+                        r_next.update({"api_call_params": params})
+                        result_list.append(RemindoResult(r_next))
                 return result_list
             else:
-                return [
-                    RemindoResult(resp["response"]["results"][r])
-                    for r in range(len(resp["response"]["results"]))
-                ]
+                for r in range(len(resp["response"]["results"])):
+                    r_unique = resp["response"]["results"][r]
+                    # Add the api call params
+                    r_unique.update({"api_call_params": params})
+                    result_list.append(RemindoResult(r_unique))
+                return result_list
 
     def list_subscription_result(
         self,
@@ -555,6 +564,7 @@ class RemindoClient:
             params["locale"] = str(locale)
 
         resp = self.request(url="/result/reliability/list", content=params)
+        resp.update({"api_call_params": params})
         return RemindoReliability(resp)
 
     def list_item_results(
@@ -590,7 +600,7 @@ class RemindoClient:
         -------
         """
 
-        params = {}
+        params = dict()
         if recipe_id is not None:
             params["recipe_id"] = recipe_id
         if moment_id is not None:
@@ -612,12 +622,10 @@ class RemindoClient:
                     # section = resp[subscription][s]["section"]
                     # section_id = resp[subscription][s]["section_id"]
                     items = resp[subscription][s]["itemresults"].keys()
-                    [
-                        itemresults.append(
-                            RemindoItem(resp[subscription][s]["itemresults"][i])
-                        )
-                        for i in items
-                    ]
+                    for i in items:
+                        it = resp[subscription][s]["itemresults"][i]
+                        it.update({"api_call_params": params})
+                        itemresults.append(RemindoItem(it))
             return itemresults
         else:
             return None
@@ -661,5 +669,7 @@ class RemindoClient:
         if resp["success"] is True:
             itemstats = []
             for item in range(len(resp["itemresults"])):
-                itemstats.append(RemindoStats(resp["itemresults"][item]))
+                r = resp["itemresults"][item]
+                r.update({"api_call_params": params})
+                itemstats.append(RemindoStats(r))
             return itemstats

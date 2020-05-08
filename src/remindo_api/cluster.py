@@ -1,5 +1,5 @@
 """Class implementation for Remindo user groups"""
-from remindoapi import utils
+from remindo_api import utils
 
 
 class RemindoCluster:

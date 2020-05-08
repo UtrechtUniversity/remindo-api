@@ -1,5 +1,5 @@
 """Class implementation for Remindo reliability"""
-from remindoapi import utils
+from remindo_api import utils
 
 
 class RemindoReliability:
@@ -50,3 +50,35 @@ class RemindoReliability:
     def max(self):
         """Return the max for the selected assessment"""
         return utils.safeget(self._reliability_dict, "max")
+
+    # Api calls
+
+    @property
+    def api_call_params_recipe_id(self):
+        """Return the parameter recipe id used in the api call"""
+        return utils.safeget(self._reliability_dict, "api_call_params", "recipe_id")
+
+    @property
+    def api_call_params_moment_id(self):
+        """Return the parameter moment_id used in the api call"""
+        return utils.safeget(self._reliability_dict, "api_call_params", "moment_id")
+
+    @property
+    def api_call_params_variant_id(self):
+        """Return the parameter variant_id used in the api call"""
+        return utils.safeget(self._reliability_dict, "api_call_params", "variant_id")
+
+    @property
+    def api_call_params_scan_id(self):
+        """Return the parameter scan_id used in the api call"""
+        return utils.safeget(self._reliability_dict, "api_call_params", "scan_id")
+
+    @property
+    def api_call_params_corrections(self):
+        """Return the parameter corrections used in the api call"""
+        return utils.safeget(self._reliability_dict, "api_call_params", "corrections")
+
+    @property
+    def api_call_params_locale(self):
+        """Return the parameter locale used in the api call"""
+        return utils.safeget(self._reliability_dict, "api_call_params", "locale")

@@ -1,5 +1,5 @@
 """Class implementation for Remindo result"""
-from remindoapi import utils
+from remindo_api import utils
 
 
 class RemindoResult:
@@ -209,3 +209,117 @@ class RemindoResult:
     def can_change(self):
         """Return the Remindo can change bool for the result"""
         return utils.safeget(self._result_dict, "can_change")
+
+    # For moments
+
+    @property
+    def api_call_params_id(self):
+        """Return the parameter id used in the api call"""
+        return utils.safeget(self._result_dict, "api_call_params", "id")
+
+    @property
+    def api_call_params_code(self):
+        """Return the parameter code used in the api call"""
+        return utils.safeget(self._result_dict, "api_call_params", "code")
+
+    @property
+    def api_call_params_candidate_ids(self):
+        """Return the parameter candidate_ids used in the api call"""
+        return utils.safeget(self._result_dict, "api_call_params", "candidate_ids")
+
+    @property
+    def api_call_params_candidate_codes(self):
+        """Return the parameter candidate_codes used in the api call"""
+        return utils.safeget(self._result_dict, "api_call_params", "candidate_codes")
+
+    @property
+    def api_call_params_candidate_filter(self):
+        """Return the parameter candidate_filter used in the api call"""
+        return utils.safeget(self._result_dict, "api_call_params", "candidate_filter")
+
+    # For results
+
+    @property
+    def api_call_params_type(self):
+        """Return the parameter candidate_filter used in the api call"""
+        return utils.safeget(self._result_dict, "api_call_params", "type")
+
+    @property
+    def api_call_params_modified_since(self):
+        """Return the parameter modified_since used in the api call"""
+        return utils.safeget(self._result_dict, "api_call_params", "modified_since")
+
+    @property
+    def api_call_params_modified_until(self):
+        """Return the parameter modified_until used in the api call"""
+        return utils.safeget(self._result_dict, "api_call_params", "modified_until")
+
+    @property
+    def api_call_params_start_time_since(self):
+        """Return the parameter modified_until used in the api call"""
+        return utils.safeget(self._result_dict, "api_call_params", "start_time_since")
+
+    @property
+    def api_call_params_start_time_until(self):
+        """Return the parameter modistart_time_untilfied_until used in the api call"""
+        return utils.safeget(self._result_dict, "api_call_params", "start_time_until")
+
+    @property
+    def api_call_params_end_time_since(self):
+        """Return the parameter end_time_since used in the api call"""
+        return utils.safeget(self._result_dict, "api_call_params", "end_time_since")
+
+    @property
+    def api_call_params_end_time_until(self):
+        """Return the parameter end_time_until used in the api call"""
+        return utils.safeget(self._result_dict, "api_call_params", "end_time_until")
+
+    @property
+    def api_call_params_status(self):
+        """Return the parameter status used in the api call"""
+        return utils.safeget(self._result_dict, "api_call_params", "status")
+
+    @property
+    def api_call_params_search(self):
+        """Return the parameter search used in the api call"""
+        return utils.safeget(self._result_dict, "api_call_params", "search")
+
+    @property
+    def api_call_params_cluster_ids(self):
+        """Return the parameter cluster_ids used in the api call"""
+        return utils.safeget(self._result_dict, "api_call_params", "cluster_ids")
+
+    @property
+    def api_call_params_study_ids(self):
+        """Return the parameter study_ids used in the api call"""
+        return utils.safeget(self._result_dict, "api_call_params", "study_ids")
+
+    @property
+    def api_call_params_recipe_ids(self):
+        """Return the parameter recipe_ids used in the api call"""
+        return utils.safeget(self._result_dict, "api_call_params", "recipe_ids")
+
+    @property
+    def api_call_params_result_ids(self):
+        """Return the parameter recipe_ids used in the api call"""
+        return utils.safeget(self._result_dict, "api_call_params", "result_ids")
+
+    @property
+    def api_call_params_subscription_ids(self):
+        """Return the parameter subscription_ids used in the api call"""
+        return utils.safeget(self._result_dict, "api_call_params", "subscription_ids")
+
+    @property
+    def api_call_params_page(self):
+        """Return the parameter subscription_ids used in the api call"""
+        return utils.safeget(self._result_dict, "api_call_params", "page")
+
+    @property
+    def api_call_params_page_size(self):
+        """Return the parameter page_size used in the api call"""
+        return utils.safeget(self._result_dict, "api_call_params", "page_size")
+
+    @property
+    def api_call_params_complete(self):
+        """Return the parameter complete used in the api call"""
+        return utils.safeget(self._result_dict, "api_call_params", "complete")

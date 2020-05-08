@@ -5,8 +5,8 @@ import logging.config
 from pathlib import Path
 import time
 
-from remindoapi import client
-from remindoapi import collectdata
+from remindo_api import client
+from remindo_api import collectdata
 
 # Setting up logger, Logger properties are defined in logging.ini file
 logging.config.fileConfig(f"{Path(__file__).parents[0]}/logging.ini")
