@@ -49,3 +49,30 @@ class RemindoStudy:
     def source_study_id(self):
         """Return the Remindo source study id for the study"""
         return utils.safeget(self._study_dict, "source_study_id")
+
+    # API call params
+
+    @property
+    def api_call_params_code(self):
+        """Return the parameter code used in the api call"""
+        return utils.safeget(self._study_dict, "api_call_params", "code")
+
+    @property
+    def api_call_params_study_id(self):
+        """Return the parameter study_id used in the api call"""
+        return utils.safeget(self._study_dict, "api_call_params", "study_id")
+
+    @property
+    def api_call_params_datasource_uuid(self):
+        """Return the parameter datasource_uuid used in the api call"""
+        return utils.safeget(self._study_dict, "api_call_params", "datasource_uuid")
+
+    @property
+    def api_call_params_complete(self):
+        """Return the parameter complete used in the api call"""
+        return utils.safeget(self._study_dict, "api_call_params", "complete")
+
+    @property
+    def api_call_params_since(self):
+        """Return the parameter since used in the api call"""
+        return utils.safeget(self._study_dict, "api_call_params", "since")

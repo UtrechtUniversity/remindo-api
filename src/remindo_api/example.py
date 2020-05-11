@@ -14,30 +14,31 @@ config.read_file(open("config.cfg"))
 
 def main():
     print("hello")
-    logging.debug("Creating remindo client in example.py.")
-    rclient = client.RemindoClient(
-        config["REMINDOKEYS"]["UUID"],
-        config["REMINDOKEYS"]["SECRET"],
-        config["REMINDOKEYS"]["URL_BASE"],
-    )
+    # logging.debug("Creating remindo client in example.py.")
+    # rclient = client.RemindoClient(
+    #     config["REMINDOKEYS"]["UUID"],
+    #     config["REMINDOKEYS"]["SECRET"],
+    #     config["REMINDOKEYS"]["URL_BASE"],
+    # )
 
     # mom = 3487
     # rec = 2335
     # stats = rclient.list_stats(recipe_id=2323)
     # print(stats[0])
-    s = client.list_reliability(recipe_id=2335, moment_id=3487)
-    print("|", s.alpha)
-    print("|", s.sem)
-    print("|", s.notes)
-    print("|", s.missing_count)
-    print("|", s.answer_count)
-    print("|", s.stdev)
-    print("|", s.average)
-    print("|", s.max)
-    print("|", s.api_call_params_recipe_id)
-    print("|", s.api_call_params_moment_id)
 
-    s = rclient.list_results(recipe_ids=2335)[0]
+    # s = client.list_reliability(recipe_id=2335, moment_id=3487)
+    # print("|", s.alpha)
+    # print("|", s.sem)
+    # print("|", s.notes)
+    # print("|", s.missing_count)
+    # print("|", s.answer_count)
+    # print("|", s.stdev)
+    # print("|", s.average)
+    # print("|", s.max)
+    # print("|", s.api_call_params_recipe_id)
+    # print("|", s.api_call_params_moment_id)
+
+    # s = rclient.list_results(recipe_ids=2335)[0]
 
     # print("|", s.subscription_id)
     # print("|", s.user_id)

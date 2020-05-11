@@ -133,17 +133,21 @@ class RemindoClient:
         studies = RemindoStudy(resp["studies"]).list_all()
         if complete is False:
             for study in studies:
-                list_study.append(RemindoStudy(studies[study]))
+                s = studies[study]
+                s.update({"api_call_params": params})
+                list_study.append(RemindoStudy(s))
             return list_study
         else:
             recipes = []
             for study in studies:
-                list_study.append(RemindoStudy(studies[study]))
+                s = studies[study]
+                s.update({"api_call_params": params})
+                list_study.append(RemindoStudy(s))
             for study in resp["studies"]:
                 for recipe in resp["studies"][study]["recipes"]:
-                    recipes.append(
-                        RemindoRecipe(resp["studies"][study]["recipes"][recipe])
-                    )
+                    r = resp["studies"][study]["recipes"][recipe]
+                    r.update({"api_call_params": params})
+                    recipes.append(RemindoRecipe(r))
             return list_study, recipes
 
     def list_recipes(
