@@ -622,14 +622,20 @@ class RemindoClient:
             itemresults = []
             for subscription in resp.keys():
                 sections = len(resp[subscription])
+                count_items = 0
                 for s in range(sections):
                     # section = resp[subscription][s]["section"]
                     # section_id = resp[subscription][s]["section_id"]
                     items = resp[subscription][s]["itemresults"].keys()
                     for i in items:
+                        count_items += 1
                         it = resp[subscription][s]["itemresults"][i]
                         it.update(
-                            {"subscription_id": subscription, "api_call_params": params}
+                            {
+                                "subscription_id": subscription,
+                                "position_item": count_items,
+                                "api_call_params": params,
+                            }
                         )
                         itemresults.append(RemindoItem(it))
             return itemresults

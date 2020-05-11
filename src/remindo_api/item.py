@@ -64,6 +64,11 @@ class RemindoItem:
         return utils.safeget(self._item_dict, "subscription_id")
 
     @property
+    def position_item(self):
+        """Return the section_id"""
+        return utils.safeget(self._item_dict, "position_item")
+
+    @property
     def response_cardinality(self):
         """Return the cardinality of the item response"""
         return utils.safeget(self._item_dict, "response", "RESPONSE", "cardinality")
