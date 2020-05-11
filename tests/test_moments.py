@@ -34,13 +34,15 @@ def test_isRecipe(rclient):
     assert moment.time_end == "2020-02-24 12:30:00"
     assert moment.time_start == "2020-02-21 14:00:00"
     assert moment.type == "period"
+    assert moment.api_call_params_recipe_ids == 2323
 
 
 def test_momentResult(rclient):
-    result = rclient.list_moments_results(ids=3472)
+    result = rclient.list_moments_results(id=3472)
     for r in result:
         assert isinstance(r, RemindoResult)
     assert [31615 == r.subscription_id for r in result]
     assert [7759 == r.user_code for r in result]
     assert ["[2890, 1781, 2899]" == r.area_feedback for r in result]
     assert [31615 == r.subscription_id for r in result]
+    assert result[0].api_call_params_id == 3472

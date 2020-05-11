@@ -273,7 +273,7 @@ class RemindoClient:
 
         Parameters
         --------.
-        ids : int, string mandatory
+        id : int, string mandatory
             ID of moment
         code : int, string mandatory
             code of moment
