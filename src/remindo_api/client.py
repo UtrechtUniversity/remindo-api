@@ -628,7 +628,9 @@ class RemindoClient:
                     items = resp[subscription][s]["itemresults"].keys()
                     for i in items:
                         it = resp[subscription][s]["itemresults"][i]
-                        it.update({"api_call_params": params})
+                        it.update(
+                            {"subscription_id": subscription, "api_call_params": params}
+                        )
                         itemresults.append(RemindoItem(it))
             return itemresults
         else:
