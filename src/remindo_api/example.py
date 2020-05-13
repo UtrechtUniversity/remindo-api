@@ -14,19 +14,22 @@ config.read_file(open("config.cfg"))
 
 def main():
     print("hello")
-    # logging.debug("Creating remindo client in example.py.")
-    # rclient = client.RemindoClient(
-    #     config["REMINDOKEYS"]["UUID"],
-    #     config["REMINDOKEYS"]["SECRET"],
-    #     config["REMINDOKEYS"]["URL_BASE"],
-    # )
+    logging.debug("Creating remindo client in example.py.")
+    rclient = client.RemindoClient(
+        config["REMINDOKEYS"]["UUID"],
+        config["REMINDOKEYS"]["SECRET"],
+        config["REMINDOKEYS"]["URL_BASE"],
+    )
+
+    c = rclient.hello_world()
+    print(c.message)
 
     # mom = 3487
     # rec = 2335
     # stats = rclient.list_stats(recipe_id=2323)
     # print(stats[0])
 
-    # s = client.list_reliability(recipe_id=2335, moment_id=3487)
+    # s = rclient.list_reliability(recipe_id=2335, moment_id=3487)
     # print("|", s.alpha)
     # print("|", s.sem)
     # print("|", s.notes)

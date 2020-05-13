@@ -1,10 +1,13 @@
 """Class implementation for Remindo moment"""
+from dataclasses import dataclass
+
+
 from remindo_api import utils
 
 
+@dataclass
 class RemindoMoment:
-    def __init__(self, moment_dict):
-        self._moment_dict = moment_dict
+    _moment_dict: dict
 
     @property
     def rid(self):

@@ -1,10 +1,13 @@
 """Class implementation for Remindo studies"""
+from dataclasses import dataclass
+
+
 from remindo_api import utils
 
 
+@dataclass
 class RemindoStudy:
-    def __init__(self, study_dict):
-        self._study_dict = study_dict
+    _study_dict: dict
 
     def list_all(self):
         """Return Remindo studies"""

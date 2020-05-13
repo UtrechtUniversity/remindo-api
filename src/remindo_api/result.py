@@ -1,10 +1,13 @@
 """Class implementation for Remindo result"""
+from dataclasses import dataclass
+
+
 from remindo_api import utils
 
 
+@dataclass
 class RemindoResult:
-    def __init__(self, result_dict):
-        self._result_dict = result_dict
+    _result_dict: dict
 
     def list_results(self):
         """Return Remindo results"""

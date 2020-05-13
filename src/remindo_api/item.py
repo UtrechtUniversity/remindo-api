@@ -1,12 +1,14 @@
 """Class implementation for Remindo item"""
 from collections import OrderedDict
+from dataclasses import dataclass
+
 
 from remindo_api import utils
 
 
+@dataclass
 class RemindoItem:
-    def __init__(self, item_dict):
-        self._item_dict = OrderedDict(item_dict)
+    _item_dict: OrderedDict
 
     @property
     def item_identifier(self):

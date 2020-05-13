@@ -1,10 +1,13 @@
 """Class implementation for Remindo recipe"""
+from dataclasses import dataclass
+
+
 from remindo_api import utils
 
 
+@dataclass
 class RemindoRecipe:
-    def __init__(self, recipe_dict):
-        self._recipe_dict = recipe_dict
+    _recipe_dict: dict
 
     @property
     def rid(self):

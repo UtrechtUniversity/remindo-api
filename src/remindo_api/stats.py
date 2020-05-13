@@ -2,12 +2,15 @@
 
 These are overall statistics for items.
 """
+from dataclasses import dataclass
+
+
 from remindo_api import utils
 
 
+@dataclass
 class RemindoStats:
-    def __init__(self, stats_dict):
-        self._stats_dict = stats_dict
+    _stats_dict: dict
 
     @property
     def item_identifier(self):

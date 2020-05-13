@@ -1,3 +1,5 @@
+from typing import Any, List
+
 import requests
 
 from .cluster import RemindoCluster
@@ -36,7 +38,7 @@ class RemindoClient:
     """Main client class of Remindo
     """
 
-    def __init__(self, uuid, secret, url_base):
+    def __init__(self, uuid, secret, url_base) -> None:
         """Initialize the client"""
         self.uuid = uuid
         self.secret = secret
@@ -44,7 +46,7 @@ class RemindoClient:
         self.ip = requests.get("https://jsonip.com").json()["ip"]
 
     @property
-    def query_dict(self):
+    def query_dict(self) -> dict:
         """ Query personal data from client """
         return {"key": self.uuid, "secret": self.secret, "url_base": self.url_base}
 
@@ -53,12 +55,14 @@ class RemindoClient:
         req = RemindoRequest(self, *args, **kwargs)
         return req.request()
 
-    def hello_world(self):
+    def hello_world(self) -> RemindoRequest:
         """ Make a "Hello World" request to verify keys """
         resp = self.request(url="/remote_api/hello_world", content="")
         return RemindoHelloWorld(resp)
 
-    def list_clusters(self, filter=None, category=None, full=True):
+    def list_clusters(
+        self, filter: str = None, category: str = None, full: bool = True
+    ) -> List[RemindoCluster]:
         """List all available user groups.
 
         Parameters
@@ -92,8 +96,13 @@ class RemindoClient:
         return clusters
 
     def list_studies(
-        self, code=None, study_id=None, datasource_uuid=None, complete=False, since=None
-    ):
+        self,
+        code: str = None,
+        study_id: int = None,
+        datasource_uuid: str = None,
+        complete: bool = False,
+        since: str = None,
+    ) -> list:
         """'List studies, which are a set of recipes
 
         Parameters
@@ -152,16 +161,16 @@ class RemindoClient:
 
     def list_recipes(
         self,
-        code=None,
-        category=None,
-        study_id=None,
-        recipe_id=None,
-        filtr=None,
-        datasource_uuid=None,
-        since=None,
-        properties=None,
-        full=False,
-    ):
+        code: str = None,
+        category: str = None,
+        study_id: int = None,
+        recipe_id: int = None,
+        filtr: str = None,
+        datasource_uuid: str = None,
+        since: str = None,
+        properties: bool = None,
+        full: bool = False,
+    ) -> List[RemindoRecipe]:
         """List recipes
 
         Recipe is a list of question for a determined exam - needs to be assigned
@@ -222,7 +231,14 @@ class RemindoClient:
 
         return list_recipes
 
-    def list_moments(self, ids=None, code=None, recipe_ids=None, frm=None, until=None):
+    def list_moments(
+        self,
+        ids: int = None,
+        code: str = None,
+        recipe_ids: int = None,
+        frm: str = None,
+        until: str = None,
+    ) -> List[RemindoMoment]:
         """List moments
 
         Parameters
@@ -267,12 +283,12 @@ class RemindoClient:
 
     def list_moments_results(
         self,
-        id=None,
-        code=None,
-        candidate_ids=None,
-        candidate_codes=None,
-        candidate_filter=None,
-    ):
+        id: int = None,
+        code: int = None,
+        candidate_ids: int = None,
+        candidate_codes: int = None,
+        candidate_filter: str = None,
+    ) -> List[RemindoResult]:
         """List results of selected moments
 
         Parameters
@@ -317,25 +333,25 @@ class RemindoClient:
 
     def list_results(
         self,
-        typ=None,
-        modified_since=None,
-        modified_until=None,
-        start_time_since=None,
-        start_time_until=None,
-        end_time_since=None,
-        end_time_until=None,
-        status=None,
-        search=None,
-        candidate_ids=None,
-        cluster_ids=None,
-        study_ids=None,
-        recipe_ids=None,
-        result_ids=None,
-        subscription_ids=None,
-        page=None,
-        page_size=None,
-        complete=False,
-    ):
+        typ: str = None,
+        modified_since: str = None,
+        modified_until: str = None,
+        start_time_since: str = None,
+        start_time_until: str = None,
+        end_time_since: str = None,
+        end_time_until: str = None,
+        status: str = None,
+        search: str = None,
+        candidate_ids: int = None,
+        cluster_ids: int = None,
+        study_ids: int = None,
+        recipe_ids: int = None,
+        result_ids: int = None,
+        subscription_ids: int = None,
+        page: int = None,
+        page_size: int = None,
+        complete: bool = False,
+    ) -> List[RemindoResult]:
         """Retrieve list of results
 
         Parameters
@@ -456,12 +472,12 @@ class RemindoClient:
 
     def list_subscription_result(
         self,
-        recipe_id=None,
-        moment_id=None,
-        subscription_ids=None,
-        user_ids=None,
-        add_item_info=False,
-    ):
+        recipe_id: int = None,
+        moment_id: int = None,
+        subscription_ids: int = None,
+        user_ids: int = None,
+        add_item_info: bool = False,
+    ) -> Any:
         """List subscription results
 
         No more than 50.000
@@ -501,13 +517,13 @@ class RemindoClient:
     # Behavior of this call is not consistent with the documentation
     def list_reliability(
         self,
-        recipe_id=None,
-        moment_id=None,
-        variant_id=None,
-        scan_id=None,
-        corrections=None,
-        locale=None,
-    ):
+        recipe_id: int = None,
+        moment_id: int = None,
+        variant_id: int = None,
+        scan_id: int = None,
+        corrections: list = None,
+        locale: str = None,
+    ) -> List[RemindoReliability]:
         """"Calculate result reliability
 
         Calculate the reliability over a set of results using cronbach’s alpha
@@ -573,12 +589,12 @@ class RemindoClient:
 
     def list_item_results(
         self,
-        recipe_id=None,
-        moment_id=None,
-        subscription_ids=None,
-        user_ids=None,
-        add_item_info=False,
-    ):
+        recipe_id: int = None,
+        moment_id: int = None,
+        subscription_ids: int = None,
+        user_ids: int = None,
+        add_item_info: bool = False,
+    ) -> List[RemindoItem]:
         """"Retrieve item results
 
         Returns a list of question/item results for a given filter. No more than 50.000
@@ -643,8 +659,12 @@ class RemindoClient:
             return None
 
     def list_stats(
-        self, recipe_id=None, moment_id=None, subscription_ids=None, user_ids=None
-    ):
+        self,
+        recipe_id: int = None,
+        moment_id: int = None,
+        subscription_ids: int = None,
+        user_ids: int = None,
+    ) -> List[RemindoStats]:
         """"Retrieve recipe question/item result statistics
 
         Returns a list of aggregated statistics for each question/item results for a given

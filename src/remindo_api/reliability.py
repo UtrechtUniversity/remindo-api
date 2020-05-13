@@ -1,10 +1,13 @@
 """Class implementation for Remindo reliability"""
+from dataclasses import dataclass
+
+
 from remindo_api import utils
 
 
+@dataclass
 class RemindoReliability:
-    def __init__(self, reliability_dict):
-        self._reliability_dict = reliability_dict
+    _reliability_dict: dict
 
     def list_all(self):
         """Return Remindo reliability key values"""
