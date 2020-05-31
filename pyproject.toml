@@ -28,6 +28,8 @@ safety = "^1.9.0"
 pre-commit = "^2.3.0"
 nox = "^2019.11.9"
 pytype = {version = "^2020.5.7", python = "3.7"}
+typeguard = "^2.7.1"
+flake8-annotations = "^2.1.0"
 
 [tool.coverage.paths]
 source = ["src", "*/site-packages"]

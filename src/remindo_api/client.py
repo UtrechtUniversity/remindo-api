@@ -16,8 +16,8 @@ from .study import RemindoStudy
 
 # TODO: Error: /api/v1/result/reliability {'error':
 # 'Please specify a valid API method for class result. Available methods: list'}
-# TODO: what about substituting to personal data fake with Faker?
-# TODO: complete list_stubscritpion call
+# TODO: complete list_subscritpion call
+# TODO: complete mypy typing
 
 
 class RemindoClientException(Exception):

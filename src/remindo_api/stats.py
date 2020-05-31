@@ -53,7 +53,7 @@ class RemindoStats:
         return utils.safeget(self._stats_dict, "section")
 
     @property
-    def question_numbers(self):
+    def question_position(self):
         """Return the question numbers in which it appears"""
         # Confirm this description
         return utils.safeget(self._stats_dict, "question_numbers")

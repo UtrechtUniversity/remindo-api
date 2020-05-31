@@ -62,12 +62,12 @@ class RemindoCollect:
             os.makedirs(self._base_directory)
 
     def fetch_clusters(self):
-        logging.debug("Fetching cluster data.")
+        logging.debug("Fetching clusters data.")
         clusters = self._rclient.list_clusters()
         for cluster in clusters:
             self._cluster_data_list.append(self._parse_cluster_data(cluster))
 
-        for module_name, module_data in zip(["cluster"], [self._cluster_data_list]):
+        for module_name, module_data in zip(["clusters"], [self._cluster_data_list]):
             logging.debug(f"Writing data for: {module_name}")
             self._write_to_disk(module_name, module_data)
 
@@ -160,7 +160,7 @@ class RemindoCollect:
                 continue
 
         for module_name, module_data in zip(
-            ["moment_result"], [self._moment_result_data_list]
+            ["moment_results"], [self._moment_result_data_list]
         ):
             logging.debug(f"Writing data for: {module_name}")
             self._write_to_disk(module_name, module_data)
@@ -255,7 +255,7 @@ class RemindoCollect:
                         print("with message: '{0}'".format(e))
                         continue
 
-        for module_name, module_data in zip(["item"], [self._item_data_list]):
+        for module_name, module_data in zip(["items"], [self._item_data_list]):
             logging.debug(f"Writing data for: {module_name}")
             self._write_to_disk(module_name, module_data)
 
@@ -287,8 +287,8 @@ class RemindoCollect:
         """Parse cluster data from cluster object"""
         return OrderedDict(
             {
-                "cluster_id": cluster_obj.rid,
-                "cluster_name": cluster_obj.name,
+                "id": cluster_obj.rid,
+                "name": cluster_obj.name,
                 "record_create_timestamp": datetime.now(),
             }.items()
         )
@@ -297,14 +297,16 @@ class RemindoCollect:
         """Parse study data from study object"""
         return OrderedDict(
             {
-                "study_id": study_obj.rid,
-                "study_name": study_obj.name,
-                "study_code": study_obj.code,
-                "study_descr": study_obj.descr,
-                "study_edition_name": study_obj.edition_name,
-                "study_edition_descr": study_obj.edition_descr,
-                "study_source_edition_id": study_obj.source_edition_id,
-                "study_source_study_id": study_obj.source_study_id,
+                "id": study_obj.rid,
+                "name": study_obj.name,
+                "code": study_obj.code,
+                "descr": study_obj.descr,
+                "edition_name": study_obj.edition_name,
+                "edition_descr": study_obj.edition_descr,
+                "source_edition_id": study_obj.source_edition_id,
+                "source_study_id": study_obj.source_study_id,
+                "api_call_params_complete": study_obj.api_call_params_complete,
+                "api_call_params_since": study_obj.api_call_params_since,
                 "record_create_timestamp": datetime.now(),
             }.items()
         )
@@ -313,35 +315,38 @@ class RemindoCollect:
         """Parse recipe data from recipe object"""
         return OrderedDict(
             {
-                "recipe_id": recipe_obj.rid,
-                "recipe_name": recipe_obj.name,
-                "recipe_code": recipe_obj.code,
-                "recipe_study_id": recipe_obj.study_id,
-                "recipe_category": recipe_obj.category,
-                "recipe_status": recipe_obj.status,
-                "recipe_type": recipe_obj.type,
+                "id": recipe_obj.rid,
+                "name": recipe_obj.name,
+                "code": recipe_obj.code,
+                "study_id": recipe_obj.study_id,
+                "category": recipe_obj.category,
+                "status": recipe_obj.status,
+                "type": recipe_obj.type,
+                "exam_duration": recipe_obj.settings_exam_duration,
                 # availalbe only from study/list full=True
                 # "recipe_source_recipe_id" : recipe_obj.source_recipe_id,
-                "recipe_v": recipe_obj.settings_v,
-                "recipe_max_retries": recipe_obj.settings_max_retries,
-                "recipe_tools": recipe_obj.settings_tools,
-                "recipe_practice_repeat_until": recipe_obj.settings_practice_repeat_until,
-                "recipe_practice_continue_practice": recipe_obj.settings_practice_continue_practice,
-                "recipe_practice_start_retry_by_candidate": recipe_obj.settings_practice_start_retry_by_candidate,
-                "recipe_practice_start_retry_delay": recipe_obj.settings_practice_start_retry_delay,
-                "recipe_exam_caesura": recipe_obj.settings_exam_caesura,
-                "recipe_settings_exam_round_grade_decimals": recipe_obj.settings_exam_round_grade_decimals,
-                "recipe_settings_show_result_given_answer": recipe_obj.settings_show_result_given_answer,
-                "recipe_settings_show_result_correct_answer": recipe_obj.settings_show_result_correct_answer,
-                "recipe_settings_show_result_score": recipe_obj.settings_show_result_score,
-                "recipe_settings_show_correct": recipe_obj.settings_show_correct,
-                "recipe_settings_show_grade": recipe_obj.settings_show_grade,
-                "recipe_settings_passed": recipe_obj.settings_passed,
-                "recipe_exam_round_grade_decimals": recipe_obj.settings_exam_round_grade_decimals,
-                "recipe_exam_duration": recipe_obj.settings_exam_duration,
-                "recipe_settings_settings_bonuspoints": recipe_obj.settings_settings_bonuspoints,
-                "recipe_settings_settings_extra_time": recipe_obj.settings_settings_extra_time,
-                "record_create_timestamp": datetime.now(),
+                # "v": recipe_obj.settings_v,
+                "max_retries": recipe_obj.settings_max_retries,
+                "tools": recipe_obj.settings_tools,
+                "practice_repeat_until": recipe_obj.settings_practice_repeat_until,
+                "practice_continue_practice": recipe_obj.settings_practice_continue_practice,
+                "practice_start_retry_by_candidate": recipe_obj.settings_practice_start_retry_by_candidate,
+                "practice_start_retry_delay": recipe_obj.settings_practice_start_retry_delay,
+                "exam_caesura": recipe_obj.settings_exam_caesura,
+                "exam_round_grade_decimals": recipe_obj.settings_exam_round_grade_decimals,
+                "show_result_given_answer": recipe_obj.settings_show_result_given_answer,
+                "show_result_correct_answer": recipe_obj.settings_show_result_correct_answer,
+                "show_result_score": recipe_obj.settings_show_result_score,
+                "show_correct": recipe_obj.settings_show_correct,
+                "show_grade": recipe_obj.settings_show_grade,
+                "passed": recipe_obj.settings_passed,
+                "bonuspoints": recipe_obj.settings_settings_bonuspoints,
+                "extra_time": recipe_obj.settings_settings_extra_time,
+                "api_call_params_recipe_id": recipe_obj.api_call_params_recipe_id,
+                "api_call_params_study_id": recipe_obj.api_call_params_study_id,
+                "api_call_params_since": recipe_obj.api_call_params_since,
+                "api_call_params_full": recipe_obj.api_call_params_full,
+                "create_timestamp": datetime.now(),
             }.items()
         )
 
@@ -349,30 +354,32 @@ class RemindoCollect:
         """Parse moment data from moment object"""
         return OrderedDict(
             {
-                "moment_id": moment_obj.rid,
-                "moment_name": moment_obj.name,
-                "moment_caesura": moment_obj.caesura,
-                "moment_code": moment_obj.code,
-                "moment_datasource_id": moment_obj.datasource_id,
-                "moment_date_end": moment_obj.date_end,
-                "moment_date_start": moment_obj.date_start,
-                "moment_duration": moment_obj.duration,
-                "moment_extra_time": moment_obj.extra_time,
-                "moment_limit_ips": moment_obj.limit_ips,
-                "moment_recipe_id": moment_obj.recipe_id,
-                "moment_recipe_type": moment_obj.recipe_type,
-                "moment_requires_approval": moment_obj.requires_approval,
-                "moment_study_id": moment_obj.study_id,
-                "moment_study_name": moment_obj.study_name,
-                "moment_time_end": moment_obj.time_end,
-                "moment_time_start": moment_obj.time_start,
-                "moment_type": moment_obj.type,
-                "moment_show_result": moment_obj.show_result,
-                "moment_show_result_date": moment_obj.show_result_date,
-                "moment_show_result_delay": moment_obj.show_result_delay,
-                "moment_show_result_delay_type": moment_obj.show_result_delay_type,
-                "moment_show_result_time": moment_obj.show_result_time,
-                "moment_status": moment_obj.status,
+                "id": moment_obj.rid,
+                "name": moment_obj.name,
+                "caesura": moment_obj.caesura,
+                "code": moment_obj.code,
+                "datasource_id": moment_obj.datasource_id,
+                "date_end": moment_obj.date_end,
+                "date_start": moment_obj.date_start,
+                "duration": moment_obj.duration,
+                "extra_time": moment_obj.extra_time,
+                "limit_ips": moment_obj.limit_ips,
+                "recipe_id": moment_obj.recipe_id,
+                "recipe_type": moment_obj.recipe_type,
+                "requires_approval": moment_obj.requires_approval,
+                "study_id": moment_obj.study_id,
+                "study_name": moment_obj.study_name,
+                "time_end": moment_obj.time_end,
+                "time_start": moment_obj.time_start,
+                "type": moment_obj.type,
+                "show_result": moment_obj.show_result,
+                "show_result_date": moment_obj.show_result_date,
+                "show_result_delay": moment_obj.show_result_delay,
+                "show_result_delay_type": moment_obj.show_result_delay_type,
+                "show_result_time": moment_obj.show_result_time,
+                "status": moment_obj.status,
+                "api_call_params_recipe_ids": moment_obj.api_call_params_recipe_ids,
+                "api_call_params_from": moment_obj.api_call_params_from,
                 "record_create_timestamp": datetime.now(),
             }.items()
         )
@@ -381,45 +388,46 @@ class RemindoCollect:
         """Parse moment data from moment result object"""
         return OrderedDict(
             {
-                "moment_subscription_id": moment_obj.subscription_id,
-                "moment_result_id": moment_obj.result_id,
-                "moment_user_id": moment_obj.user_id,
-                "moment_user_code": moment_obj.user_code,
-                "moment_recipe_id": moment_obj.recipe_id,
-                "moment_recipe_type": moment_obj.recipe_type,
-                "moment_recipe_name": moment_obj.recipe_name,
-                "moment_recipe_code": moment_obj.recipe_code,
-                "moment_recipe_category": moment_obj.recipe_category,
-                "moment_recipe_source_id": moment_obj.recipe_source_id,
-                "moment_study_id": moment_obj.study_id,
-                "moment_study_name": moment_obj.study_name,
-                "moment_status": moment_obj.status,
-                "moment_start_time": moment_obj.start_time,
-                "moment_end_time": moment_obj.end_time,
-                "moment_max_score": moment_obj.max_score,
-                "moment_score": moment_obj.score,
-                "moment_grade": moment_obj.grade,
-                "moment_try_count": moment_obj.try_count,
-                "moment_i_count": moment_obj.i_count,
-                "moment_i_right": moment_obj.i_right,
-                "moment_i_answered": moment_obj.i_answered,
-                "moment_i_review": moment_obj.i_review,
-                "moment_i_correct": moment_obj.i_correct,
-                "moment_i_incorrect": moment_obj.i_incorrect,
-                "moment_i_mostlycorrect": moment_obj.i_mostlycorrect,
-                "moment_i_mostlyincorrect": moment_obj.i_mostlyincorrect,
-                "moment_show_given_answer": moment_obj.show_given_answer,
-                "moment_show_score": moment_obj.show_score,
-                "moment_show_correct": moment_obj.show_correct,
-                "moment_show_grade": moment_obj.show_grade,
-                "moment_show_passed": moment_obj.show_passed,
-                "moment_report_data": moment_obj.report_data,
-                "moment_passed": moment_obj.passed,
-                "moment_area_name": moment_obj.area_name,
-                "moment_area_feedback": moment_obj.area_feedback,
-                "moment_score_type": moment_obj.score_type,
-                "moment_grade_formatted": moment_obj.grade_formatted,
-                "moment_can_change": moment_obj.can_change,
+                "subscription_id": moment_obj.subscription_id,
+                "result_id": moment_obj.result_id,
+                "user_id": moment_obj.user_id,
+                "user_code": moment_obj.user_code,
+                "recipe_id": moment_obj.recipe_id,
+                "recipe_type": moment_obj.recipe_type,
+                "recipe_name": moment_obj.recipe_name,
+                "recipe_code": moment_obj.recipe_code,
+                "recipe_category": moment_obj.recipe_category,
+                "recipe_source_id": moment_obj.recipe_source_id,
+                "study_id": moment_obj.study_id,
+                "study_name": moment_obj.study_name,
+                "status": moment_obj.status,
+                "start_time": moment_obj.start_time,
+                "end_time": moment_obj.end_time,
+                "max_score": moment_obj.max_score,
+                "score": moment_obj.score,
+                "grade": moment_obj.grade,
+                "try_count": moment_obj.try_count,
+                "i_count": moment_obj.i_count,
+                "i_right": moment_obj.i_right,
+                "i_answered": moment_obj.i_answered,
+                "i_review": moment_obj.i_review,
+                "i_correct": moment_obj.i_correct,
+                "i_incorrect": moment_obj.i_incorrect,
+                "i_mostlycorrect": moment_obj.i_mostlycorrect,
+                "i_mostlyincorrect": moment_obj.i_mostlyincorrect,
+                "show_given_answer": moment_obj.show_given_answer,
+                "show_score": moment_obj.show_score,
+                "show_correct": moment_obj.show_correct,
+                "show_grade": moment_obj.show_grade,
+                "show_passed": moment_obj.show_passed,
+                "report_data": moment_obj.report_data,
+                "passed": moment_obj.passed,
+                "area_name": moment_obj.area_name,
+                "area_feedback": moment_obj.area_feedback,
+                "score_type": moment_obj.score_type,
+                "grade_formatted": moment_obj.grade_formatted,
+                "can_change": moment_obj.can_change,
+                "api_call_moment_id": moment_obj.api_call_params_id,
                 "record_create_timestamp": datetime.now(),
             }.items()
         )
@@ -436,6 +444,8 @@ class RemindoCollect:
                 "stdev": reliability_obj.stdev,
                 "average": reliability_obj.average,
                 "max": reliability_obj.max,
+                "api_call_params_recipe_id": reliability_obj.api_call_params_recipe_id,
+                "api_call_params_moment_id": reliability_obj.api_call_params_moment_id,
                 "record_create_timestamp": datetime.now(),
             }.items()
         )
@@ -452,12 +462,14 @@ class RemindoCollect:
                 "interaction_count": stats_obj.interaction_count,
                 "difficulty": stats_obj.difficulty,
                 "section": stats_obj.section,
-                "question_numbers": stats_obj.question_numbers,
+                "question_position": stats_obj.question_position,
                 "p": stats_obj.p,
                 "std": stats_obj.std,
                 "rir": stats_obj.rir,
                 "total": stats_obj.total,
                 "answered": stats_obj.answered,
+                "api_call_params_recipe_id": stats_obj.api_call_params_recipe_id,
+                "api_call_params_moment_id": stats_obj.api_call_params_moment_id,
                 "record_create_timestamp": datetime.now(),
             }.items()
         )
@@ -476,11 +488,15 @@ class RemindoCollect:
                 "flagged": item_obj.flagged,
                 "check_manually": item_obj.check_manually,
                 "weight": item_obj.weight,
+                "subscription_id": item_obj.subscription_id,
+                "position_item": item_obj.position_item,
                 "response_cardinality": item_obj.response_cardinality,
                 "response_baseType": item_obj.response_baseType,
                 "response_choiceSequence": item_obj.response_choiceSequence,
                 "response_candidateResponse": item_obj.response_candidateResponse,
                 "response_correctResponse": item_obj.response_correctResponse,
+                "api_call_params_recipe_id": item_obj.api_call_params_recipe_id,
+                "api_call_params_moment_id": item_obj.api_call_params_moment_id,
                 "record_create_timestamp": datetime.now(),
             }.items()
         )
