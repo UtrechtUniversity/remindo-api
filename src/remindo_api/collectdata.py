@@ -13,10 +13,7 @@ import pandas as pd
 logger = logging.getLogger(__name__)
 # TODO: retrieve individual recipes based on date
 # use it to quality check with those retrieved from studies?
-# TODO: FINISH EXCEPTIONS!
 
-# All results are based around moments, as those represent test made, not recipes
-# apart from item results, where recipes are first level
 # _parse_moment_data() is not parsing subscriptions settings on purpose
 # list_results() currently not being used - no need to save students' data?
 # list_reliability() currently not being used because does not work
