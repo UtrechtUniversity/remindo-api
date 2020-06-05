@@ -69,8 +69,13 @@ class RemindoRequest:
         else:
             if self.req_format == "json":
                 respJson = resp.json()
-                payload = json.loads(respJson["payload"])
-                return payload
+                # To catch some error messages
+                if type(respJson["payload"]) is not bool:
+                    payload = json.loads(respJson["payload"])
+                    return payload
+                else:
+                    payload = {"success": False}
+                    return payload
             raise Exception("Other problem")
 
     def makeFilter(self, params):

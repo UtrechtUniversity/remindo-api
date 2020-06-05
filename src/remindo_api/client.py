@@ -583,7 +583,7 @@ class RemindoClient:
         if locale is not None:
             params["locale"] = str(locale)
 
-        resp = self.request(url="/result/reliability/list", content=params)
+        resp = self.request(url="/result/reliability", content=params)
         resp.update({"api_call_params": params})
         return RemindoReliability(resp)
 
