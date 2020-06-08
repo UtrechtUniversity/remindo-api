@@ -27,7 +27,7 @@ class RemindoReliability:
     def notes(self):
         """Return the notes for the selected assessment"""
         # TODO: to check when available
-        return utils.safeget(self._reliability_dict, "sem")[0]
+        return utils.safeget(self._reliability_dict, "notes")
 
     @property
     def missing_count(self):

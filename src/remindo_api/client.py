@@ -523,7 +523,7 @@ class RemindoClient:
         scan_id: int = None,
         corrections: list = None,
         locale: str = None,
-    ) -> List[RemindoReliability]:
+    ) -> Any:
         """"Calculate result reliability
 
         Calculate the reliability over a set of results using cronbach’s alpha
@@ -577,11 +577,11 @@ class RemindoClient:
         if moment_id is not None:
             params["moment_id"] = moment_id
         if variant_id is not None:
-            params["variant_id"] = int(variant_id)
+            params["variant_id"] = variant_id
         if corrections is not None:
-            params["corrections"] = list(corrections)
+            params["corrections"] = corrections
         if locale is not None:
-            params["locale"] = str(locale)
+            params["locale"] = locale
 
         resp = self.request(url="/result/reliability", content=params)
         resp.update({"api_call_params": params})
