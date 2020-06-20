@@ -8,6 +8,7 @@ import os
 import time
 
 import pandas as pd
+from remindo_api import textcleaner
 
 
 logger = logging.getLogger(__name__)
@@ -489,9 +490,15 @@ class RemindoCollect:
                 "position_item": item_obj.position_item,
                 "response_cardinality": item_obj.response_cardinality,
                 "response_baseType": item_obj.response_baseType,
-                "response_choiceSequence": item_obj.response_choiceSequence,
-                "response_candidateResponse": item_obj.response_candidateResponse,
-                "response_correctResponse": item_obj.response_correctResponse,
+                "response_choiceSequence": textcleaner.RemindoTextCleaner.clean_all(
+                    item_obj.response_choiceSequence
+                ),
+                "response_candidateResponse": textcleaner.RemindoTextCleaner.clean_all(
+                    item_obj.response_candidateResponse
+                ),
+                "response_correctResponse": textcleaner.RemindoTextCleaner.clean_all(
+                    item_obj.response_correctResponse
+                ),
                 "api_call_params_recipe_id": item_obj.api_call_params_recipe_id,
                 "api_call_params_moment_id": item_obj.api_call_params_moment_id,
                 "record_create_timestamp": datetime.now(),
