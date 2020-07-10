@@ -7,10 +7,8 @@ import os
 from pathlib import Path
 
 # import time
-
 from remindo_api import client
 from remindo_api import collectdata
-from six.moves import input
 
 # Setting up logger, Logger properties are defined in logging.ini file
 logging.config.fileConfig(f"{Path(__file__).parents[0]}/logging.ini")
@@ -18,7 +16,7 @@ logger = logging.getLogger(__name__)
 
 # Reading configurations
 config = configparser.ConfigParser()
-config.read_file(open(os.path.join(Path(__file__).parents[0], "config.cfg")))
+config.read_file(open(os.path.join(Path(__file__).parents[0], "/config/prod.cfg")))
 
 # TODO: fix manual change when retrieval breaks
 # Either: 1) delete what was retrieved and restart
@@ -49,13 +47,6 @@ def _is_file(directory, name):
         return False
 
 
-def _input_continue(input):
-    if input != "Yes":
-        return False
-    else:
-        return True
-
-
 def main():
     logging.debug("Creating Remindo client.")
     rclient = client.RemindoClient(
@@ -76,22 +67,22 @@ def main():
             m = _open_from_temp(working_directory, "moment_id_list")
             rm = _open_from_temp_dict(working_directory, "recipe_moment_id_dict")
 
-            val = input("Do you want to continue fetching the reliability? (Yes/No) ")
-            answer = _input_continue(val)
+            # val = input("Do you want to continue fetching the reliability? (Yes/No) ")
+            # answer = _input_continue(val)
 
-            if answer:
-                rcollector = collectdata.RemindoCollect(
-                    rclient=rclient,
-                    data_directory=working_directory,
-                    since_date=config["DATE"]["SINCE"],
-                    until_date=config["DATE"]["UNTIL"],
-                    from_date=config["DATE"]["FROM"],
-                    recipe_id_list=r,
-                    moment_id_list=m,
-                    recipe_moment_id_dict=rm,
-                )
-                rcollector.fetch_reliability()
-                logging.debug(f"Finished retrieving reliability")
+            # if answer:
+            rcollector = collectdata.RemindoCollect(
+                rclient=rclient,
+                data_directory=working_directory,
+                since_date=config["DATE"]["SINCE"],
+                until_date=config["DATE"]["UNTIL"],
+                from_date=config["DATE"]["FROM"],
+                recipe_id_list=r,
+                moment_id_list=m,
+                recipe_moment_id_dict=rm,
+            )
+            rcollector.fetch_reliability()
+            logging.debug(f"Finished retrieving reliability")
         except KeyError as e:
             logging.exception("MAIN ", e)
         try:

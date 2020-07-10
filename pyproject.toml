@@ -11,8 +11,8 @@ keywords = ["Remindo", "API", "wrapper"]
 python = "^3.7"
 requests = "^2.23.0"
 pycryptodomex = "^3.9.7"
-configparser = "^5.0.0"
-pandas = "^1.0.3"
+configparser = "3.5.0"
+pandas = "0.25.3"
 flake8 = "^3.7.9"
 six = "^1.15.0"
 
