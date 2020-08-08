@@ -15,6 +15,7 @@ configparser = "3.5.0"
 pandas = "0.25.3"
 flake8 = "^3.7.9"
 six = "^1.15.0"
+sphinx = "^3.1.2"
 
 [tool.poetry.dev-dependencies]
 mypy = "^0.770"
@@ -31,6 +32,12 @@ nox = "^2019.11.9"
 pytype = {version = "^2020.5.7", python = "3.7"}
 typeguard = "^2.7.1"
 flake8-annotations = "^2.1.0"
+flake8-docstrings = "^1.5.0"
+darglint = "^1.5.2"
+xdoctest = "^0.13.0"
+sphinx = "^3.1.2"
+autopep8 = "^1.5.4"
+sphinx-autodoc-typehints = "^1.11.0"
 
 [tool.coverage.paths]
 source = ["src", "*/site-packages"]

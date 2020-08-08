@@ -1,8 +1,10 @@
 # content of ./test_reliability.py
-from remindo_api.test_reliability import RemindoReliability
+"""Tests for reliability."""
+from remindo_api.reliability import RemindoReliability
 
 
 def test_isInstanceRemindoReliability(rclient):
+    """Test function to retrieve an instance of RemindoReliability."""
     r = rclient.list_reliability(recipe_id=2335, moment_id=3487)
     assert isinstance(r, RemindoReliability)
 

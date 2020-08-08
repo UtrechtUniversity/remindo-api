@@ -1,9 +1,11 @@
 # content of ./test_studies.py
+"""Tests for studies."""
 from remindo_api.recipe import RemindoRecipe
 from remindo_api.study import RemindoStudy
 
 
 def test_listOnlyStudies(rclient):
+    """Test function to retrieve studies."""
     study = rclient.list_studies(study_id=86)[0]
     assert isinstance(study, RemindoStudy)
     assert study.rid == 86
@@ -19,6 +21,7 @@ def test_listOnlyStudies(rclient):
 
 
 def test_listStudiesRecipes(rclient):
+    """Test function to retrieve studies and recipes."""
     study, recipes = rclient.list_studies(
         study_id=86, complete=True, since="2020-01-01"
     )

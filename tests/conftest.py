@@ -1,4 +1,5 @@
 # content of ./conftest.py
+"""Configure tests."""
 import pytest
 from remindo_api import apikey
 from remindo_api import client

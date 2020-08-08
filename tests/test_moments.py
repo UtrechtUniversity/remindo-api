@@ -1,15 +1,18 @@
 # content of ./test_moments.py
+"""Tests for RemindoMoment."""
 from remindo_api.moment import RemindoMoment
 from remindo_api.result import RemindoResult
 
 
 def test_isInstanceRemindoRecipe(rclient):
+    """Test function to retrieve an instance of RemindoRecipe."""
     moments = rclient.list_moments(recipe_ids=2323)
     assert isinstance(moments[0], RemindoMoment)
     assert [3472 == m.rid for m in moments]
 
 
 def test_isRecipe(rclient):
+    """Test function to check the validity of RemindoRecipe."""
     moment = rclient.list_moments(recipe_ids=2323)[0]
     assert moment.rid == 3472
     assert moment.code == "ONTKOPPELD"
@@ -38,6 +41,7 @@ def test_isRecipe(rclient):
 
 
 def test_momentResult(rclient):
+    """Test function to check the validity of the results of moment."""
     result = rclient.list_moments_results(id=3472)
     for r in result:
         assert isinstance(r, RemindoResult)

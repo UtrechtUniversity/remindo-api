@@ -1,4 +1,5 @@
-"""Class implementation for fetching remindo data"""
+# src/remindo_api/collectdata.py
+"""Class implementation for fetching remindo data."""
 from collections import OrderedDict
 import csv
 from datetime import datetime
@@ -28,13 +29,19 @@ logger = logging.getLogger(__name__)
 
 
 class RemindoCollectException(Exception):
-    """Class that is called for exception messages
+    """Class that is called for exception messages.
 
     You can see the usage of this class looking at the test
 
     """
 
     def __init__(self, error_msg):
+        """__init__ exception.
+
+        Args:
+            error_msg (str): String containing the error message.
+
+        """
         self.error_msg = error_msg
 
     def __str__(self):
@@ -42,14 +49,20 @@ class RemindoCollectException(Exception):
 
 
 class ParseRecipeException(Exception):
+    """Class to parse recipe exceptions."""
+
     pass
 
 
 class FetchException(Exception):
+    """Class to fetch exceptions."""
+
     pass
 
 
 class RemindoCollect:
+    """Class for general data collection from Remindo."""
+
     def __init__(
         self, rclient, data_directory, since_date, until_date, from_date, **kwargs
     ):
@@ -92,6 +105,7 @@ class RemindoCollect:
             os.makedirs(self._base_directory)
 
     def fetch_clusters(self):
+        """Fetch clusters."""
         logging.debug("Fetching clusters data.")
         clusters = self._rclient.list_clusters()
         for cluster in clusters:
@@ -102,6 +116,7 @@ class RemindoCollect:
             self._write_to_disk(module_name, module_data)
 
     def fetch_studies_recipes(self):
+        """Fetch recipes from studies."""
         logging.debug("Fetching study data.")
         studies, recipes = self._rclient.list_studies(
             complete=True,
@@ -121,6 +136,7 @@ class RemindoCollect:
         self._write_to_temp("recipe_id_list", self._recipe_id_list)
 
     def fetch_recipes(self):
+        """Fetch recipes."""
         logging.debug("Fetching recipes data from studies.")
         for rid in self._recipe_id_list:
             try:
@@ -160,6 +176,7 @@ class RemindoCollect:
             self._write_to_disk(module_name, module_data)
 
     def fetch_moments(self):
+        """Fetch moments from recipes."""
         logging.debug(
             "Fetching moments from recipes, \n from {0} until {1}.".format(
                 self._from_date, self._until_date
@@ -201,6 +218,7 @@ class RemindoCollect:
         self._write_to_temp_dict("recipe_moment_id_dict", self._recipe_moment_id_dict)
 
     def fetch_moments_result(self):
+        """Fetch moment results using dictionary."""
         logging.debug("Fetching moments result data from moments.")
         for moment in self._moment_id_list:
             try:
@@ -227,6 +245,7 @@ class RemindoCollect:
             self._write_to_disk(module_name, module_data)
 
     def fetch_reliability(self):
+        """Fetch reliability using moments."""
         logging.debug("Fetching reliability data from moments.")
         for recipe in self._recipe_moment_id_dict.keys():
             for moment in self._recipe_moment_id_dict[recipe]:
@@ -242,7 +261,7 @@ class RemindoCollect:
                             )
                     except KeyError:
                         logging.debug(
-                            "A Key Error occurred on Recipe {1}; Moment {2} ".format(
+                            "A Key Error occurred on Recipe {0}; Moment {1} ".format(
                                 recipe, moment
                             )
                         )
@@ -263,7 +282,7 @@ class RemindoCollect:
                             )
                     except KeyError as e:
                         logging.debug(
-                            "A Key Error occurred on Recipe {1}; Moment {2} ".format(
+                            "A Key Error occurred on Recipe {0}; Moment {1} ".format(
                                 recipe, moment
                             )
                         )
@@ -285,6 +304,7 @@ class RemindoCollect:
             self._write_to_disk(module_name, module_data)
 
     def fetch_stats_data(self):
+        """Fetch stats using moments."""
         # Checks if recipes have mutiple list of moments
         logging.debug("Fetching stats data from moments.")
         for recipe in self._recipe_moment_id_dict.keys():
@@ -300,7 +320,7 @@ class RemindoCollect:
                                 )
                     except KeyError as e:
                         logging.debug(
-                            "A Key Error occurred on recipe {1}, moment {2} ".format(
+                            "A Key Error occurred on recipe {0}, moment {1} ".format(
                                 recipe, moment
                             )
                         )
@@ -322,7 +342,7 @@ class RemindoCollect:
                         time.sleep(0.03)
                     except KeyError as e:
                         logging.debug(
-                            "A Key Error occurred on recipe {1}, moment {2} ".format(
+                            "A Key Error occurred on recipe {0}, moment {1} ".format(
                                 recipe, moment
                             )
                         )
@@ -334,6 +354,7 @@ class RemindoCollect:
             self._write_to_disk(module_name, module_data)
 
     def fetch_item_data(self):
+        """Fetch items using moments."""
         logging.debug("Fetching item data from recipes and moments.")
         for recipe in self._recipe_moment_id_dict.keys():
             for moment in self._recipe_moment_id_dict[recipe]:
@@ -354,7 +375,7 @@ class RemindoCollect:
                             self._write_item(module_name="items", module_data=a)
                     except KeyError as e:
                         logging.debug(
-                            "A Key Error occurred on recipe {1}, moment {2} ".format(
+                            "A Key Error occurred on recipe {0}, moment {1} ".format(
                                 recipe, moment
                             )
                         )
@@ -362,17 +383,20 @@ class RemindoCollect:
                         continue
 
     def _write_to_temp(self, name, data):
+        """Write to temp for tuples."""
         file = os.path.join(self._base_directory, f"{name}.txt")
         with open(file, "w") as f:
             for s in data:
                 f.write(str(s) + "\n")
 
     def _write_to_temp_dict(self, name, data):
+        """Write to temp dictionary."""
         file = os.path.join(self._base_directory, f"{name}.json")
         with open(file, "w") as f:
             json.dump(data, f)
 
     def _write_item(self, module_name, module_data):
+        """Write for items' data."""
         file = os.path.join(self._base_directory, f"{module_name}.csv")
         header = False if os.path.isfile(file) else True
         pd.DataFrame(module_data).to_csv(
@@ -396,6 +420,7 @@ class RemindoCollect:
     #     )
 
     def _write_to_disk(self, module_name, module_data):
+        """Save function."""
         file = os.path.join(self._base_directory, f"{module_name}.csv")
         write_mode, header = ("a", False) if os.path.isfile(file) else ("w", True)
 
@@ -409,6 +434,7 @@ class RemindoCollect:
             )
 
     def reset_data_lists(self):
+        """Reset temporary data list."""
         self._cluster_data_list = list()
         self._study_data_list = list()
         self._recipe_data_list = list()
@@ -419,7 +445,7 @@ class RemindoCollect:
         self._item_data_list = list()
 
     def _parse_cluster_data(self, cluster_obj):
-        """Parse cluster data from cluster object"""
+        """Parse cluster data from cluster object."""
         return OrderedDict(
             {
                 "id": cluster_obj.rid,
@@ -429,7 +455,7 @@ class RemindoCollect:
         )
 
     def _parse_study_data(self, study_obj):
-        """Parse study data from study object"""
+        """Parse study data from study object."""
         return OrderedDict(
             {
                 "id": study_obj.rid,
@@ -447,7 +473,7 @@ class RemindoCollect:
         )
 
     def _parse_recipe_data(self, recipe_obj):
-        """Parse recipe data from recipe object"""
+        """Parse recipe data from recipe object."""
         return OrderedDict(
             {
                 "id": recipe_obj.rid,
@@ -487,7 +513,7 @@ class RemindoCollect:
         )
 
     def _parse_moment_data(self, moment_obj):
-        """Parse moment data from moment object"""
+        """Parse moment data from moment object."""
         return OrderedDict(
             {
                 "id": moment_obj.rid,
@@ -520,7 +546,7 @@ class RemindoCollect:
         )
 
     def _parse_moment_result_data(self, moment_obj):
-        """Parse moment data from moment result object"""
+        """Parse moment data from moment result object."""
         return OrderedDict(
             {
                 "subscription_id": moment_obj.subscription_id,
@@ -567,7 +593,7 @@ class RemindoCollect:
         )
 
     def _parse_reliability_result_data(self, reliability_obj):
-        """Parse reliability data from reliability result object"""
+        """Parse reliability data from reliability result object."""
         return OrderedDict(
             {
                 "alpha": reliability_obj.alpha,
@@ -585,7 +611,7 @@ class RemindoCollect:
         )
 
     def _parse_stats_data(self, stats_obj):
-        """Parse stats data from stats result object"""
+        """Parse stats data from stats result object."""
         return OrderedDict(
             {
                 "item_identifier": stats_obj.item_identifier,
@@ -609,7 +635,7 @@ class RemindoCollect:
         )
 
     def _parse_item_data(self, item_obj):
-        """Parse item data from item result object"""
+        """Parse item data from item result object."""
         return OrderedDict(
             {
                 "subscription_id": item_obj.subscription_id,

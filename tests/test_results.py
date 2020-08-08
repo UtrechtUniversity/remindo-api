@@ -1,13 +1,16 @@
 # content of ./test_result.py
+"""Tests for RemindoResult."""
 from remindo_api.result import RemindoResult
 
 
 def test_isInstanceRemindoResult(rclient):
+    """Test function to retrieve an instance of RemindoResult."""
     results = rclient.list_results(recipe_ids=2335)
     assert isinstance(results[0], RemindoResult)
 
 
-def test_isRemindoStats(rclient):
+def test_isRemindoRemindoResult(rclient):
+    """Test function to check the validity of RemindoResult."""
     results = rclient.list_results(recipe_ids=2335)
     r = results[0]
     assert r.subscription_id == 31531

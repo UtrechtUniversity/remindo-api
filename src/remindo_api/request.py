@@ -1,3 +1,5 @@
+# src/remindo_api/request.py
+"""Class implementation for sending requests to Remindo."""
 import json
 import time
 
@@ -7,9 +9,9 @@ import requests
 
 
 class RemindoRequestException(Exception):
-    """Class that is called for exception messages
+    """Class that is called for exception messages.
 
-    You can see the usage of this class looking at the test
+    You can see the usage of this class looking at the test.
 
     """
 
@@ -22,14 +24,14 @@ class RemindoRequestException(Exception):
 
 
 class RemindoRequest:
-    """Main class to send requests to Remindo
+    """Main class to send requests to Remindo.
 
-    To finish its documentation
+    To finish its documentation.
 
     """
 
     def __init__(self, client, url, content, req_format="json"):
-        """Instantiate all the relevant parameters
+        """Instantiate all the relevant parameters.
 
         To instantiate all the keys, this class uses the `config.ini` file.
 
@@ -52,7 +54,7 @@ class RemindoRequest:
         self.signature = h.hexdigest()
 
     def request(self):
-        """Create message request"""
+        """Create message request."""
         self.contentDumped = json.dumps(self.content)
         params = {
             "payload": self.payload,

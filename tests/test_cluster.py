@@ -1,8 +1,10 @@
 # content of ./test_cluster.py
+"""Tests for cluster."""
 from remindo_api.cluster import RemindoCluster
 
 
 def test_listIdCluster(rclient):
+    """Test function to retrieve cluster id."""
     list_ids = list()
     response = rclient.list_clusters()
     assert isinstance(response[0], RemindoCluster)
@@ -11,6 +13,7 @@ def test_listIdCluster(rclient):
 
 
 def test_listNameCluster(rclient):
+    """Test function to retrieve cluster name."""
     list_names = list()
     response = rclient.list_clusters()
     assert isinstance(response[0], RemindoCluster)
@@ -19,6 +22,7 @@ def test_listNameCluster(rclient):
 
 
 def test_listCluster(rclient):
+    """Test function to retrieve clusters."""
     response = rclient.list_clusters()
     assert isinstance(response[0], RemindoCluster)
     assert 2257 == response[0].rid

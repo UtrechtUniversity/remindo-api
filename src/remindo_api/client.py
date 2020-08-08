@@ -1,3 +1,5 @@
+# src/remindo_api/client.py
+"""Client for Remindo."""
 from typing import Any, List
 
 import requests
@@ -21,42 +23,62 @@ from .study import RemindoStudy
 
 
 class RemindoClientException(Exception):
-    """Class that is called for exception messages
+    """Class that is called for exception messages.
 
-    You can see the usage of this class looking at the test
-
+    You can see the usage of this class looking at the test.
     """
 
     def __init__(self, error_msg):
+        """Init exception."""
         self.error_msg = error_msg
 
     def __str__(self):
+        """Return exception."""
         return self.error_msg
 
 
 class RemindoClient:
-    """Main client class of Remindo
-    """
+    """Main client class of Remindo."""
 
     def __init__(self, uuid, secret, url_base) -> None:
-        """Initialize the client"""
+        """Initialize a RemindoClient.
+
+        It uses parameters that one needs to obtain from Paragin.
+
+        Args:
+            uuid (str): uuid of the account with access to Remindo.
+            secret (str): secret of the account with access to
+                Remindo.
+            url_base (str) : url_base for accessing Remindo.
+                Changes depending on each university and between
+                test and production environemnts.
+
+        """
         self.uuid = uuid
         self.secret = secret
         self.url_base = url_base
         self.ip = requests.get("https://jsonip.com").json()["ip"]
+        """str: current ip from which Remindo is accessed.
+            It needs to be authorized.
+        """
 
     @property
     def query_dict(self) -> dict:
-        """ Query personal data from client """
+        """Query personal data from client."""
         return {"key": self.uuid, "secret": self.secret, "url_base": self.url_base}
 
     def request(self, *args, **kwargs):
-        """ Create a remindo_api object and make a request """
+        """Create a remindo_api object and make a request."""
         req = RemindoRequest(self, *args, **kwargs)
         return req.request()
 
     def hello_world(self) -> RemindoRequest:
-        """ Make a "Hello World" request to verify keys """
+        """Make a "Hello World" request to verify key and connection.
+
+        Returns:
+            :obj:`RemindoHelloWorld`: Object RemindoHelloWorld. Contains string "hello world" if
+                successfull, none if not.
+        """
         resp = self.request(url="/remote_api/hello_world", content="")
         return RemindoHelloWorld(resp)
 
@@ -65,20 +87,14 @@ class RemindoClient:
     ) -> List[RemindoCluster]:
         """List all available user groups.
 
-        Parameters
-        ---------
-        filter : string, optional
-            A search query for the name of the cluster.
-        category : string, optional
-            Return only user groups in this category.
-        full : boolean, optional
-            Return all the user groups.
+        Args:
+            filter (str): A search query for the name of the cluster.
+            category (str): Return only user groups in this category.
+            full (bool): Return all the user groups.
 
-        Returns
-        -------
-        RemindoCluster : dict
-            A list of dict of user groups in the form:
-                {"id" : 0000, "name" : 'test'}.
+        Returns:
+            :obj:`dict` of :obj:`RemindoCluster`: A list of dict of user groups in the form:
+                    {"id" : 0000, "name" : 'test'}.
         """
         params = {}
         if filter is not None:
@@ -103,27 +119,22 @@ class RemindoClient:
         complete: bool = False,
         since: str = None,
     ) -> list:
-        """'List studies, which are a set of recipes
+        """List studies.
 
-        Parameters
-        ---------
-        code : string, optional
-            Return studies with study code
-        study_id : int, optional
-            Retrun study with ID
-        datasource_uuid : string, optional
-            Return studies from test manager with UUID
-        complete : boolean, optional, default: false
-            Full study & all recipes)
-        since : date, optional
-            Date is in Y-m-d format. To be filled only when complete is true
+        Studies are a set of recipes.
 
-        Returns
-        --------
-        RemindoStudy : list
-            Return list of Remindo studies
-        RemindoRecipe : list
-            if complete == True, return list of studies and associated recipes modified since date
+        Args:
+            code (str): Return studies with study code
+            study_id (int): Optional; Return study with ID
+            datasource_uuid (str): Optional; Return studies from test manager with UUID
+            complete (bool): Optional; Full study & all recipes)
+            since (str): Optional; Date is in Y-m-d format. To be filled only when complete is true
+
+        Returns:
+            :obj:`list` of :obj:`RemindoStudy`: Return list of Remindo studies
+            :obj:`list` of :obj:`RemindoRecipe`:
+                if complete == True, return list of studies and associated recipes modified since date
+
         """
         params = {}
         if code is not None:
@@ -171,36 +182,24 @@ class RemindoClient:
         properties: bool = None,
         full: bool = False,
     ) -> List[RemindoRecipe]:
-        """List recipes
+        """List recipes.
 
         Recipe is a list of question for a determined exam - needs to be assigned
         to a student with a 'subscription' before starting exam.
 
-        Parameters
-        ---------
-        code : string, optional
-            When given, it will only return recipes where the recipe code contains the given text.
-        category : string, optional
-            When given, it will only return recipes where the recipe category contains the given text.
-        study_id: int, optional
-            When given, only the recipes in the study with this ID are returned.
-        recipe_id : int, optional
-            When given, only the recipe with the given ID is returned
-        filter : filterobject, optional
-            Search query for retrieving the recipe
-        datasource_uuid : string, optional
-            Return recipes from test manager with UUID
-        since : date, Y-m-d format, optional
-            Return recipes modified since
-        properties : boolean, optional
-            Returns the custom from test manager
-        full : boolean, optional
-            Returns additional information
+        Args:
+            code (str): When given, it will only return recipes where the recipe code contains the given text.
+            category (str): When given, it will only return recipes where the recipe category contains the given text.
+            study_id (int): When given, only the recipes in the study with this ID are returned.
+            recipe_id (int): When given, only the recipe with the given ID is returned
+            filtr (str): Optional; Search query for retrieving the recipe
+            datasource_uuid (str): Optional; Return recipes from test manager with UUID
+            since (str): Optional; Return recipes modified since
+            properties (bool): Optional; Returns the custom from test manager
+            full (bool): Optional; Returns additional information
 
-        Returns
-        -------
-        RemindoRecipe : list
-            Return list of Remindo recipe object(s)
+        Returns:
+            :obj:`list` of :obj:`RemindoRecipe`: Return list of Remindo recipe object(s)
         """
         params = {}
         if code is not None:
@@ -239,25 +238,17 @@ class RemindoClient:
         frm: str = None,
         until: str = None,
     ) -> List[RemindoMoment]:
-        """List moments
+        """List moments.
 
-        Parameters
-        ---------
-        ids : int or array<int>, optional
-            Return moment for test id(s)
-        codes : string or array<string>, optional
-            Return list for test moment code(s)
-        recipe_ids : int or array<int>, optional
-            Return moments with recipe id(s)
-        from : datetime string, optional
-            Return moments after date
-        until : datetime string, optional
-            Return moments before date
+        Args:
+            ids (int): Return moment for test id(s)
+            code (str): Return list for test moment code(s)
+            recipe_ids (int): Optional; Return moments with recipe id(s)
+            frm (str): Optional; Return moments after date
+            until (str): Optional; Return moments before date
 
-        Returns
-        -------
-        RemindoMoment : list
-            Return list of RemindoMoment object(s)
+        Returns:
+            :obj:`list` of :obj:`RemindoMoment`: Return list of RemindoMoment object(s)
         """
         params = {}
         if ids is not None:
@@ -289,25 +280,17 @@ class RemindoClient:
         candidate_codes: int = None,
         candidate_filter: str = None,
     ) -> List[RemindoResult]:
-        """List results of selected moments
+        """List results of selected moments.
 
-        Parameters
-        --------.
-        id : int, string mandatory
-            ID of moment
-        code : int, string mandatory
-            code of moment
-        candidate_ids : int or array<int>, optional
-            Return result for candidate id
-        candidate_codes : int or array<int>, optional
-            Return result for candidate code(s)
-        candidate_filter : filterobject, optional
-            Filter object to retrieve user
+        Args:
+            id (int): ID of moment
+            code (int): Code of moment
+            candidate_ids (int): Optional; Return result for candidate id
+            candidate_codes (int): Optional; Return result for candidate code(s)
+            candidate_filter (str): Optional; Filter object to retrieve user
 
-        Returns
-        -------
-        RemindoResult : list
-            Return list of Remindo Result object(s) for the moment.
+        Returns:
+            :obj:`list` of :obj:`RemindoResult`: Return list of Remindo Result object(s) for the moment.
         """
         params = {}
         if id is not None:
@@ -352,52 +335,32 @@ class RemindoClient:
         page_size: int = None,
         complete: bool = False,
     ) -> List[RemindoResult]:
-        """Retrieve list of results
+        """Retrieve list of results.
 
-        Parameters
-        ---------
-        type : string, optional
-            Restrict by type: practice, graded practice, exam
-        modified_since : string/int, optional
-            estrict by date and time of last modification
-        modified_until : string/int, optional
-            Restrict by date and time of last modification
-        start_time_since : string/int, optional
-            Restrict by date and time of start
-        start_time_until : string/int, optional
-            Restrict by date and time of start
-        end_time_since : string/int, optional
-            Restrict by date and time of end
-        end_time_until : string/int, optional
-            Restrict by date and time of end
-        status : string, optional
-            Restrict by results with status: started, finished, review, closed
-        search : string, optional
-            Restrict by recipe name or user name match
-        candidate_ids : int/array<int>, optional
-            Restrict by candidates IDs
-        cluster_ids : int/array<int>, optional
-            Restrict by clusters IDs
-        study_ids : int/array<int>, optional
-            Restrict by studies IDs
-        recipe_ids : int/array<int>, optional
-            Restrict by recipes IDs
-        result_ids : int/array<int>, optional
-            Restrict by results IDs
-        subscription_ids : int/array<int>, optional
-            Restrict by subscriptions IDs
-        page : int, optional
-            page to be requested, starting at 1
-        page_size : int, optional
-            Desirable page size, from 1 to 200
-        complete : bool, optional
-            Adds fields report_data and actionlog
+        Args:
+            typ (str): Optional; Restrict by type: practice, graded practice, exam
+            modified_since (str): Optional; Restrict by date and time of last modification
+            modified_until (str): Optional; Restrict by date and time of last modification
+            start_time_since (str): Optional; Restrict by date and time of start
+            start_time_until (str): Optional; Restrict by date and time of start
+            end_time_since (str): Optional; Restrict by date and time of end
+            end_time_until (str): Optional; Restrict by date and time of end
+            status (str): Optional; Restrict by results with status: started, finished, review, closed
+            search (str): Optional; Restrict by recipe name or user name match
+            candidate_ids (int): Optional; Restrict by candidates IDs
+            cluster_ids (int): Optional; Restrict by clusters IDs
+            study_ids (int): Optional; Restrict by studies IDs
+            recipe_ids (int): Optional; Restrict by recipes IDs
+            result_ids (int): Optional; Restrict by results IDs
+            subscription_ids (int): Optional; Restrict by subscriptions IDs
+            page (int): Optional; Page to be requested, starting at 1
+            page_size (int): Optional; Desirable page size, from 1 to 200
+            complete (bool): Optional; Adds fields report_data and actionlog
 
-        Returns
-        -------
-        RemindoResult : list
-            If the results have more than one page of results, returns a list of RemindoResult objects
-            If the results only have one page of results, returns one RemindoResult object.
+        Returns:
+            :obj:`list` of :obj:`RemindoResult`:
+                If the results have more than one page of results, returns a list of RemindoResult objects
+                If the results only have one page of results, returns one RemindoResult object.
         """
         params = {}
         if typ is not None:
@@ -478,27 +441,20 @@ class RemindoClient:
         user_ids: int = None,
         add_item_info: bool = False,
     ) -> Any:
-        """List subscription results
+        """List subscription results.
 
-        No more than 50.000
+        No more than 50.000.
 
-        Parameters
-        ---------
-        recipe_id : int, mandatory
-            Recipe ID to retrive item result statistics.
-        moment_id : int, optional
-            Limit results to this moment.
-        subscription_ids : array, optional
-            Limit results to this subscription ID.
-        user_ids : array, optional
-            Limit results to user IDs.
-        add_item_info : boolean, optional
-            If true, and with single subscription_id or single user_id, add extra information for each item
+        Args:
+            recipe_id (int): Recipe ID to retrive item result statistics.
+            moment_id (int): Optional; Limit results to this moment.
+            subscription_ids (int): Optional; Limit results to this subscription ID.
+            user_ids (int): Optional; Limit results to user IDs.
+            add_item_info (bool): Optional; If true, and with single subscription_id or single user_id,
+                add extra information for each item
 
-        Returns
-        -------
-        list : list
-            return results tied to subscription.
+        Returns:
+            :obj:`list` of :obj:`RemindoResult`: Returns results tied to subscription.
         """
         params = {}
         if recipe_id is not None:
@@ -524,51 +480,24 @@ class RemindoClient:
         corrections: list = None,
         locale: str = None,
     ) -> Any:
-        """"Calculate result reliability
+        """Calculate result reliability.
 
         Calculate the reliability over a set of results using cronbach’s alpha
         and the standard error of measurement.You always need to filter on a single
         recipe to calculate the reliability. Either using a test moment, a recipe,
         a scan or a paper variant.
 
-        Parameters
-        ---------
-        recipe_id : int, optional
-            Calculate reliability for the given test recipe
-        moment_id : int, optional
-            Calculate reliability for the given test moment
-        variant_id : int, optional
-            Calculate reliability for the given paper variant
-        scan_id : int, optional
-            Calculate reliability for the given scan corrections
-        corrections : enum[], optional
-            Which answer model corrections to apply while calculating the reliability.
-            Available are: \active (active corrections) or concept (concept corrections)
-        locale : string, optional
-            The language in which to provide extra information (notes)
+        Args:
+            recipe_id (int): Optional; Calculate reliability for the given test recipe
+            moment_id (int): Calculate reliability for the given test moment
+            variant_id (int): Optional; Calculate reliability for the given paper variant
+            scan_id (int): Optional; Calculate reliability for the given scan corrections
+            corrections (list): Optional; Which answer model corrections to apply while calculating the reliability.
+                Available are: `active` (active corrections) or `concept` (concept corrections)
+            locale (str): Optional; The language in which to provide extra information (notes)
 
-        Returns
-        -------
-        alpha : float
-            Cronbach's Alpha value
-        sem : float
-            SEM value
-        notes : text
-            text
-        missing count : int
-            int
-        answer_count : int
-            int
-        stdev : float
-            float
-        average : float
-            float
-        max : int
-            int
-        error : bool
-            true or null
-        success : bool
-            BOOL
+        Returns:
+            :obj:`RemindoReliability`: Returns object containing reliability parameters.
         """
 
         params = {}
@@ -595,29 +524,23 @@ class RemindoClient:
         user_ids: int = None,
         add_item_info: bool = False,
     ) -> List[RemindoItem]:
-        """"Retrieve item results
+        """Retrieve item results.
 
         Returns a list of question/item results for a given filter. No more than 50.000
         item results will be returned. The result is a nested array, grouped by subscription
         id and test section (if applicable).
 
-        Parameters
-        ---------
-        recipe_id : int, mandatory
-            The recipe ID for which you want to retrieve the item result statistic
-        moment_id : int, optional
-            Limit the item results to the ones used in this moment
-        subscription_ids : array, optional
-            Limit the item results to the given subscription IDs
-        user_ids : array, optional
-            Limit the item results to the given user IDs
-        add_item_info : boolean, optional
-            If true, and in combination with a single subscription_id or a single user_id,
-            will add extra information for each item, such as item properties, the author
-            of the item and the time it was created
+        Args:
+            recipe_id (int): The recipe ID for which you want to retrieve the item result statistic
+            moment_id (int): Limit the item results to the ones used in this moment
+            subscription_ids (int): Optional; Limit the item results to the given subscription IDs
+            user_ids (int): Optional; Limit the item results to the given user IDs
+            add_item_info (bool): Optional; If true, and in combination with a single subscription_id or a single user_id,
+                will add extra information for each item, such as item properties, the author
+                of the item and the time it was created
 
-        Returns
-        -------
+        Returns:
+            :obj:`list` of :obj:`RemindoItem`: Returns list of RemindoItem containing the results for each item (question) on the test.
         """
 
         params = dict()
@@ -665,24 +588,20 @@ class RemindoClient:
         subscription_ids: int = None,
         user_ids: int = None,
     ) -> List[RemindoStats]:
-        """"Retrieve recipe question/item result statistics
+        """Retrieve recipe question/item result statistics.
 
         Returns a list of aggregated statistics for each question/item results for a given
         recipe of pair recipe-moment.
 
-        Parameters
-        ---------
-        recipe_id : int, mandatory
-            The recipe ID for which you want to retrieve the item result statistics
-        moment_id : int, optional
-            Limit the item results to the ones used in this moment.
-        subscription_ids : array, optional
-            Limit the item results to the given subscription IDs
-        user_ids : array, optional
-            Limit the item results to the given user IDs
+        Args:
+            recipe_id (int): The recipe ID for which you want to retrieve the item result statistics
+            moment_id (int): Optional; Limit the item results to the ones used in this moment.
+            subscription_ids (int): Optional; Limit the item results to the given subscription IDs
+            user_ids (int): Optional; Limit the item results to the given user IDs
 
-        Returns
-        -------
+        Returns:
+            :obj:`list` of :obj:`RemindoStat`: Returns list of RemindoStat for each of the items (questions) on the exam.
+                Each stat contains the summarized values for one question.
         """
 
         params = {}

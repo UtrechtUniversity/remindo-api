@@ -3,11 +3,13 @@ from remindo_api.stats import RemindoStats
 
 
 def test_isInstanceRemindoStats(rclient):
+    """Test function to retrieve an instance of RemindoStats."""
     stats = rclient.list_stats(recipe_id=2323)
     assert isinstance(stats[0], RemindoStats)
 
 
 def test_isRemindoStats(rclient):
+    """Test function to check the validity of RemindoStats."""
     stats = rclient.list_stats(recipe_id=2323)
     s = stats[0]
     assert s.item_identifier == "f34647b3-80e6-4854-967d-7766cfeba90e"

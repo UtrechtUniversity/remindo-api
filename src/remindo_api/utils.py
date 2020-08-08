@@ -1,8 +1,9 @@
+# src/remindo_api/utils.py
 import re
 
 
 class TextCleaner:
-    """Class to clean notes' text"""
+    """Class to clean notes' text."""
 
     @classmethod
     def clean_all(cls, text):
@@ -20,7 +21,7 @@ class TextCleaner:
 
 
 def retry_if_type_error(exception):
-    """Return True if we should retry, False otherwise"""
+    """Return True if we should retry, False otherwise."""
     return isinstance(exception, TypeError)
 
 
