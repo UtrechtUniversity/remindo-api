@@ -1,4 +1,4 @@
-remindo_api
+Remindo API
 =========
 
 This package provides a Python interface for the `Remindo API
@@ -15,29 +15,36 @@ This package depends on the following packages:
 -  Cryptodome
 -  json
 
-They can be installed using ``pip``.
+The dependecies can be installed preferably using ``poetry`` but also using ``pip``, as follos:
 
-.. code:: python
-    sudo pip install -r requirements.txt
+### Poetry
 
-or if pipenv is installed
+On terminal, after navigating to the repository:
 
-.. code:: python
-    sudo pipenv install
+```python
+    poetry install
+```
 
+If you want to make changes to the code, please install the repository in "developer mode":
 
-If you want to contribute to this package, you will need the ``nose``
-package as well.
+```python
+    poetry install --dev
+```
 
+### Pip
 
-Installation
-------------
+On terminal, after navigating to the repository, install the requirements:
 
-To install, run the following command from the top-level package
-directory.
+```python
+    pip install remindo-api
+```
 
-.. code:: python
-    sudo python setup.py install
+If you want to make changes to the code, please install the requirements first:
+
+```python
+    pip install -r requirements.txt
+    pip install remindo-api
+```
 
 
 Getting Started
@@ -48,11 +55,14 @@ One person you could contact, if you believe you will be granted access authoriz
 is Patrick Van der Veer, system architect of UU's ITS.
 
 Once you have the API keys, you need to substitute your keys in the `config.ini` file,
-before creating client instance to query Remindo.
+before creating any client instance to query the Remindo database.
 
-.. code:: python
-    from remindo_api import client
-    rc = client.RemindoClient()
+
+Documentation
+-------------
+
+Read more about this package
+`here <http://goodreads.readthedocs.org/en/latest/>`__.
 
 
 Examples
@@ -61,21 +71,27 @@ Examples
 This package provides a Python interface for many Remindo API methods.
 Here are a few examples demonstrating how to access data on Remindo.
 
-Clusters
-~~~~~
+### Creating a Client instance
+
+```python
+    from remindo_api import client
+    rc = client.RemindoClient()
+```
+
+
+### Retrieving Clusters
 
 Let's access the first book added to Goodreads! It is the book with id
 1.
 
-.. code:: python
-
+```python
     clusters = rc.
+```
 
-Once you have the ``GoodreadsBook`` instance for the book, you can
+Once you have the `cluster` instance, you can
 access data for the queried book.
 
-.. code:: python
-
+```python
     >>> book.title
     u'Harry Potter and the Half-Blood Prince (Harry Potter, #6)'
     >>> authors = book.authors
@@ -83,14 +99,13 @@ access data for the queried book.
     u'J.K. Rowling'
     >>> book.average_rating
     u'4.49'
+```
 
-Studies
-~~~~~~~
+### Retrieving Studies
 
 You can get information about an author as well.
 
-.. code:: python
-
+```python
     list_recipes = []
     [list_recipes.append(recipe.rid) for recipe in cln.list_recipes(cln, full = True)]
 
@@ -120,14 +135,13 @@ You can get information about an author as well.
     u'13'
     >>> author.books
     [Extremely Loud and Incredibly Close, Everything Is Illuminated, Eating Animals, Tree of Codes, Everything is Illuminated & Extremely Loud and Incredibly Close, The unabridged pocketbook of lightning, The Future Dictionary of America, A Convergence of Birds: Original Fiction and Poetry Inspired by Joseph Cornell, New American Haggadah, The Sixth Borough]
+```
 
-Recipes
-~~~~~
+### Retrieving Recipes
 
 User data can be retrieved by user id or username.
 
-.. code:: python
-
+```python
     >>> user = gc.user(1)
     >>> user.name
     u'Otis Chandler'
@@ -135,14 +149,13 @@ User data can be retrieved by user id or username.
     u'otis'
     >>> user.small_image_url
     u'http://d.gr-assets.com/users/1189644957p2/1.jpg'
+```
 
-Moments
-~~~~~~
+### Retrieving Moments
 
 Let's find a group discussing Python and get more information about it.
 
-.. code:: python
-
+```python
     >>> g = gc.find_groups("Python")
     >>> g = groups[0]
     >>> g['title']
@@ -152,14 +165,13 @@ Let's find a group discussing Python and get more information about it.
     u'Only for Committed Self Learners and Computer Scientists Who are Starving for
     Information, and Want to Advance their Skills Through: Reading, Practicing and
     Discussion Computer Science and Programming Books.'
+```
 
-Results
-~~~~~~
+### Retrieving Results
 
-Goodreads API also allows to list events happening in an area.
+Remindo API also allows to list events happening in an area.
 
-.. code:: python
-
+```python
     >>> events = gc.list_events(21229)
     >>> event = events[0]
     >>> event.title
@@ -168,14 +180,13 @@ Goodreads API also allows to list events happening in an area.
     u'120 N. Front St.'
     >>> event.city
     u'Wrightsville'
+```
 
-Items
-~~~~~~
+### Retrieving Items
 
-Goodreads API also allows to list events happening in an area.
+Remindo API also allows to list events happening in an area.
 
-.. code:: python
-
+```python
     >>> events = gc.list_events(21229)
     >>> event = events[0]
     >>> event.title
@@ -184,14 +195,13 @@ Goodreads API also allows to list events happening in an area.
     u'120 N. Front St.'
     >>> event.city
     u'Wrightsville'
+```
 
-Statistics and reliabilities
-~~~~~~
+### Retrieving Items' Statistics and Reliabilities
 
 Goodreads API also allows to list events happening in an area.
 
-.. code:: python
-
+```python
     >>> events = gc.list_events(21229)
     >>> event = events[0]
     >>> event.title
@@ -200,13 +210,7 @@ Goodreads API also allows to list events happening in an area.
     u'120 N. Front St.'
     >>> event.city
     u'Wrightsville'
-
-
-Documentation
--------------
-
-Read more about this package
-`here <http://goodreads.readthedocs.org/en/latest/>`__.
+```
 
 Contribution
 ------------
@@ -219,24 +223,3 @@ License
 -------
 
 `MIT License <http://opensource.org/licenses/mit-license.php>`__
-
-Acknowledgment
---------------
-
-Thanks to `Paul Shannon <https://github.com/paulshannon>`__ for
-providing 'goodreads' package at PyPI.
-
-.. |Build Status| image:: http://img.shields.io/travis/sefakilic/goodreads.svg
-   :target: https://travis-ci.org/sefakilic/goodreads
-.. |Coverage Status| image:: http://img.shields.io/coveralls/sefakilic/goodreads.svg
-   :target: https://coveralls.io/r/sefakilic/goodreads
-.. |Documentation Status| image:: https://readthedocs.org/projects/goodreads/badge/?version=latest
-   :target: https://readthedocs.org/projects/goodreads/?badge=latest
-.. |Downloads| image:: https://img.shields.io/pypi/dm/goodreads.svg
-   :target: https://pypi.python.org/pypi/goodreads/
-.. |Latest Version| image:: https://img.shields.io/pypi/v/goodreads.svg
-   :target: https://pypi.python.org/pypi/goodreads/
-.. |Supported Python versions| image:: https://img.shields.io/pypi/pyversions/goodreads.svg
-   :target: https://pypi.python.org/pypi/goodreads/
-.. |License| image:: https://img.shields.io/pypi/l/goodreads.svg
-   :target: https://pypi.python.org/pypi/goodreads/
