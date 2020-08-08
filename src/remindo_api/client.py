@@ -16,8 +16,6 @@ from .stats import RemindoStats
 from .study import RemindoStudy
 
 
-# TODO: Error: /api/v1/result/reliability {'error':
-# 'Please specify a valid API method for class result. Available methods: list'}
 # TODO: complete list_subscritpion call
 # TODO: complete mypy typing
 

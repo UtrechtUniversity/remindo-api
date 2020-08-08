@@ -23,6 +23,7 @@ __pycache__/
 # Distribution / packaging
 .Python
 .nox
+src/remindo_api/config.cfg
 build/
 config.cfg
 apikey.py

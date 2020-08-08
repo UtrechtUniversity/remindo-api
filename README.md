@@ -1,21 +1,26 @@
 Remindo API
 =========
 
-This package provides a Python interface for the `Remindo API
-<http://paragin.com>`. Using this package you can extract the
-majority of the read-only data from Paragin.
+This package provides a Python interface for the API endpoint offered by [Remindo](https://www.paragin.nl/remindotoets/), a product of [Paragin](https://paragin.nl). This API wrapper allows you to extract and read the
+majority of the exam-related data from Remindo. 
+
+This package was developed by Utrecht University and is meant to be used with a read-only access. Therefore, the API features to modify exam-related data are not currently available.
 
 
 Dependencies
 ------------
 
-This package depends on the following packages:
+The package contains the following dependencies:
 
--  requests
--  Cryptodome
--  json
+-  `requests`. To communicate with the API endpoint.
+-  `Cryptodome`. To encrypt and decrypt data.
+-  `json`. To read data.
 
-The dependecies can be installed preferably using ``poetry`` but also using ``pip``, as follos:
+The dependecies can be installed preferably using ``poetry`` but also using ``pip``. This can be done as follows.
+
+Installing
+------------
+
 
 ### Poetry
 
@@ -54,7 +59,7 @@ The first thing is to request an API key from Utrecht University's (UU) ITS serv
 One person you could contact, if you believe you will be granted access authorization
 is Patrick Van der Veer, system architect of UU's ITS.
 
-Once you have the API keys, you need to substitute your keys in the `config.ini` file,
+Once you have the API keys, you need to substitute your keys in the `config.cfg` file,
 before creating any client instance to query the Remindo database.
 
 
@@ -62,7 +67,7 @@ Documentation
 -------------
 
 Read more about this package
-`here <http://goodreads.readthedocs.org/en/latest/>`__.
+[here](http://remindo.readthedocs.org/en/latest/).
 
 
 Examples
@@ -75,14 +80,27 @@ Here are a few examples demonstrating how to access data on Remindo.
 
 ```python
     from remindo_api import client
-    rc = client.RemindoClient()
+    rc = client.RemindoClient(
+        config["REMINDOKEYS"]["UUID"],
+        config["REMINDOKEYS"]["SECRET"],
+        config["REMINDOKEYS"]["URL_BASE"],
+    )
 ```
 
+### Check Connection
+
+Let's use the `helloworld()` function to test if the credentials to connect to the Remindo endpoint are correct:
+
+```python
+    hw = rc.helloworld()
+    print(hw.message)
+    >>> hello world
+```
+
+Once we determined that the credentials are correct, we can continue using the client to retrieve Remindo data.
 
 ### Retrieving Clusters
 
-Let's access the first book added to Goodreads! It is the book with id
-1.
 
 ```python
     clusters = rc.
@@ -199,7 +217,7 @@ Remindo API also allows to list events happening in an area.
 
 ### Retrieving Items' Statistics and Reliabilities
 
-Goodreads API also allows to list events happening in an area.
+Remindo API also allows to list events happening in an area.
 
 ```python
     >>> events = gc.list_events(21229)
@@ -222,4 +240,4 @@ a pull request for a bug fix or additional feature.
 License
 -------
 
-`MIT License <http://opensource.org/licenses/mit-license.php>`__
+[MIT License](http://opensource.org/licenses/mit-license.php).

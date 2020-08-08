@@ -13,7 +13,6 @@ config.read_file(open("config.cfg"))
 
 
 def main():
-    print("hello")
     logging.debug("Creating remindo client in example.py.")
     rclient = client.RemindoClient(
         config["REMINDOKEYS"]["UUID"],
@@ -21,8 +20,10 @@ def main():
         config["REMINDOKEYS"]["URL_BASE"],
     )
 
-    c = rclient.hello_world()
-    print(c.message)
+    c = rclient.list_clusters()
+    for i in c:
+        i.rid
+    # c.rid
 
     # mom = 3487
     # rec = 2335
