@@ -20,9 +20,9 @@ def main():
         config["REMINDOKEYS"]["URL_BASE"],
     )
 
-    c = rclient.list_clusters()
-    for i in c:
-        i.rid
+    c = rclient.hello_world()
+    print(c)
+    # c = rclient.list_studies()
     # c.rid
 
     # mom = 3487

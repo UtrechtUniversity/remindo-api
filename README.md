@@ -103,132 +103,137 @@ Once we determined that the credentials are correct, we can continue using the c
 
 
 ```python
-    clusters = rc.
+    clusters = rc.list_cluster()
 ```
 
-Once you have the `cluster` instance, you can
-access data for the queried book.
+Once you have retrieved a list of `cluster`, you can
+access data for the queried clusters.
+
+Let's access the first cluster of the list of clusters retrieved.
 
 ```python
-    >>> book.title
-    u'Harry Potter and the Half-Blood Prince (Harry Potter, #6)'
-    >>> authors = book.authors
-    >>> authors[0].name
-    u'J.K. Rowling'
-    >>> book.average_rating
-    u'4.49'
+    >>> clusters[0].rid
+    >>> '1111'
+    clusters[0].name
+    >>> 'cluster_name'
 ```
+
+More details on the calls available for `clusters` are available [here](https://readthedocs.com).
 
 ### Retrieving Studies
 
-You can get information about an author as well.
+You can retrieve information about studies as well.
 
 ```python
-    list_recipes = []
-    [list_recipes.append(recipe.rid) for recipe in cln.list_recipes(cln, full = True)]
-
-    # For results statistics
-    for recipe in list_recipes[1:2]:
-        # print(cln.list_stats(cln, recipe_id = recipe))
-        print([i.p for i in cln.list_stats(cln, recipe_id = recipe)])
-
-    # For item results
-    # for recipe in list_recipes[1:2]:
-    #     print([item.duration for item in cln.list_itemresults(cln, recipe_id = recipe, add_item_info = True)])
-    # print(cln.list_itemresults(cln, recipe_id = recipe, add_item_info = True))
-
-    # For reliability
-    # for recipe in list_recipes:
-    #     print(cln.list_reliability(cln, recipe_id = recipe))
-
-    # For results
-    # for recipe in list_recipes[1:2]:
-    #     result_recipe = cln.list_results(cln, recipe_ids= recipe)
-    #     print([[r.i_correct,r.i_answered]  for r in result_recipe])
-
-    >>> author = gc.author(2617)
-    >>> author.name
-    u'Jonathan Safran Foer'
-    >>> author.works_count
-    u'13'
-    >>> author.books
-    [Extremely Loud and Incredibly Close, Everything Is Illuminated, Eating Animals, Tree of Codes, Everything is Illuminated & Extremely Loud and Incredibly Close, The unabridged pocketbook of lightning, The Future Dictionary of America, A Convergence of Birds: Original Fiction and Poetry Inspired by Joseph Cornell, New American Haggadah, The Sixth Borough]
+    studies = rc.list_studies()
+    study = studies[0]
 ```
+
+You can access information about a study as before:
+
+```python
+    study.rid
+    >>> 'rid'
+    study.name
+    >>> 'name'
+    study.code
+    >>> 'code'
+    ...
+```
+
+More details on the calls available for `studies` are available [here](https://readthedocs.com).
 
 ### Retrieving Recipes
 
-User data can be retrieved by user id or username.
+Recipes can also be retrieved with a simple call. In the example below we save a list of recipes to be used in later examples.
 
 ```python
-    >>> user = gc.user(1)
-    >>> user.name
-    u'Otis Chandler'
-    >>> user.user_name
-    u'otis'
-    >>> user.small_image_url
-    u'http://d.gr-assets.com/users/1189644957p2/1.jpg'
+    list_recipes = []
+    [list_recipes.append(recipe.rid) for recipe in rc.list_recipes(cln, full = True)]
 ```
+
+The call uses the parameter `full = True` (by default is `False`) to indicate that we want to retrieve all the information available on Remindo concerning the Recipes.
+
+More details on the calls available for `recipes` are available [here](https://readthedocs.com).
 
 ### Retrieving Moments
 
-Let's find a group discussing Python and get more information about it.
+Using the list of recipes saved from the previous call, we can now retrieve information about moments contained in each recipe.
+
+Let's access the rid of the first recipe
+```python
+    recipe_rid = list_recipes[0].rid
+    moments = rc.list_moments(recipe_ids = recipe_rid)
+```
+
+Once we have retrieved all the moments information for one recipe, we can access these information as usual. We also save the moment id, to be used in a later call.
 
 ```python
-    >>> g = gc.find_groups("Python")
-    >>> g = groups[0]
-    >>> g['title']
-    u'The Computer Scientists'
-    >>> group = gc.group(g['id'])
-    >>> group.description
-    u'Only for Committed Self Learners and Computer Scientists Who are Starving for
-    Information, and Want to Advance their Skills Through: Reading, Practicing and
-    Discussion Computer Science and Programming Books.'
+    # To be used later in examples
+    moment_rid = moments[0].rid
+    
+    moments[0].rid
+    >>> 'moment_rid'
+    moments[0].code
+    >>> 'moment_code'
+    moments[0].date_end
+    >>> 'moment_date_end'
+    ...
 ```
+
+More details on the calls available for `moments` are available [here](https://readthedocs.com).
 
 ### Retrieving Results
 
-Remindo API also allows to list events happening in an area.
+Using the previously saved recipes information, we can use the general call `list_results` to retrive results' information about recipes.
 
 ```python
-    >>> events = gc.list_events(21229)
-    >>> event = events[0]
-    >>> event.title
-    u'Books and Cocktails'
-    >>> event.address
-    u'120 N. Front St.'
-    >>> event.city
-    u'Wrightsville'
+    for recipe in list_recipes[1:2]:
+        result_recipe = rc.list_results(cln, recipe_ids= recipe)
+        print([[r.i_correct,r.i_answered]  for r in result_recipe])
 ```
+
+More details on the calls available for `recipes`' results are available [here](https://readthedocs.com).
+
+Using the previously saved moment id, we now retrieve results' informations on individual moments using the `list_moment_results` call.
+
+```python
+    moment_results = rc.list_moments_results(id = moment_rid)
+    
+    moment_results[0].subscription_id
+    >>> 'moment_subscription_id'
+    moment_results[0].user_id
+    >>> 'moment_user_id'
+    moment_results[0].user_code
+    >>> 'moment_user_code'
+    ...
+```
+
+More details on the calls available for `moments`' results are available [here](https://readthedocs.com).
 
 ### Retrieving Items
 
-Remindo API also allows to list events happening in an area.
 
 ```python
-    >>> events = gc.list_events(21229)
-    >>> event = events[0]
-    >>> event.title
-    u'Books and Cocktails'
-    >>> event.address
-    u'120 N. Front St.'
-    >>> event.city
-    u'Wrightsville'
+    for recipe in list_recipes[1:2]:
+        print([item.duration for item in rc.list_itemresults(
+            recipe_id = recipe,
+            add_item_info = True)]
+        )
+        print(cln.list_itemresults(recipe_id = recipe, add_item_info = True))
 ```
+
+More details on the calls available for `items`' results are available [here](https://readthedocs.com).
 
 ### Retrieving Items' Statistics and Reliabilities
 
-Remindo API also allows to list events happening in an area.
 
 ```python
-    >>> events = gc.list_events(21229)
-    >>> event = events[0]
-    >>> event.title
-    u'Books and Cocktails'
-    >>> event.address
-    u'120 N. Front St.'
-    >>> event.city
-    u'Wrightsville'
+    for recipe in list_recipes:
+        print(cln.list_reliability(recipe_id = recipe))
 ```
+
+More details on the calls available for `items`' statistics and `reliabilities` are available [here](https://readthedocs.com).
 
 Contribution
 ------------
