@@ -27,13 +27,6 @@ remindo_api.collectdata
    :members:
 
 
-remindo_api.fetchdata
-----------------------------
-
-.. automodule:: remindo_api.fetchdata
-   :members:
-
-
 remindo_api.helloworld
 ----------------------------
 
