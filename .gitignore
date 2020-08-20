@@ -23,6 +23,8 @@ __pycache__/
 # Distribution / packaging
 .Python
 .nox
+src/remindo_api/example.py
+src/remindo_api/fetchdata.py
 src/remindo_api/config.cfg
 build/
 config.cfg
