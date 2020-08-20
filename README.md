@@ -241,8 +241,3 @@ Contribution
 If you find an API method that is not supported by this package, feel
 free to create a Github issue. Also, you are more than welcome to submit
 a pull request for a bug fix or additional feature.
-
-License
--------
-
-[MIT License](http://opensource.org/licenses/mit-license.php).
