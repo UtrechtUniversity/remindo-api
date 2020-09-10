@@ -1,3 +1,5 @@
+[![Documentation Status](https://readthedocs.org/projects/remindo-api/badge/?version=latest)](https://remindo-api.readthedocs.io/en/latest/?badge=latest)
+
 Remindo API
 =========
 
