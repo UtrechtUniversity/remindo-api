@@ -1,0 +1,16 @@
+# .flake8
+[flake8]
+# add `ANN`
+select = B,B9,BLK,C,D,DAR,E,F,I,S,W
+docstring-convention = google
+ignore = E203,E501,W503,D105,D107,D202
+max-line-length = 132
+application-import-names = remindo-api,tests
+import-order-style = google
+per-file-ignores = 
+    tests/*:S101,ANN,DAR,D
+    noxfile.py:ANN,DAR,D
+    src/remindo_api/utils.py:ANN,DAR,D
+    src/remindo_api/recipe.py:DAR
+    setup.py:D
+    __init__.py:D

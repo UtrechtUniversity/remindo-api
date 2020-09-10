@@ -1,0 +1,5 @@
+# .darglint
+[darglint]
+strictness = short
+ignore_regex=^_(.*)
+docstring_style=google
