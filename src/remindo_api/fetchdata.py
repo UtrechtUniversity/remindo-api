@@ -1,5 +1,5 @@
 # src/remindo_api/collectdata.py
-"""Class implementation to fetch Remindo data."""
+"""Example implementation to fetch Remindo data."""
 import configparser
 from datetime import datetime
 import json
