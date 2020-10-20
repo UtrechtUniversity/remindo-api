@@ -390,7 +390,7 @@ class RemindoCollect:
                 f.write(str(s) + "\n")
 
     def _write_to_temp_dict(self, name, data):
-        """Write to temp dictionary."""
+        """Write to temp for dictionary."""
         file = os.path.join(self._base_directory, f"{name}.json")
         with open(file, "w") as f:
             json.dump(data, f)
@@ -450,7 +450,7 @@ class RemindoCollect:
             {
                 "id": cluster_obj.rid,
                 "name": cluster_obj.name,
-                "record_create_timestamp": datetime.now(),
+                "extract_date": datetime.now(),
             }.items()
         )
 
@@ -468,7 +468,7 @@ class RemindoCollect:
                 "source_study_id": study_obj.source_study_id,
                 "apicall_since": study_obj.api_call_params_since,
                 "apicall_complete": study_obj.api_call_params_complete,
-                "record_create_timestamp": datetime.now(),
+                "extract_date": datetime.now(),
             }.items()
         )
 
@@ -483,32 +483,30 @@ class RemindoCollect:
                 "category": recipe_obj.category,
                 "status": recipe_obj.status,
                 "type": recipe_obj.type,
-                # available only from study/list full=True
-                # "recipe_source_recipe_id" : recipe_obj.source_recipe_id,
-                # "v": recipe_obj.settings_v,
                 "max_retries": recipe_obj.settings_max_retries,
                 "tools": recipe_obj.settings_tools,
                 "apicall_recipe_id": recipe_obj.api_call_params_recipe_id,
                 "apicall_since": recipe_obj.api_call_params_since,
                 "apicall_study_id": recipe_obj.api_call_params_study_id,
                 "apicall_full": recipe_obj.api_call_params_full,
-                # # "recipe_practice_repeat_until" : recipe_obj.settings_practice_repeat_until,
-                # # "recipe_practice_continue_practice" : recipe_obj.settings_practice_continue_practice,
-                # # "recipe_practice_start_retry_by_candidate" : recipe_obj.settings_practice_start_retry_by_candidate,
-                # # "recipe_practice_start_retry_delay" : recipe_obj.settings_practice_start_retry_delay,
-                # "recipe_exam_caesura" : recipe_obj.settings_exam_caesura,
-                # "recipe_settings_exam_round_grade_decimals" : recipe_obj.settings_exam_round_grade_decimals,
-                # "recipe_settings_show_result_given_answer" : recipe_obj.settings_show_result_given_answer,
-                # "recipe_settings_show_result_correct_answer" : recipe_obj.settings_show_result_correct_answer,
-                # "recipe_settings_show_result_score" : recipe_obj.settings_show_result_score,
-                # "recipe_settings_show_correct" : recipe_obj.settings_show_correct,
-                # "recipe_settings_show_grade" : recipe_obj.settings_show_grade,
-                # "recipe_settings_passed" : recipe_obj.settings_passed,
-                # "recipe_exam_round_grade_decimals" : recipe_obj.settings_exam_round_grade_decimals,
-                # "recipe_exam_duration" : recipe_obj.settings_exam_duration,
-                # "recipe_settings_settings_bonuspoints" : recipe_obj.settings_settings_bonuspoints,
-                # "recipe_settings_settings_extra_time" : recipe_obj.settings_settings_extra_time,
-                "record_create_timestamp": datetime.now(),
+                # available only from study/list full=True
+                # "practice_repeat_until" : recipe_obj.settings_practice_repeat_until,
+                # "practice_continue_practice" : recipe_obj.settings_practice_continue_practice,
+                # "practice_start_retry_by_candidate" : recipe_obj.settings_practice_start_retry_by_candidate,
+                # "practice_start_retry_delay" : recipe_obj.settings_practice_start_retry_delay,
+                # "exam_caesura" : recipe_obj.settings_exam_caesura,
+                # "settings_exam_round_grade_decimals" : recipe_obj.settings_exam_round_grade_decimals,
+                # "settings_show_result_given_answer" : recipe_obj.settings_show_result_given_answer,
+                # "settings_show_result_correct_answer" : recipe_obj.settings_show_result_correct_answer,
+                # "settings_show_result_score" : recipe_obj.settings_show_result_score,
+                # "settings_show_correct" : recipe_obj.settings_show_correct,
+                # "settings_show_grade" : recipe_obj.settings_show_grade,
+                # "settings_passed" : recipe_obj.settings_passed,
+                # "exam_round_grade_decimals" : recipe_obj.settings_exam_round_grade_decimals,
+                # "exam_duration" : recipe_obj.settings_exam_duration,
+                # "settings_settings_bonuspoints" : recipe_obj.settings_settings_bonuspoints,
+                # "settings_settings_extra_time" : recipe_obj.settings_settings_extra_time,
+                "extract_date": datetime.now(),
             }.items()
         )
 
@@ -541,7 +539,8 @@ class RemindoCollect:
                 "show_result_time": moment_obj.show_result_time,
                 "status": moment_obj.status,
                 "apicall_from": moment_obj.api_call_params_from,
-                "record_create_timestamp": datetime.now(),
+                "apicall_recipe_id": moment_obj.api_call_params_recipe_ids,
+                "extract_date": datetime.now(),
             }.items()
         )
 
@@ -549,8 +548,8 @@ class RemindoCollect:
         """Parse moment data from moment result object."""
         return OrderedDict(
             {
-                "subscription_id": moment_obj.subscription_id,
                 "result_id": moment_obj.result_id,
+                "subscription_id": moment_obj.subscription_id,
                 "user_id": moment_obj.user_id,
                 "user_code": moment_obj.user_code,
                 "recipe_id": moment_obj.recipe_id,
@@ -588,7 +587,7 @@ class RemindoCollect:
                 "score_type": moment_obj.score_type,
                 "grade_formatted": moment_obj.grade_formatted,
                 "can_change": moment_obj.can_change,
-                "record_create_timestamp": datetime.now(),
+                "extract_date": datetime.now(),
             }.items()
         )
 
@@ -604,9 +603,9 @@ class RemindoCollect:
                 "stdev": reliability_obj.stdev,
                 "average": reliability_obj.average,
                 "max": reliability_obj.max,
-                "apicall_moment_id": reliability_obj.api_call_params_moment_id,
-                "apicall_recipe_id": reliability_obj.api_call_params_recipe_id,
-                "record_create_timestamp": datetime.now(),
+                "moment_id": reliability_obj.api_call_params_moment_id,
+                "recipe_id": reliability_obj.api_call_params_recipe_id,
+                "extract_date": datetime.now(),
             }.items()
         )
 
@@ -628,9 +627,9 @@ class RemindoCollect:
                 "rir": stats_obj.rir,
                 "total": stats_obj.total,
                 "answered": stats_obj.answered,
-                "apicall_moment_id": stats_obj.api_call_params_moment_id,
-                "apicall_recipe_id": stats_obj.api_call_params_recipe_id,
-                "record_create_timestamp": datetime.now(),
+                "moment_id": stats_obj.api_call_params_moment_id,
+                "recipe_id": stats_obj.api_call_params_recipe_id,
+                "extract_date": datetime.now(),
             }.items()
         )
 
@@ -655,8 +654,8 @@ class RemindoCollect:
                 "response_choiceSequence": item_obj.response_choiceSequence,
                 "response_candidateResponse": item_obj.response_candidateResponse,
                 "response_correctResponse": item_obj.response_correctResponse,
-                "apicall_moment_id": item_obj.api_call_params_moment_id,
-                "apicall_recipe_id": item_obj.api_call_params_recipe_id,
-                "record_create_timestamp": datetime.now(),
+                "moment_id": item_obj.api_call_params_moment_id,
+                "recipe_id": item_obj.api_call_params_recipe_id,
+                "extract_date": datetime.now(),
             }.items()
         )
