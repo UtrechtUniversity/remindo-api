@@ -14,18 +14,13 @@ import pandas as pd
 # from remindo_api import textcleaner
 
 logger = logging.getLogger(__name__)
-# TODO: check whether the since/from/until combination works
-# TODO: check _base_directory and the cfg usage
 # TODO: retrieve individual recipes based on date
 # use it to quality check with those retrieved from studies?
-# TODO: FINISH EXCEPTIONS!
 # TODO: use the textcleaner
 
 # All results are based around moments, as those represent test made, not recipes
 # apart from item results, where recipes are first level
 # _parse_moment_data() is not parsing subscriptions settings on purpose
-# list_results() currently not being used - no need to save students' data?
-# list_reliability() currently not being used because does not work
 
 
 class RemindoCollectException(Exception):
@@ -298,7 +293,7 @@ class RemindoCollect:
                         continue
 
         for module_name, module_data in zip(
-            ["reliability"], [self._reliability_data_list]
+            ["reliabilities"], [self._reliability_data_list]
         ):
             logging.debug(f"Writing data for: {module_name}")
             self._write_to_disk(module_name, module_data)
