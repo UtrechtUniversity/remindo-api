@@ -42,11 +42,13 @@ class RemindoRequest:
         self.content = content
         self.payload = self.content
 
+    def make_envelope(self):
         self.timestamp = int(time.time())
         self.envelope = {"uuid": self.uuid, "timestamp": self.timestamp}
         self.secEncoded = self.secret.encode("utf-8")
 
     def make_body(self):
+        self.make_envelope()
         self.body = {"envelope": self.envelope, "payload": self.payload}
 
     def make_message(self):
