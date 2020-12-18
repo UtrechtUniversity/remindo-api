@@ -4,7 +4,7 @@ import json
 import time
 
 
-from Cryptodome.Hash import HMAC, SHA1
+from Cryptodome.Hash import HMAC, SHA1, SHA256
 import requests
 
 
@@ -12,7 +12,6 @@ class RemindoRequestException(Exception):
     """Class that is called for exception messages.
 
     You can see the usage of this class looking at the test.
-
     """
 
     def __init__(self, error_msg, url):
@@ -27,14 +26,12 @@ class RemindoRequest:
     """Main class to send requests to Remindo.
 
     To finish its documentation.
-
     """
 
     def __init__(self, client, url, content, req_format="json"):
         """Instantiate all the relevant parameters.
 
         To instantiate all the keys, this class uses the `config.ini` file.
-
         """
         self.secret = client.secret
         self.ip = client.ip
@@ -43,25 +40,35 @@ class RemindoRequest:
         self.req_format = req_format
         self.url = url
         self.content = content
+        self.payload = self.content
+
         self.timestamp = int(time.time())
         self.envelope = {"uuid": self.uuid, "timestamp": self.timestamp}
         self.secEncoded = self.secret.encode("utf-8")
-        self.payload = self.content
+
+    def make_body(self):
         self.body = {"envelope": self.envelope, "payload": self.payload}
+
+    def make_message(self):
         self.message = self.ip + ":" + json.dumps((self.body), separators=(",", ":"))
         self.message = self.message.encode("utf-8")
-        h = HMAC.new((self.secEncoded), msg=(self.message), digestmod=SHA1)
+
+    def encrypt(self):
+        self.make_body()
+        self.make_message()
+        h = HMAC.new(key=self.secEncoded, msg=(self.message), digestmod=SHA256)
         self.signature = h.hexdigest()
 
     def request(self):
         """Create message request."""
         self.contentDumped = json.dumps(self.content)
+        self.encrypt()
         params = {
             "payload": self.payload,
             "envelope": self.envelope,
             "signature": self.signature,
         }
-        time.sleep(0.1)
+        time.sleep(0.05)
         parameters = json.dumps(params, separators=(",", ":"))
         resp = requests.post(
             (self.api_url_base + self.url), data=parameters, timeout=None
