@@ -34,21 +34,17 @@ class RemindoRequest:
         To instantiate all the keys, this class uses the `config.ini` file.
         """
         self.secret = client.secret
+        self.secEncoded = self.secret.encode("utf-8")
         self.ip = client.ip
         self.api_url_base = client.url_base
         self.uuid = client.uuid
         self.req_format = req_format
         self.url = url
-        self.content = content
-        self.payload = self.content
-
-    def make_envelope(self):
-        self.timestamp = int(time.time())
-        self.envelope = {"uuid": self.uuid, "timestamp": self.timestamp}
-        self.secEncoded = self.secret.encode("utf-8")
+        self.payload = content
 
     def make_body(self):
-        self.make_envelope()
+        self.timestamp = int(time.time())
+        self.envelope = {"uuid": self.uuid, "timestamp": self.timestamp}
         self.body = {"envelope": self.envelope, "payload": self.payload}
 
     def make_message(self):
@@ -58,12 +54,11 @@ class RemindoRequest:
     def encrypt(self):
         self.make_body()
         self.make_message()
-        h = HMAC.new(key=self.secEncoded, msg=(self.message), digestmod=SHA256)
+        h = HMAC.new(key=self.secEncoded, msg=(self.message), digestmod=SHA1)
         self.signature = h.hexdigest()
 
     def request(self):
         """Create message request."""
-        self.contentDumped = json.dumps(self.content)
         self.encrypt()
         params = {
             "payload": self.payload,
