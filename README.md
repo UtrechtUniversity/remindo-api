@@ -37,11 +37,6 @@ This package was developed by Utrecht University and is meant to be used with a 
 
 **Date**: Started January 2019
 
-**Researchers**:
-
-- Gemma Corbalan Perez (g.corbalan@uu.nl)
-- Matthias van Veen Veen (M.R.vanVeen@uu.nl)
-
 **Research Software Engineer**:
 
 - Leonardo Jaya Vida (l.j.vida@uu.nl)
