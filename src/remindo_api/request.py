@@ -4,7 +4,7 @@ import json
 import time
 
 
-from Cryptodome.Hash import HMAC, SHA1, SHA256
+from Crypto.Hash import HMAC, SHA256, SHA1
 import requests
 
 
