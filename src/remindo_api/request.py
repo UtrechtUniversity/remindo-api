@@ -58,7 +58,12 @@ class RemindoRequest:
         self.signature = h.hexdigest()
 
     def request(self):
-        """Create message request."""
+        """Create message request.
+        
+        Raise:
+            RemindoRequestException: the request failed with status code
+            =! 200.
+        """
         self.encrypt()
         params = {
             "payload": self.payload,
@@ -73,16 +78,19 @@ class RemindoRequest:
         if resp.status_code != 200:
             raise RemindoRequestException(resp.reason, self.url)
         else:
-            if self.req_format == "json":
-                respJson = resp.json()
-                # To catch some error messages
-                if type(respJson["payload"]) is not bool:
-                    payload = json.loads(respJson["payload"])
-                    return payload
-                else:
-                    payload = {"success": False}
-                    return payload
-            raise Exception("Other problem")
+            try:
+                if self.req_format == "json":
+                    respJson = resp.json()
+                    # To catch some error messages
+                    if type(respJson["payload"]) is not bool:
+                        payload = json.loads(respJson["payload"])
+                        return payload
+                    else:
+                        payload = {"success": False}
+                        return payload
+            except Exception as e:
+                print("A problem occurred in the request with message:")
+                print(e)
 
     def makeFilter(self, params):
         """Creates filter based on parameters that are passed."""

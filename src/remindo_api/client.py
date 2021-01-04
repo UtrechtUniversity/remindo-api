@@ -130,8 +130,7 @@ class RemindoClient:
 
         Returns:
             :obj:`list` of :obj:`RemindoStudy`: Return list of Remindo studies
-            :obj:`list` of :obj:`RemindoRecipe`:
-                if complete == True, return list of studies and associated recipes modified since date
+            :obj:`list` of :obj:`RemindoRecipe`: if complete == True, return list of studies and associated recipes modified since date
 
         """
         params = {}
