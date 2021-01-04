@@ -1,5 +1,10 @@
 [![Documentation Status](https://readthedocs.org/projects/remindo-api/badge/?version=latest)](https://remindo-api.readthedocs.io/en/latest/?badge=latest)
 
+<p align="center">
+  <img src="docs/img/remindo.png" width="250px"></img>
+  </p>
+<br/>
+
 # Remindo API
 
 This package provides a Python interface for the API endpoint offered by [Remindo](https://www.paragin.nl/remindotoets/), a product of [Paragin](https://paragin.nl). This API wrapper allows you to extract and read the majority of the exam-related data from Remindo.

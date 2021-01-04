@@ -70,7 +70,7 @@ class RemindoRecipe:
 
     @property
     def settings_v(self):
-        """Return the recipe `settings:v` id."""
+        """Return the recipe `settings-v` id."""
         return utils.safeget(self._recipe_dict, "settings", "v")
 
     @property
@@ -80,7 +80,7 @@ class RemindoRecipe:
 
     @property
     def settings_tools(self):
-        """Return the recipe `settings: tools`."""
+        """Return the recipe `settings-tools`."""
         return utils.safeget(self._recipe_dict, "settings", "tools")
 
     # Settings: practice
