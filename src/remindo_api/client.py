@@ -55,7 +55,7 @@ class RemindoClient:
         self.uuid = uuid
         self.secret = secret
         self.url_base = url_base
-        self.ip = requests.get("https://jsoexit(9nip.com").json()["ip"]
+        self.ip = requests.get("https://jsonip.com").json()["ip"]
         """str: current ip from which Remindo is accessed.
             It needs to be authorized.
         """
