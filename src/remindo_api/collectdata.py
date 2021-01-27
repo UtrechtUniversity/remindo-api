@@ -138,14 +138,14 @@ class RemindoCollect:
                 recipes = self._rclient.list_recipes(
                     recipe_id=rid, since=self._since_date, full=True
                 )
-                logging.debug("(Recipes) Recipe = {0}".format(rid))
+                logging.debug(f"(Recipes) Recipe = {rid}")
                 if len(recipes) == 1:
                     try:
                         self._recipe_data_list.append(
                             self._parse_recipe_data(recipes[0])
                         )
                     except KeyError:
-                        logging.debug("A Key Error occurred on recipe {0} ".format(rid))
+                        logging.debug(f"A Key Error occurred on recipe {rid} ")
                         continue
                 elif len(recipes) > 1:
                     for recipe in recipes:
@@ -154,16 +154,14 @@ class RemindoCollect:
                                 self._parse_recipe_data(recipe)
                             )
                         except KeyError:
-                            logging.debug(
-                                "A Key Error occurred on recipe {0} ".format(rid)
-                            )
+                            logging.debug(f"A Key Error occurred on recipe {rid} ")
                             continue
                 else:
                     logging.debug("An unknown error occurred.")
                     continue
                 time.sleep(0.05)
             except Exception:
-                logging.debug("An error occurred on recipe id {0}".format(rid))
+                logging.debug(f"An error occurred on recipe id {rid}")
                 continue
 
         for module_name, module_data in zip(["recipes"], [self._recipe_data_list]):
@@ -173,9 +171,7 @@ class RemindoCollect:
     def fetch_moments(self):
         """Fetch moments from recipes."""
         logging.debug(
-            "Fetching moments from recipes, \n from {0} until {1}.".format(
-                self._from_date, self._until_date
-            )
+            f"Fetching moments from recipes, from {self._from_date} until {self._until_date}."
         )
         for recipe in self._recipe_id_list:
             try:
@@ -184,11 +180,7 @@ class RemindoCollect:
                 )
                 moment_temp_list = []
                 for moment in moments:
-                    logging.debug(
-                        "(Moments) Recipe = {0}; Moment = {1}".format(
-                            recipe, moment.rid
-                        )
-                    )
+                    logging.debug(f"(Moments) Recipe = {recipe}; Moment = {moment.rid}")
                     moment_temp_list.append(moment.rid)
                     self._moment_data_list.append(self._parse_moment_data(moment))
                     self._moment_id_list.append(moment.rid)
@@ -197,9 +189,7 @@ class RemindoCollect:
                 time.sleep(0.03)
             except Exception as e:
                 logging.debug(
-                    "An error with arguments {0} occurred on recipe {1}".format(
-                        e.args, recipe
-                    )
+                    "An error with arguments {e.args} occurred on recipe {recipe}"
                 )
                 continue
 
@@ -219,7 +209,7 @@ class RemindoCollect:
             try:
                 moment_results = self._rclient.list_moments_results(ids=moment)
                 if moment_results is not False:
-                    logging.debug("(Moment result) Moment = {0}".format(moment))
+                    logging.debug(f"(Moment result) Moment = {moment}")
                     for moment_result in moment_results:
                         self._moment_result_data_list.append(
                             self._parse_moment_result_data(moment_result)
@@ -227,9 +217,7 @@ class RemindoCollect:
                 time.sleep(0.05)
             except Exception as e:
                 logging.debug(
-                    "An error with arguments {0} occurred on Moment {1}".format(
-                        e.args, moment
-                    )
+                    f"An error with arguments {e.args} occurred on Moment {moment}"
                 )
                 continue
 
@@ -246,7 +234,7 @@ class RemindoCollect:
             for moment in self._recipe_moment_id_dict[recipe]:
                 if moment is None:
                     try:
-                        logging.debug("(Reliability) Moment = {0}".format(moment))
+                        logging.debug(f"(Reliability) Moment = {moment}")
                         reliability_result = self._rclient.list_reliability(
                             recipe_id=recipe
                         )
@@ -256,17 +244,13 @@ class RemindoCollect:
                             )
                     except KeyError:
                         logging.debug(
-                            "A Key Error occurred on Recipe {0}; Moment {1} ".format(
-                                recipe, moment
-                            )
+                            f"A Key Error occurred on Recipe {recipe}; Moment {moment}"
                         )
                         continue
                 else:
                     try:
                         logging.debug(
-                            "(Reliability) Recipe = {0}; Moment = {1}".format(
-                                recipe, moment
-                            )
+                            f"(Reliability) Recipe = {recipe}; Moment = {moment}"
                         )
                         reliability_result = self._rclient.list_reliability(
                             moment_id=moment, recipe_id=recipe
@@ -277,17 +261,13 @@ class RemindoCollect:
                             )
                     except KeyError as e:
                         logging.debug(
-                            "A Key Error occurred on Recipe {0}; Moment {1} ".format(
-                                recipe, moment
-                            )
+                            f"A Key Error occurred on Recipe {recipe}; Moment {moment} "
                         )
                         logging.debug(e.args)
                         continue
                     except Exception as e:
                         logging.debug(
-                            "An error with arguments {0} occurred on Moment {1}".format(
-                                e.args, moment
-                            )
+                            f"An error with arguments {e.args} occurred on Moment {moment}"
                         )
                         logging.debug(e.args)
                         continue
@@ -306,7 +286,7 @@ class RemindoCollect:
             for moment in self._recipe_moment_id_dict[recipe]:
                 if moment is None:
                     try:
-                        logging.debug("(Stats) Recipe = {0}".format(recipe))
+                        logging.debug(f"(Stats) Recipe = {recipe}")
                         stats_results = self._rclient.list_stats(recipe_id=recipe)
                         if stats_results is not None:
                             for result in stats_results:
@@ -315,17 +295,13 @@ class RemindoCollect:
                                 )
                     except KeyError as e:
                         logging.debug(
-                            "A Key Error occurred on recipe {0}, moment {1} ".format(
-                                recipe, moment
-                            )
+                            f"A Key Error occurred on recipe {recipe}, moment {moment} "
                         )
                         logging.debug(e.args)
                         continue
                 else:
                     try:
-                        logging.debug(
-                            "(Stats) Recipe = {0}; Moment = {1}".format(recipe, moment)
-                        )
+                        logging.debug(f"(Stats) Recipe = {recipe}; Moment = {moment}")
                         stats_results = self._rclient.list_stats(
                             recipe_id=recipe, moment_id=moment
                         )
@@ -337,9 +313,7 @@ class RemindoCollect:
                         time.sleep(0.03)
                     except KeyError as e:
                         logging.debug(
-                            "A Key Error occurred on recipe {0}, moment {1} ".format(
-                                recipe, moment
-                            )
+                            f"A Key Error occurred on recipe {recipe}, moment {moment} "
                         )
                         logging.debug(e.args)
                         continue
@@ -357,9 +331,7 @@ class RemindoCollect:
                     continue
                 else:
                     try:
-                        logging.debug(
-                            "(Items) Recipe = {0}; Moment = {1}".format(recipe, moment)
-                        )
+                        logging.debug(f"(Items) Recipe = {recipe}; Moment = {moment}")
                         item_results = self._rclient.list_item_results(
                             recipe_id=recipe, moment_id=moment
                         )
@@ -370,9 +342,7 @@ class RemindoCollect:
                             self._write_item(module_name="items", module_data=a)
                     except KeyError as e:
                         logging.debug(
-                            "A Key Error occurred on recipe {0}, moment {1} ".format(
-                                recipe, moment
-                            )
+                            f"A Key Error occurred on recipe {recipe}, moment {moment}"
                         )
                         logging.debug(e.args)
                         continue
@@ -434,7 +404,8 @@ class RemindoCollect:
         self._study_data_list = list()
         self._recipe_data_list = list()
         self._moment_data_list = list()
-        self._result_data_list = list()
+        self._moment_result_data_list = list()
+        # self._result_data_list = list()
         self._reliability_data_list = list()
         self._stats_data_list = list()
         self._item_data_list = list()
