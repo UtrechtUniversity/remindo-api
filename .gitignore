@@ -32,7 +32,6 @@ build/
 config.cfg
 apikey.py
 develop-eggs/
-dist/
 downloads/
 eggs/
 .eggs/
