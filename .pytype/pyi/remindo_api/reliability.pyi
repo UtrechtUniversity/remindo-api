@@ -1,11 +1,14 @@
 # (generated with --quick)
 
-from typing import Any
+from typing import Any, Callable, Type, TypeVar
 
 utils: module
 
+_T = TypeVar('_T')
+
 class RemindoReliability:
-    _reliability_dict: Any
+    __doc__: str
+    _reliability_dict: dict
     alpha: Any
     answer_count: Any
     api_call_params_corrections: Any
@@ -20,5 +23,10 @@ class RemindoReliability:
     notes: Any
     sem: Any
     stdev: Any
-    def __init__(self, reliability_dict) -> None: ...
+    def __init__(self, _reliability_dict: dict) -> None: ...
     def list_all(self) -> dict: ...
+
+@overload
+def dataclass(_cls: Type[_T]) -> Type[_T]: ...
+@overload
+def dataclass(*, init: bool = ..., repr: bool = ..., eq: bool = ..., order: bool = ..., unsafe_hash: bool = ..., frozen: bool = ...) -> Callable[[Type[_T]], Type[_T]]: ...

@@ -1,12 +1,15 @@
 # (generated with --quick)
 
 import collections
-from typing import Any, Type
+from typing import Any, Callable, Type, TypeVar
 
 OrderedDict: Type[collections.OrderedDict]
 utils: module
 
+_T = TypeVar('_T')
+
 class RemindoItem:
+    __doc__: str
     _item_dict: collections.OrderedDict
     api_call_params_add_item_info: Any
     api_call_params_moment_id: Any
@@ -30,4 +33,9 @@ class RemindoItem:
     status: Any
     subscription_id: Any
     weight: Any
-    def __init__(self, item_dict) -> None: ...
+    def __init__(self, _item_dict: collections.OrderedDict) -> None: ...
+
+@overload
+def dataclass(_cls: Type[_T]) -> Type[_T]: ...
+@overload
+def dataclass(*, init: bool = ..., repr: bool = ..., eq: bool = ..., order: bool = ..., unsafe_hash: bool = ..., frozen: bool = ...) -> Callable[[Type[_T]], Type[_T]]: ...

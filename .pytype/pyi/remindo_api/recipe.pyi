@@ -1,11 +1,14 @@
 # (generated with --quick)
 
-from typing import Any, Dict
+from typing import Any, Callable, Dict, Type, TypeVar
 
 utils: module
 
+_T = TypeVar('_T')
+
 class RemindoRecipe:
-    _recipe_dict: Any
+    __doc__: str
+    _recipe_dict: dict
     api_call_params_category: Any
     api_call_params_code: Any
     api_call_params_datasource_uuid: Any
@@ -48,4 +51,9 @@ class RemindoRecipe:
     status: Any
     study_id: Any
     type: Any
-    def __init__(self, recipe_dict) -> None: ...
+    def __init__(self, _recipe_dict: dict) -> None: ...
+
+@overload
+def dataclass(_cls: Type[_T]) -> Type[_T]: ...
+@overload
+def dataclass(*, init: bool = ..., repr: bool = ..., eq: bool = ..., order: bool = ..., unsafe_hash: bool = ..., frozen: bool = ...) -> Callable[[Type[_T]], Type[_T]]: ...

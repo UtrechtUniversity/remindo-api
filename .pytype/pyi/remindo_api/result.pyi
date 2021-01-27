@@ -1,11 +1,14 @@
 # (generated with --quick)
 
-from typing import Any
+from typing import Any, Callable, Type, TypeVar
 
 utils: module
 
+_T = TypeVar('_T')
+
 class RemindoResult:
-    _result_dict: Any
+    __doc__: str
+    _result_dict: dict
     api_call_params_candidate_codes: Any
     api_call_params_candidate_filter: Any
     api_call_params_candidate_ids: Any
@@ -68,5 +71,10 @@ class RemindoResult:
     try_count: Any
     user_code: Any
     user_id: Any
-    def __init__(self, result_dict) -> None: ...
+    def __init__(self, _result_dict: dict) -> None: ...
     def list_results(self) -> dict: ...
+
+@overload
+def dataclass(_cls: Type[_T]) -> Type[_T]: ...
+@overload
+def dataclass(*, init: bool = ..., repr: bool = ..., eq: bool = ..., order: bool = ..., unsafe_hash: bool = ..., frozen: bool = ...) -> Callable[[Type[_T]], Type[_T]]: ...

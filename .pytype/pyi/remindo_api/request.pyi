@@ -4,6 +4,7 @@ from typing import Any, Dict, Tuple, TypeVar
 
 HMAC: Any
 SHA1: Any
+SHA256: Any
 json: module
 requests: module
 time: module
@@ -14,8 +15,6 @@ class RemindoRequest:
     __doc__: str
     api_url_base: Any
     body: Dict[str, Any]
-    content: Any
-    contentDumped: str
     envelope: Dict[str, Any]
     ip: Any
     message: Any
@@ -28,8 +27,11 @@ class RemindoRequest:
     url: Any
     uuid: Any
     def __init__(self, client, url, content, req_format = ...) -> None: ...
+    def encrypt(self) -> None: ...
     def makeFilter(self, params) -> Any: ...
     def makeTable(self, response: _T0) -> _T0: ...
+    def make_body(self) -> None: ...
+    def make_message(self) -> None: ...
     def request(self) -> Any: ...
 
 class RemindoRequestException(Exception):

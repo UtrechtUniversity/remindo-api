@@ -1,36 +1,54 @@
 rule infer
-  command = /Users/leonardovida/dev/remindo-api/.nox/pytype/bin/python -m pytype.single --imports_info $imports --module-name $module -V 3.7 -o $out --no-report-errors --nofail --quick $in
+  command = /Users/leonardovida/dev/remindo-api/.nox/pytype-3-8/bin/python -m pytype.single --imports_info $imports --module-name $module -V 3.8 -o $out --no-report-errors --nofail --quick $in
   description = infer $module
 rule check
-  command = /Users/leonardovida/dev/remindo-api/.nox/pytype/bin/python -m pytype.single --disable import-error --imports_info $imports --module-name $module -V 3.7 -o $out --analyze-annotated --nofail --quick $in
+  command = /Users/leonardovida/dev/remindo-api/.nox/pytype-3-8/bin/python -m pytype.single --disable import-error --imports_info $imports --module-name $module -V 3.8 -o $out --analyze-annotated --nofail --quick $in
   description = check $module
 build /Users/leonardovida/dev/remindo-api/.pytype/pyi/remindo_api/utils.pyi: check /Users/leonardovida/dev/remindo-api/src/remindo_api/utils.py
   imports = /Users/leonardovida/dev/remindo-api/.pytype/imports/remindo_api.utils.imports
   module = remindo_api.utils
-build /Users/leonardovida/dev/remindo-api/.pytype/pyi/remindo_api/cluster.pyi: check /Users/leonardovida/dev/remindo-api/src/remindo_api/cluster.py | /Users/leonardovida/dev/remindo-api/.pytype/pyi/remindo_api/utils.pyi
-  imports = /Users/leonardovida/dev/remindo-api/.pytype/imports/remindo_api.cluster.imports
-  module = remindo_api.cluster
 build /Users/leonardovida/dev/remindo-api/.pytype/pyi/remindo_api/helloworld.pyi: check /Users/leonardovida/dev/remindo-api/src/remindo_api/helloworld.py | /Users/leonardovida/dev/remindo-api/.pytype/pyi/remindo_api/utils.pyi
   imports = /Users/leonardovida/dev/remindo-api/.pytype/imports/remindo_api.helloworld.imports
   module = remindo_api.helloworld
-build /Users/leonardovida/dev/remindo-api/.pytype/pyi/remindo_api/item.pyi: check /Users/leonardovida/dev/remindo-api/src/remindo_api/item.py | /Users/leonardovida/dev/remindo-api/.pytype/pyi/remindo_api/utils.pyi
-  imports = /Users/leonardovida/dev/remindo-api/.pytype/imports/remindo_api.item.imports
-  module = remindo_api.item
-build /Users/leonardovida/dev/remindo-api/.pytype/pyi/remindo_api/moment.pyi: check /Users/leonardovida/dev/remindo-api/src/remindo_api/moment.py | /Users/leonardovida/dev/remindo-api/.pytype/pyi/remindo_api/utils.pyi
-  imports = /Users/leonardovida/dev/remindo-api/.pytype/imports/remindo_api.moment.imports
-  module = remindo_api.moment
+build /Users/leonardovida/dev/remindo-api/.pytype/pyi/remindo-api/tests/test_helloworld.pyi: check /Users/leonardovida/dev/remindo-api/tests/test_helloworld.py | /Users/leonardovida/dev/remindo-api/.pytype/pyi/remindo_api/helloworld.pyi
+  imports = /Users/leonardovida/dev/remindo-api/.pytype/imports/remindo-api.tests.test_helloworld.imports
+  module = remindo-api.tests.test_helloworld
+build /Users/leonardovida/dev/remindo-api/.pytype/pyi/remindo_api/result.pyi: check /Users/leonardovida/dev/remindo-api/src/remindo_api/result.py | /Users/leonardovida/dev/remindo-api/.pytype/pyi/remindo_api/utils.pyi
+  imports = /Users/leonardovida/dev/remindo-api/.pytype/imports/remindo_api.result.imports
+  module = remindo_api.result
+build /Users/leonardovida/dev/remindo-api/.pytype/pyi/remindo-api/tests/test_results.pyi: check /Users/leonardovida/dev/remindo-api/tests/test_results.py | /Users/leonardovida/dev/remindo-api/.pytype/pyi/remindo_api/result.pyi
+  imports = /Users/leonardovida/dev/remindo-api/.pytype/imports/remindo-api.tests.test_results.imports
+  module = remindo-api.tests.test_results
 build /Users/leonardovida/dev/remindo-api/.pytype/pyi/remindo_api/recipe.pyi: check /Users/leonardovida/dev/remindo-api/src/remindo_api/recipe.py | /Users/leonardovida/dev/remindo-api/.pytype/pyi/remindo_api/utils.pyi
   imports = /Users/leonardovida/dev/remindo-api/.pytype/imports/remindo_api.recipe.imports
   module = remindo_api.recipe
+build /Users/leonardovida/dev/remindo-api/.pytype/pyi/remindo-api/tests/test_recipes.pyi: check /Users/leonardovida/dev/remindo-api/tests/test_recipes.py | /Users/leonardovida/dev/remindo-api/.pytype/pyi/remindo_api/recipe.pyi
+  imports = /Users/leonardovida/dev/remindo-api/.pytype/imports/remindo-api.tests.test_recipes.imports
+  module = remindo-api.tests.test_recipes
+build /Users/leonardovida/dev/remindo-api/.pytype/pyi/remindo_api/cluster.pyi: check /Users/leonardovida/dev/remindo-api/src/remindo_api/cluster.py | /Users/leonardovida/dev/remindo-api/.pytype/pyi/remindo_api/utils.pyi
+  imports = /Users/leonardovida/dev/remindo-api/.pytype/imports/remindo_api.cluster.imports
+  module = remindo_api.cluster
+build /Users/leonardovida/dev/remindo-api/.pytype/pyi/remindo-api/tests/test_cluster.pyi: check /Users/leonardovida/dev/remindo-api/tests/test_cluster.py | /Users/leonardovida/dev/remindo-api/.pytype/pyi/remindo_api/cluster.pyi
+  imports = /Users/leonardovida/dev/remindo-api/.pytype/imports/remindo-api.tests.test_cluster.imports
+  module = remindo-api.tests.test_cluster
+build /Users/leonardovida/dev/remindo-api/.pytype/pyi/remindo-api/noxfile.pyi: check /Users/leonardovida/dev/remindo-api/noxfile.py
+  imports = /Users/leonardovida/dev/remindo-api/.pytype/imports/remindo-api.noxfile.imports
+  module = remindo-api.noxfile
+build /Users/leonardovida/dev/remindo-api/.pytype/pyi/remindo_api/moment.pyi: check /Users/leonardovida/dev/remindo-api/src/remindo_api/moment.py | /Users/leonardovida/dev/remindo-api/.pytype/pyi/remindo_api/utils.pyi
+  imports = /Users/leonardovida/dev/remindo-api/.pytype/imports/remindo_api.moment.imports
+  module = remindo_api.moment
+build /Users/leonardovida/dev/remindo-api/.pytype/pyi/remindo-api/tests/test_moments.pyi: check /Users/leonardovida/dev/remindo-api/tests/test_moments.py | /Users/leonardovida/dev/remindo-api/.pytype/pyi/remindo_api/moment.pyi /Users/leonardovida/dev/remindo-api/.pytype/pyi/remindo_api/result.pyi
+  imports = /Users/leonardovida/dev/remindo-api/.pytype/imports/remindo-api.tests.test_moments.imports
+  module = remindo-api.tests.test_moments
+build /Users/leonardovida/dev/remindo-api/.pytype/pyi/remindo_api/item.pyi: check /Users/leonardovida/dev/remindo-api/src/remindo_api/item.py | /Users/leonardovida/dev/remindo-api/.pytype/pyi/remindo_api/utils.pyi
+  imports = /Users/leonardovida/dev/remindo-api/.pytype/imports/remindo_api.item.imports
+  module = remindo_api.item
 build /Users/leonardovida/dev/remindo-api/.pytype/pyi/remindo_api/reliability.pyi: check /Users/leonardovida/dev/remindo-api/src/remindo_api/reliability.py | /Users/leonardovida/dev/remindo-api/.pytype/pyi/remindo_api/utils.pyi
   imports = /Users/leonardovida/dev/remindo-api/.pytype/imports/remindo_api.reliability.imports
   module = remindo_api.reliability
 build /Users/leonardovida/dev/remindo-api/.pytype/pyi/remindo_api/request.pyi: check /Users/leonardovida/dev/remindo-api/src/remindo_api/request.py
   imports = /Users/leonardovida/dev/remindo-api/.pytype/imports/remindo_api.request.imports
   module = remindo_api.request
-build /Users/leonardovida/dev/remindo-api/.pytype/pyi/remindo_api/result.pyi: check /Users/leonardovida/dev/remindo-api/src/remindo_api/result.py | /Users/leonardovida/dev/remindo-api/.pytype/pyi/remindo_api/utils.pyi
-  imports = /Users/leonardovida/dev/remindo-api/.pytype/imports/remindo_api.result.imports
-  module = remindo_api.result
 build /Users/leonardovida/dev/remindo-api/.pytype/pyi/remindo_api/stats.pyi: check /Users/leonardovida/dev/remindo-api/src/remindo_api/stats.py | /Users/leonardovida/dev/remindo-api/.pytype/pyi/remindo_api/utils.pyi
   imports = /Users/leonardovida/dev/remindo-api/.pytype/imports/remindo_api.stats.imports
   module = remindo_api.stats
@@ -43,51 +61,30 @@ build /Users/leonardovida/dev/remindo-api/.pytype/pyi/remindo_api/client.pyi: ch
 build /Users/leonardovida/dev/remindo-api/.pytype/pyi/remindo_api/collectdata.pyi: check /Users/leonardovida/dev/remindo-api/src/remindo_api/collectdata.py
   imports = /Users/leonardovida/dev/remindo-api/.pytype/imports/remindo_api.collectdata.imports
   module = remindo_api.collectdata
-build /Users/leonardovida/dev/remindo-api/.pytype/pyi/remindo_api/example/fetchdata.pyi: check /Users/leonardovida/dev/remindo-api/src/remindo_api/example/fetchdata.py | /Users/leonardovida/dev/remindo-api/.pytype/pyi/remindo_api/client.pyi /Users/leonardovida/dev/remindo-api/.pytype/pyi/remindo_api/collectdata.pyi
-  imports = /Users/leonardovida/dev/remindo-api/.pytype/imports/remindo_api.example.fetchdata.imports
-  module = remindo_api.example.fetchdata
-build /Users/leonardovida/dev/remindo-api/.pytype/pyi/remindo_api/example.pyi: check /Users/leonardovida/dev/remindo-api/src/remindo_api/example.py | /Users/leonardovida/dev/remindo-api/.pytype/pyi/remindo_api/client.pyi
+build /Users/leonardovida/dev/remindo-api/.pytype/pyi/remindo_api/example.pyi: check /Users/leonardovida/dev/remindo-api/src/remindo_api/example.py | /Users/leonardovida/dev/remindo-api/.pytype/pyi/remindo_api/client.pyi /Users/leonardovida/dev/remindo-api/.pytype/pyi/remindo_api/collectdata.pyi
   imports = /Users/leonardovida/dev/remindo-api/.pytype/imports/remindo_api.example.imports
   module = remindo_api.example
-build /Users/leonardovida/dev/remindo-api/.pytype/pyi/remindo_api/__init__.pyi: check /Users/leonardovida/dev/remindo-api/src/remindo_api/__init__.py
-  imports = /Users/leonardovida/dev/remindo-api/.pytype/imports/remindo_api.__init__.imports
-  module = remindo_api.__init__
-build /Users/leonardovida/dev/remindo-api/.pytype/pyi/remindo-api/noxfile.pyi: check /Users/leonardovida/dev/remindo-api/noxfile.py
-  imports = /Users/leonardovida/dev/remindo-api/.pytype/imports/remindo-api.noxfile.imports
-  module = remindo-api.noxfile
-build /Users/leonardovida/dev/remindo-api/.pytype/pyi/remindo-api/tests/test_results.pyi: check /Users/leonardovida/dev/remindo-api/tests/test_results.py | /Users/leonardovida/dev/remindo-api/.pytype/pyi/remindo_api/result.pyi
-  imports = /Users/leonardovida/dev/remindo-api/.pytype/imports/remindo-api.tests.test_results.imports
-  module = remindo-api.tests.test_results
-build /Users/leonardovida/dev/remindo-api/.pytype/pyi/remindo-api/tests/test_moments.pyi: check /Users/leonardovida/dev/remindo-api/tests/test_moments.py | /Users/leonardovida/dev/remindo-api/.pytype/pyi/remindo_api/moment.pyi /Users/leonardovida/dev/remindo-api/.pytype/pyi/remindo_api/result.pyi
-  imports = /Users/leonardovida/dev/remindo-api/.pytype/imports/remindo-api.tests.test_moments.imports
-  module = remindo-api.tests.test_moments
 build /Users/leonardovida/dev/remindo-api/.pytype/pyi/remindo-api/tests/__init__.pyi: check /Users/leonardovida/dev/remindo-api/tests/__init__.py
   imports = /Users/leonardovida/dev/remindo-api/.pytype/imports/remindo-api.tests.__init__.imports
   module = remindo-api.tests.__init__
-build /Users/leonardovida/dev/remindo-api/.pytype/pyi/remindo-api/tests/test_stats.pyi: check /Users/leonardovida/dev/remindo-api/tests/test_stats.py | /Users/leonardovida/dev/remindo-api/.pytype/pyi/remindo_api/stats.pyi
-  imports = /Users/leonardovida/dev/remindo-api/.pytype/imports/remindo-api.tests.test_stats.imports
-  module = remindo-api.tests.test_stats
-build /Users/leonardovida/dev/remindo-api/.pytype/pyi/remindo-api/tests/test_helloworld.pyi: check /Users/leonardovida/dev/remindo-api/tests/test_helloworld.py | /Users/leonardovida/dev/remindo-api/.pytype/pyi/remindo_api/helloworld.pyi
-  imports = /Users/leonardovida/dev/remindo-api/.pytype/imports/remindo-api.tests.test_helloworld.imports
-  module = remindo-api.tests.test_helloworld
+build /Users/leonardovida/dev/remindo-api/.pytype/pyi/remindo_api/fetchdata.pyi: check /Users/leonardovida/dev/remindo-api/src/remindo_api/fetchdata.py | /Users/leonardovida/dev/remindo-api/.pytype/pyi/remindo_api/client.pyi /Users/leonardovida/dev/remindo-api/.pytype/pyi/remindo_api/collectdata.pyi
+  imports = /Users/leonardovida/dev/remindo-api/.pytype/imports/remindo_api.fetchdata.imports
+  module = remindo_api.fetchdata
+build /Users/leonardovida/dev/remindo-api/.pytype/pyi/remindo_api/textcleaner.pyi: check /Users/leonardovida/dev/remindo-api/src/remindo_api/textcleaner.py
+  imports = /Users/leonardovida/dev/remindo-api/.pytype/imports/remindo_api.textcleaner.imports
+  module = remindo_api.textcleaner
+build /Users/leonardovida/dev/remindo-api/.pytype/pyi/remindo-api/tests/test_reliability.pyi: check /Users/leonardovida/dev/remindo-api/tests/test_reliability.py | /Users/leonardovida/dev/remindo-api/.pytype/pyi/remindo_api/reliability.pyi
+  imports = /Users/leonardovida/dev/remindo-api/.pytype/imports/remindo-api.tests.test_reliability.imports
+  module = remindo-api.tests.test_reliability
+build /Users/leonardovida/dev/remindo-api/.pytype/pyi/remindo_api/__init__.pyi: check /Users/leonardovida/dev/remindo-api/src/remindo_api/__init__.py
+  imports = /Users/leonardovida/dev/remindo-api/.pytype/imports/remindo_api.__init__.imports
+  module = remindo_api.__init__
+build /Users/leonardovida/dev/remindo-api/.pytype/pyi/remindo-api/tests/conftest.pyi: check /Users/leonardovida/dev/remindo-api/tests/conftest.py | /Users/leonardovida/dev/remindo-api/.pytype/pyi/remindo_api/__init__.pyi /Users/leonardovida/dev/remindo-api/.pytype/pyi/remindo_api/client.pyi
+  imports = /Users/leonardovida/dev/remindo-api/.pytype/imports/remindo-api.tests.conftest.imports
+  module = remindo-api.tests.conftest
 build /Users/leonardovida/dev/remindo-api/.pytype/pyi/remindo-api/tests/test_studies.pyi: check /Users/leonardovida/dev/remindo-api/tests/test_studies.py | /Users/leonardovida/dev/remindo-api/.pytype/pyi/remindo_api/recipe.pyi /Users/leonardovida/dev/remindo-api/.pytype/pyi/remindo_api/study.pyi
   imports = /Users/leonardovida/dev/remindo-api/.pytype/imports/remindo-api.tests.test_studies.imports
   module = remindo-api.tests.test_studies
-build /Users/leonardovida/dev/remindo-api/.pytype/pyi/remindo_api/apikey.pyi: check /Users/leonardovida/dev/remindo-api/src/remindo_api/apikey.py
-  imports = /Users/leonardovida/dev/remindo-api/.pytype/imports/remindo_api.apikey.imports
-  module = remindo_api.apikey
-build /Users/leonardovida/dev/remindo-api/.pytype/pyi/remindo-api/tests/conftest.pyi: check /Users/leonardovida/dev/remindo-api/tests/conftest.py | /Users/leonardovida/dev/remindo-api/.pytype/pyi/remindo_api/apikey.pyi /Users/leonardovida/dev/remindo-api/.pytype/pyi/remindo_api/client.pyi
-  imports = /Users/leonardovida/dev/remindo-api/.pytype/imports/remindo-api.tests.conftest.imports
-  module = remindo-api.tests.conftest
-build /Users/leonardovida/dev/remindo-api/.pytype/pyi/remindo-api/tests/test_reliability.pyi: check /Users/leonardovida/dev/remindo-api/tests/test_reliability.py
-  imports = /Users/leonardovida/dev/remindo-api/.pytype/imports/remindo-api.tests.test_reliability.imports
-  module = remindo-api.tests.test_reliability
-build /Users/leonardovida/dev/remindo-api/.pytype/pyi/remindo-api/tests/test_recipes.pyi: check /Users/leonardovida/dev/remindo-api/tests/test_recipes.py | /Users/leonardovida/dev/remindo-api/.pytype/pyi/remindo_api/recipe.pyi
-  imports = /Users/leonardovida/dev/remindo-api/.pytype/imports/remindo-api.tests.test_recipes.imports
-  module = remindo-api.tests.test_recipes
-build /Users/leonardovida/dev/remindo-api/.pytype/pyi/remindo-api/tests/test_cluster.pyi: check /Users/leonardovida/dev/remindo-api/tests/test_cluster.py | /Users/leonardovida/dev/remindo-api/.pytype/pyi/remindo_api/cluster.pyi
-  imports = /Users/leonardovida/dev/remindo-api/.pytype/imports/remindo-api.tests.test_cluster.imports
-  module = remindo-api.tests.test_cluster
-build /Users/leonardovida/dev/remindo-api/.pytype/pyi/remindo_api/example/__init__.pyi: check /Users/leonardovida/dev/remindo-api/src/remindo_api/example/__init__.py
-  imports = /Users/leonardovida/dev/remindo-api/.pytype/imports/remindo_api.example.__init__.imports
-  module = remindo_api.example.__init__
+build /Users/leonardovida/dev/remindo-api/.pytype/pyi/remindo-api/tests/test_stats.pyi: check /Users/leonardovida/dev/remindo-api/tests/test_stats.py | /Users/leonardovida/dev/remindo-api/.pytype/pyi/remindo_api/stats.pyi
+  imports = /Users/leonardovida/dev/remindo-api/.pytype/imports/remindo-api.tests.test_stats.imports
+  module = remindo-api.tests.test_stats
