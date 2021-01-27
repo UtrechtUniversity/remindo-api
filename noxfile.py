@@ -14,12 +14,14 @@ locations = "src", "tests", "noxfile.py"
 
 def install_with_constraints(session: Session, *args: str, **kwargs: Any) -> None:
     """Install packages constrained by Poetry's lock file.
+
     This function is a wrapper for nox.sessions.Session.install. It
     invokes pip to install packages inside of the session's virtualenv.
     Additionally, pip is passed a constraints file generated from
     Poetry's lock file, to ensure that the packages are pinned to the
     versions specified in poetry.lock. This allows you to manage the
     packages as Poetry development dependencies.
+
     Arguments:
         session: The Session object.
         args: Command-line arguments for pip.
@@ -31,6 +33,7 @@ def install_with_constraints(session: Session, *args: str, **kwargs: Any) -> Non
             "export",
             "--dev",
             "--format=requirements.txt",
+            "--without-hashes",
             f"--output={requirements.name}",
             external=True,
         )
@@ -72,7 +75,7 @@ def lint(session: Session) -> None:
     session.run("flake8", *args)
 
 
-@nox.session(python=["3.9", "3.8"])
+@nox.session(python="3.8")
 def black(session: Session) -> None:
     """Run black code formatter."""
     args = session.posargs or locations
@@ -135,5 +138,7 @@ def xdoctest(session: Session) -> None:
 def docs(session: Session) -> None:
     """Build the documentation."""
     session.run("poetry", "install", external=True)
-    install_with_constraints(session, "sphinx", "sphinx-autodoc-typehints", "sphinx-rtd-theme")
+    install_with_constraints(
+        session, "sphinx", "sphinx-autodoc-typehints", "sphinx-rtd-theme"
+    )
     session.run("sphinx-build", "docs", "docs/_build")
