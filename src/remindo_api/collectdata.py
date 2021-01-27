@@ -95,7 +95,7 @@ class RemindoCollect:
         self._moment = int()
         self._recipe = int()
 
-        self._base_directory = os.path.join(data_directory, "landing-zone")
+        self._base_directory = data_directory
         if not os.path.isdir(self._base_directory):
             os.makedirs(self._base_directory)
 
