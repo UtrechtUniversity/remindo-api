@@ -1,3 +1,9 @@
+# Custom
+src/**/example.py
+src/**/fetchdata.py
+src/**/config.cfg
+tests/apikey.py
+
 # Editors
 .vscode/
 .idea/
@@ -23,14 +29,10 @@ __pycache__/
 # Distribution / packaging
 .Python
 .nox
-src/**/example.py
-src/**/fetchdata.py
-src/**/config.cfg
 fetchdata.py
 example.py
 build/
 config.cfg
-apikey.py
 develop-eggs/
 downloads/
 eggs/

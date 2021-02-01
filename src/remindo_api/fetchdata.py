@@ -53,9 +53,10 @@ def main():
     """Main function for fetching Remindo data."""
     logging.debug("Creating Remindo client.")
     rclient = client.RemindoClient(
-        config["REMINDOKEYS"]["UUID"],
-        config["REMINDOKEYS"]["SECRET"],
-        config["REMINDOKEYS"]["URL_BASE"],
+        uuid = config["REMINDOKEYS"]["UUID"],
+        secret = config["REMINDOKEYS"]["SECRET"],
+        url_base = config["REMINDOKEYS"]["URL_BASE"],
+        sha = "SHA1"
     )
 
     working_directory = Path(__file__).parent.absolute() / "data"

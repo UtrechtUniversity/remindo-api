@@ -1,7 +1,7 @@
 # content of ./conftest.py
 """Configure tests."""
 import pytest
-from remindo_api import apikey
+import tests.apikey as ak
 from remindo_api import client
 
 
@@ -14,6 +14,9 @@ def pytest_configure(config):
 @pytest.fixture
 def rclient():
     rclient = client.RemindoClient(
-        uuid=apikey.uuid, secret=apikey.secret, url_base=apikey.url_base
+        uuid=ak.uuid,
+        secret=ak.secret,
+        url_base=ak.url_base,
+        sha="SHA1"
     )
     yield rclient

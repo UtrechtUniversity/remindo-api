@@ -4,7 +4,7 @@ import json
 import time
 
 
-from Crypto.Hash import HMAC, SHA256, SHA1
+from Crypto.Hash import HMAC, SHA1, SHA256, SHA512
 import requests
 
 
@@ -38,6 +38,12 @@ class RemindoRequest:
         self.ip = client.ip
         self.api_url_base = client.url_base
         self.uuid = client.uuid
+        if client.sha:
+            if client.sha == "SHA1": self.sha = SHA1
+            elif client.sha == "SHA256": self.sha = SHA256
+            elif client.sha == "SHA512": self.sha = SHA512
+        else:
+            self.sha = SHA512
         self.req_format = req_format
         self.url = url
         self.payload = content
@@ -54,7 +60,7 @@ class RemindoRequest:
     def encrypt(self):
         self.make_body()
         self.make_message()
-        h = HMAC.new(key=self.secEncoded, msg=(self.message), digestmod=SHA1)
+        h = HMAC.new(key=self.secEncoded, msg=(self.message), digestmod=self.sha)
         self.signature = h.hexdigest()
 
     def request(self):

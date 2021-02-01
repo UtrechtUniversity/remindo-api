@@ -38,7 +38,7 @@ class RemindoClientException(Exception):
 class RemindoClient:
     """Main client class of Remindo."""
 
-    def __init__(self, uuid, secret, url_base) -> None:
+    def __init__(self, uuid, secret, url_base, sha = "SHA512") -> None:
         """Initialize a RemindoClient.
 
         It uses parameters that one needs to obtain from Paragin.
@@ -55,6 +55,7 @@ class RemindoClient:
         self.uuid = uuid
         self.secret = secret
         self.url_base = url_base
+        self.sha = sha
         self.ip = requests.get("https://jsonip.com").json()["ip"]
         """str: current ip from which Remindo is accessed.
             It needs to be authorized.
@@ -63,7 +64,7 @@ class RemindoClient:
     @property
     def query_dict(self) -> dict:
         """Query personal data from client."""
-        return {"key": self.uuid, "secret": self.secret, "url_base": self.url_base}
+        return {"key": self.uuid, "secret": self.secret, "url_base": self.url_base, "sha": self.sha}
 
     def request(self, *args, **kwargs):
         """Create a remindo_api object and make a request."""
