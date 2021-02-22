@@ -4,7 +4,7 @@ import json
 import time
 
 
-from Crypto.Hash import HMAC, SHA1, SHA256, SHA512
+from Crypto.Hash import HMAC, SHA1, SHA256, SHA512, SHA3_512
 import requests
 
 
@@ -38,10 +38,16 @@ class RemindoRequest:
         self.ip = client.ip
         self.api_url_base = client.url_base
         self.uuid = client.uuid
+        # Choose SHA, default SHA512
         if client.sha:
-            if client.sha == "SHA1": self.sha = SHA1
-            elif client.sha == "SHA256": self.sha = SHA256
-            elif client.sha == "SHA512": self.sha = SHA512
+            if client.sha == "SHA1":
+                self.sha = SHA1
+            elif client.sha == "SHA256":
+                self.sha = SHA256
+            elif client.sha == "SHA512":
+                self.sha = SHA512
+            elif client.sha == "SHA3_512":
+                self.sha = SHA3_512
         else:
             self.sha = SHA512
         self.req_format = req_format
@@ -65,7 +71,7 @@ class RemindoRequest:
 
     def request(self):
         """Create message request.
-        
+
         Raise:
             RemindoRequestException: the request failed with status code
             =! 200.

@@ -32,6 +32,8 @@ def safeget(dct, *keys):
             dct = dct[key]
         except KeyError:
             return None
+        except TypeError:
+            return None
     return dct
 
 
