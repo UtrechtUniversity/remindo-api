@@ -2,6 +2,7 @@
 """Client for Remindo."""
 from typing import Any, List
 
+from faker import Faker
 import requests
 
 from .cluster import RemindoCluster
@@ -38,7 +39,7 @@ class RemindoClientException(Exception):
 class RemindoClient:
     """Main client class of Remindo."""
 
-    def __init__(self, uuid, secret, url_base, sha = "SHA512") -> None:
+    def __init__(self, uuid, secret, url_base, sha="SHA512") -> None:
         """Initialize a RemindoClient.
 
         It uses parameters that one needs to obtain from Paragin.
@@ -57,6 +58,7 @@ class RemindoClient:
         self.url_base = url_base
         self.sha = sha
         self.ip = requests.get("https://jsonip.com").json()["ip"]
+        self.fake = Faker()
         """str: current ip from which Remindo is accessed.
             It needs to be authorized.
         """
@@ -64,7 +66,12 @@ class RemindoClient:
     @property
     def query_dict(self) -> dict:
         """Query personal data from client."""
-        return {"key": self.uuid, "secret": self.secret, "url_base": self.url_base, "sha": self.sha}
+        return {
+            "key": self.uuid,
+            "secret": self.secret,
+            "url_base": self.url_base,
+            "sha": self.sha,
+        }
 
     def request(self, *args, **kwargs):
         """Create a remindo_api object and make a request."""
@@ -559,6 +566,7 @@ class RemindoClient:
             itemresults = []
             for subscription in resp.keys():
                 sections = len(resp[subscription])
+                # subscription_new = self.fake.numerify(text="%%%%%%%") not needed as not personal data
                 count_items = 0
                 for s in range(sections):
                     # section = resp[subscription][s]["section"]
@@ -569,7 +577,7 @@ class RemindoClient:
                         it = resp[subscription][s]["itemresults"][i]
                         it.update(
                             {
-                                "subscription_id": subscription,
+                                "subscription_id": sections,
                                 "position_item": count_items,
                                 "api_call_params": params,
                             }

@@ -71,12 +71,12 @@ class RemindoItem:
 
     @property
     def subscription_id(self):
-        """Return the section_id."""
+        """Return the subscription_id."""
         return utils.safeget(self._item_dict, "subscription_id")
 
     @property
     def position_item(self):
-        """Return the section_id."""
+        """Return the position_id."""
         return utils.safeget(self._item_dict, "position_item")
 
     @property

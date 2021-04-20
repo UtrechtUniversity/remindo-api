@@ -2,12 +2,18 @@
 """Class implementation for Remindo result."""
 from dataclasses import dataclass
 
+from faker import Faker
 
 from remindo_api import utils
 
 
 @dataclass
 class RemindoResult:
+
+    # Create faker for user_id
+    def __init__(self):
+        self.fake = Faker()
+
     """Class to parse results."""
 
     _result_dict: dict
@@ -19,17 +25,20 @@ class RemindoResult:
     @property
     def subscription_id(self):
         """Return the Remindo subscription id for the result."""
-        return utils.safeget(self._result_dict, "subscription_id")
+        utils.safeget(self._result_dict, "subscription_id")
+        return
 
     @property
     def user_id(self):
         """Return the Remindo user id id for the result."""
-        return utils.safeget(self._result_dict, "user_id")
+        # utils.safeget(self._result_dict, "user_id") # Not used as personal data
+        return self.fake.numerify(text="%%%%%%")
 
     @property
     def user_code(self):
         """Return the Remindo user code for the result."""
-        return utils.safeget(self._result_dict, "user_code")
+        # utils.safeget(self._result_dict, "user_code") # Not used as personal data
+        return self.fake.numerify(text="%%%%%%")
 
     @property
     def cluster_ids(self):
