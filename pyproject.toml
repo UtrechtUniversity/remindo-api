@@ -9,7 +9,7 @@ keywords = ["Remindo", "API", "wrapper"]
 
 [tool.poetry.dependencies]
 python = "^3.7"
-requests = "^2.23.0"
+requests = "^2.31.0"
 configparser = "3.5.0"
 pandas = "0.25.3"
 sphinx = "^3.1.2"
